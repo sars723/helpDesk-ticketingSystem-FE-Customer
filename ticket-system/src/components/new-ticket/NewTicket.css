@@ -1,0 +1,25 @@
+.new-ticket {
+    background-color:#E4E3E5;
+    padding-bottom:10px ; 
+    height: 100vh;
+   /*  box-shadow: 0 1px 12px -2px rgb(0 0 0 / 15%); */
+}
+.new-ticket-wrapper{
+    border-radius: 10px;
+    
+}
+.new-ticket-header{
+    background-color: #cccecf;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+   
+
+}
+.new-ticket-form{
+    background-color: #FAFAFA; 
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius:5px ;
+}
+.new-ticket-form-select{
+    display: flex;
+}

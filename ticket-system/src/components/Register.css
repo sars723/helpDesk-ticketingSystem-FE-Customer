@@ -1,0 +1,49 @@
+.register {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  /*  margin-top: 200px; */
+}
+.register-container {
+  margin-top: 150px;
+  width: 400px;
+}
+.register.no-account {
+  font-size: 14px;
+}
+.register .have-account-login {
+  color: #0091ae;
+}
+.register label {
+  margin-bottom: 0;
+}
+.register .show-password {
+  display: block;
+}
+.register .show-password,
+.register .forget-password {
+  color: #0091ae;
+  font-size: 12px;
+  font-weight: 600;
+}
+.register .form-check {
+  display: flex;
+  align-items: center;
+  margin-top: 14px;
+}
+.register .btn-create-account {
+  width: 100%;
+  background-color: #eaf1f6;
+  color: black;
+  border: none;
+  margin-bottom: 20px;
+}
+.register .footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+}

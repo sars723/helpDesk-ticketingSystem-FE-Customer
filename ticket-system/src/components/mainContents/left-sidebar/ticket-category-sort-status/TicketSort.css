@@ -1,0 +1,23 @@
+.ticket-sort{
+background:#edeced ;
+padding-top: 12px;
+border-radius: 5px;
+box-shadow: 0 1px 12px -2px rgb(0 0 0 / 15%);
+margin-bottom: 25px;
+font-size: 12px;
+}
+.form-control {
+   font-size: 12px !important;
+}
+.sort-btn{
+    text-align: center;
+   
+}
+.sort-btn button{
+    color: #2980b9; 
+    background-color: #fff;
+    border: none;
+    padding:3px 5px ;
+    border-radius: 5px;
+    box-shadow: 0 1px 12px -2px rgb(0 0 0 / 15%);
+}

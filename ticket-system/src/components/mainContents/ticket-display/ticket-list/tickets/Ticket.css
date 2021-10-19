@@ -1,0 +1,24 @@
+.ticket{
+    padding-left: 20px;
+}
+.ticket h5{
+margin-bottom: 0;
+
+}
+
+.ticket p{
+    margin-bottom: 0;
+    margin-right: 10px;
+    font-size: 14px;
+    
+}
+.user-category {
+    display: flex;
+    
+    font-size: 12px;
+    line-height: 12px;
+
+}
+.user-category p{
+    font-size: 12px;
+}
