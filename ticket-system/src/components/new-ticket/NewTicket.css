@@ -1,25 +1,26 @@
 .new-ticket {
-    background-color:#E4E3E5;
-    padding-bottom:10px ; 
-    height: 100vh;
-   /*  box-shadow: 0 1px 12px -2px rgb(0 0 0 / 15%); */
+  /*  background-color: #e4e3e5;
+  padding-bottom: 10px; */
+  height: 100vh;
 }
-.new-ticket-wrapper{
-    border-radius: 10px;
-    
+.new-ticket-wrapper {
+  border-radius: 10px;
+  box-shadow: 0 0 15px -5px black;
+  /* border-top-left-radius: 5px;
+  border-top-right-radius: 5px; */
 }
-.new-ticket-header{
-    background-color: #cccecf;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-   
-
+.new-ticket-header {
+  background-color: #cccecf;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-left: -15px;
+  margin-right: -15px;
 }
-.new-ticket-form{
-    background-color: #FAFAFA; 
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius:5px ;
+.new-ticket-form {
+  /*   background-color: #fafafa; */
+  /*   border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px; */
 }
-.new-ticket-form-select{
-    display: flex;
-}
+/* .new-ticket-form-select {
+  display: flex;
+} */

@@ -1,6 +1,6 @@
 import React from "react";
 import "./Register.css";
-import { Button, Form, FormGroup, Label, Input } from "react-bootstrap";
+import { Button, Form} from "react-bootstrap";
 import { Link } from "react-router-dom";
 const Register = () => {
   return (
