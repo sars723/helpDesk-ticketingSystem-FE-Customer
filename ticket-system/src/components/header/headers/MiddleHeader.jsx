@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MiddleHeader.css";
 import { Form, FormControl, Button, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const MiddleHeader = () => {
+const MiddleHeader = ({ searchQuery, setSearchQuery }) => {
+  /* const [searchQuery, setSearchQuery] = useState(""); */
   return (
     <div className="middle-header">
       <Nav className="mr-auto">
@@ -25,7 +26,13 @@ const MiddleHeader = () => {
           <Button variant="outline-success">
             <i className="fa fa-search"></i>
           </Button>
-          <FormControl type="text" placeholder="Search" id="search-input" />
+          <FormControl
+            type="text"
+            placeholder="Search"
+            id="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </Form>
       </div>
     </div>

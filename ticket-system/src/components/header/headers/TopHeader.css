@@ -1,27 +1,25 @@
-.top-header{
-padding: 0 30px;
-padding-top: 17px;
-font-size: 12px;
-display: flex;
-justify-content: space-between;
+.top-header {
+  padding: 17px 30px;
+  padding-top: 17px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
 }
- .logo a{
-    text-decoration: none;
+.logo a {
+  text-decoration: none;
 }
- .logo .logo-title{
-     color:#fff;
-     font-size: 27px;
-     font-weight: bold;
-
- }
- .user-info .loged-user-info button{
-     color:#bbb;
-     font-size: 12px;
-     font-weight: bold;
-     background: rgba(0,0,0,.2);
-     padding: 0 6px;
-     border: 1px solid rgba(0,4,8,.1);
-     box-shadow: none;
-     height: 22px;
-    
- }
+.logo .logo-title {
+  color: #fff;
+  font-size: 27px;
+  font-weight: bold;
+}
+.user-info .loged-user-info button {
+  color: #bbb;
+  font-size: 12px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0 6px;
+  border: 1px solid rgba(0, 4, 8, 0.1);
+  box-shadow: none;
+  height: 22px;
+}

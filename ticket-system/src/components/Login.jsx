@@ -1,15 +1,36 @@
 import React from "react";
 import "./Login.css";
-import { Button, Form} from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-const Login = () => {
-  const [email,setEmail]=useState("")
-  const [password,setPassword]=useState("")
-  
-  const handleSubmit=(e)=>{
-    e.preventDefault()
-  }
+const Login = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let user = {
+      email: email,
+      password: password,
+    };
+    try {
+      const response = await fetch("http://localhost:3004/customers/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        alert("sucessfully logedin");
+        const token = await response.json();
+        window.localStorage.setItem("Token", token.accessToken);
+        props.history.push("/");
+      }
+    } catch ({ error }) {
+      console.log(error);
+    }
+  };
   return (
     <div className="login ">
       <div className="login-container">
@@ -26,12 +47,22 @@ const Login = () => {
           </p>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" vlaue={email} onChange={e=>setEmail(e.target.value)} required/>
+            <Form.Control
+              type="email"
+              vlaue={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <span className="show-password">Show Password</span>
-            <Form.Control type="password" value={password} onChange={e=>setPassword(e.target.value)} required/>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </Form.Group>
           <span className="forget-password">Forget my password</span>
           <Form.Group>

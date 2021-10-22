@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Register.css";
-import { Button, Form} from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-const Register = () => {
+
+const Register = (props) => {
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (key, value) => {
+    setUser({
+      ...user,
+      [key]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3004/customers/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      if (response.ok) {
+        alert("Successfully registerd");
+        const data = await response.json();
+        window.localStorage.setItem("id", data);
+        props.history.push("/login");
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="register ">
       <div className="register-container">
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <h1 className="text-center">
             <span className="font-weight-bold ">Strive HelpDesk</span>.com
           </h1>
@@ -19,16 +55,28 @@ const Register = () => {
           </p>
           <Form.Group>
             <Form.Label>Full Name</Form.Label>
-            <Form.Control type="text" />
+            <Form.Control
+              type="text"
+              value={user.username}
+              onChange={(e) => handleChange("name", e.target.value)}
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" />
+            <Form.Control
+              type="email"
+              value={user.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+            />
           </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <span className="show-password">Show Password</span>
-            <Form.Control type="email" />
+            <Form.Control
+              type="password"
+              value={user.password}
+              onChange={(e) => handleChange("password", e.target.value)}
+            />
           </Form.Group>
           <span className="forget-password">Forget my password</span>
           <Form.Group>

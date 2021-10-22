@@ -7,7 +7,7 @@ const intTicket = {
   priority: "",
   dueDate: "",
   subject: "",
-  detail: "",
+  detailInfo: "",
   file: "",
 };
 const NewTicket = () => {
@@ -20,10 +20,28 @@ const NewTicket = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(ticket);
+    ticket.email = window.localStorage.getItem("id");
+    try {
+      const response = await fetch("http://localhost:3004/tickets", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+        },
+        body: JSON.stringify(ticket),
+      });
+      if (response.ok) {
+        alert("tiket saved");
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div className="new-ticket container-fluid  ">
       <div className="row flex-column">
@@ -107,8 +125,8 @@ const NewTicket = () => {
               <Form.Control
                 as="textarea"
                 rows={3}
-                vlaue={ticket.detail}
-                onChange={(e) => handleChange("detail", e.target.value)}
+                vlaue={ticket.detailInfo}
+                onChange={(e) => handleChange("detailInfo", e.target.value)}
               />
             </Form.Group>
             <Form.Group>
