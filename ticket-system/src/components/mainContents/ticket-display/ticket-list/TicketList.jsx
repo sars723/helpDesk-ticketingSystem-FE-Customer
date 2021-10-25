@@ -15,27 +15,26 @@ const TicketList = ({ searchQuery }) => {
       });
       if (response.ok) {
         const fetchedTickets = await response.json();
-        console.log("tickets =", fetchedTickets);
+        console.log("tickets =");
         setTickets(fetchedTickets);
-        console.log("ticket", tickets);
       }
     } catch (error) {
       console.log(error);
     }
-  }, [tickets]);
+  }, []);
   return (
     <div className="ticket-list mt-5">
-      {tickets && console.log("tick", tickets[0])}
-      {searchQuery
-        ? tickets &&
+      {tickets.length > 0 && console.log("tick=", tickets[0].subject)}
+      {
+        tickets.length > 0 &&
           tickets
             .filter((ticket, i) =>
               ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
             )
             .map((ticket, i) => <Ticket key={i} ticket={ticket} />)
-        : tickets &&
-          tickets.map((ticket, i) => <Ticket key={i} tickets={ticket} />)}
-      {/* <Ticket/> */}
+        /* : tickets.length > 0 &&
+          tickets.map((ticket, i) => <Ticket key={i} tickets={ticket} />) */
+      }
     </div>
   );
 };
