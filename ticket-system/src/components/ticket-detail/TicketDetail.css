@@ -9,6 +9,37 @@
   background: #fafafa;
   padding: 20px;
   border-radius: 5px;
+  margin-bottom: 20px;
+}
+.conversation {
+  margin: 0 0 20px 0px !important;
+}
+.conversation-avatar {
+  padding: 0 !important;
+}
+.conversation-avatar img {
+  height: 37px;
+  width: 37px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.conversation-msg {
+  background: #fafafa;
+  border-radius: 5px;
+  padding: 6px !important;
+  position: relative;
+}
+.conversation p {
+  margin-bottom: 0;
+}
+.conversation-msg::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: -6px;
+  border-width: 7px 7px 7px 0;
+  border-style: solid;
+  border-color: transparent #fafafa;
 }
 .ticket-detail-content-header {
   display: flex;
