@@ -1,10 +1,10 @@
 import React from "react";
 import "./Ticket.css";
-const Ticket = ({ data }) => {
+const Ticket = ({ ticket }) => {
   return (
     <div className="ticket row mb-5">
       <div className="col-md-4">
-        <h5>{data.subject}</h5>
+        <h5>{ticket.subject}</h5>
         <div className="user-category">
           <p>user</p>
           <p>category</p>

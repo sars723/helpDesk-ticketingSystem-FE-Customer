@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./NewTicket.css";
 const intTicket = {
-  email: "",
+  sender: "",
   category: "",
   priority: "",
   dueDate: "",
@@ -22,7 +22,6 @@ const NewTicket = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    ticket.email = window.localStorage.getItem("id");
     try {
       const response = await fetch("http://localhost:3004/tickets", {
         method: "POST",
@@ -57,8 +56,8 @@ const NewTicket = () => {
               <Col sm={8}>
                 <Form.Control
                   type="email"
-                  value={ticket.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
+                  value={ticket.sender}
+                  onChange={(e) => handleChange("sender", e.target.value)}
                 />
               </Col>
             </Form.Group>

@@ -14,7 +14,7 @@ const Login = (props) => {
       password: password,
     };
     try {
-      const response = await fetch("http://localhost:3004/customers/login", {
+      const response = await fetch("http://localhost:3004/users/login", {
         method: "POST",
         headers: {
           "Content-type": "application/json",

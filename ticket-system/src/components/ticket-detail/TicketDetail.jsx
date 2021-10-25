@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TicketDetail.css";
 import { Button, Form } from "react-bootstrap";
+import { Next } from "react-bootstrap/esm/PageItem";
 const TicketDetail = () => {
+  const [editTicketDetail, setEditTicketDetail] = useState({
+    priority: false,
+    category: false,
+    From: false,
+    assignedTo: false,
+    date: false,
+  });
+  useEffect(() => {
+    try {
+      /* const response = await; */
+    } catch (error) {
+      Next(error);
+    }
+  }, []);
   return (
     <div className="ticket-detail container-fluid">
       <div className="row  ">
@@ -38,14 +53,45 @@ const TicketDetail = () => {
             <p className="mb-0">Details</p>
           </div>
           <div className="ticket-detail-status-content">
-            <div className="row">
-              <div className="col-3 p-0">
-                <p>priority</p>
+            {!editTicketDetail.priority ? (
+              <div className="row">
+                <div className="col-3 p-0">
+                  <p>priority</p>
+                </div>
+                <div className="col-9 d-flex justify-content-between">
+                  <p>Priority</p>{" "}
+                  <Button
+                    onClick={() => setEditTicketDetail({ priority: true })}
+                  >
+                    •••
+                  </Button>
+                </div>
               </div>
-              <div className="col-9 d-flex justify-content-between">
-                <p>Priority</p> <Button>•••</Button>
-              </div>
-            </div>
+            ) : (
+              <Form.Group>
+                <div className="row">
+                  <div className="col-3 p-0">
+                    <Form.Label>Priority</Form.Label>
+                  </div>
+                  <div className="col-9 d-flex justify-content-between">
+                    <Form.Control as="select">
+                      <option value="Low">Low</option>
+                      <option value="Normal">Normal</option>
+                      <option value="High">High</option>
+                      <option value="Crucial">Crucial</option>
+                    </Form.Control>
+                    <Button
+                      onClick={() => {
+                        setEditTicketDetail({ priority: false });
+                      }}
+                    >
+                      Ok
+                    </Button>
+                  </div>
+                </div>{" "}
+              </Form.Group>
+            )}
+
             <div className="row ">
               <div className="col-3 p-0">
                 <p>Category:</p>
