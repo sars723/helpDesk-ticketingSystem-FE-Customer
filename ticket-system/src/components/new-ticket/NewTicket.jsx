@@ -34,9 +34,9 @@ const NewTicket = ({ history }) => {
       });
       if (response.ok) {
         alert("tiket saved");
-        /*  const sendedTicket = await response.json();
-        console.log(sendedTicket);
-        history.push("/ticketDetail/" + sendedTicket._id); */
+        const sendedTicket = await response.json();
+        console.log(sendedTicket._id);
+        history.push("/ticketDetail/" + sendedTicket._id);
       } else {
         alert("sth wrong");
       }
