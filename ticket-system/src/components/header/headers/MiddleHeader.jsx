@@ -8,9 +8,9 @@ const MiddleHeader = ({ searchQuery, setSearchQuery }) => {
   return (
     <div className="middle-header">
       <Nav className="mr-auto">
-        <Nav.Link href="#home">
+        <Link to="/" className="nav-link">
           <i className="fa fa-inbox"></i>Tickets
-        </Nav.Link>
+        </Link>
         <Nav.Link href="#link">
           <i className="far fa-chart-bar"></i>Reports
         </Nav.Link>
@@ -19,7 +19,10 @@ const MiddleHeader = ({ searchQuery, setSearchQuery }) => {
         </Nav.Link>
       </Nav>
       <div className="left-newTicket-search ">
-        <Link to="" className="new-ticket-btn  d-flex align-items-center">
+        <Link
+          to="/newTicket"
+          className="new-ticket-btn  d-flex align-items-center"
+        >
           <i className="fa fa-plus-square"></i>New ticket
         </Link>
         <Form inline className="search">
