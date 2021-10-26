@@ -17,7 +17,7 @@ const Ticket = ({ ticket, history }) => {
       );
       if (response.ok) {
         const fetchedUser = await response.json();
-        console.log(fetchedUser);
+        /* console.log(fetchedUser); */
         setUser(fetchedUser);
       } else {
         alert("sth wrong");
@@ -28,15 +28,16 @@ const Ticket = ({ ticket, history }) => {
   }, []);
   return (
     <div className="ticket row mb-5">
-      {console.log("newTicket", ticket)}
+      {/* {console.log("newTicket", ticket)} */}
       <div className="col-md-4">
         <h5
           onClick={() => {
-            history.push({
-              /*  "/ticketDetail/" + ticket + "/" + user */
+            history.push(
+              "/ticketDetail/" + ticket._id /* {
               pathname: "/ticketDetail",
               state: { ticketDetail: ticket },
-            });
+            } */
+            );
           }}
         >
           {ticket.subject}

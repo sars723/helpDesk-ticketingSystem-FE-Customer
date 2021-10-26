@@ -27,7 +27,7 @@ function App() {
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
         <Route path="/newTicket" exact component={NewTicket} />
-        <Route path="/ticketDetail" exact component={TicketDetail} />
+        <Route path="/ticketDetail/:ticketID" exact component={TicketDetail} />
         {/* <Login /> */}
       </Router>
     </div>
