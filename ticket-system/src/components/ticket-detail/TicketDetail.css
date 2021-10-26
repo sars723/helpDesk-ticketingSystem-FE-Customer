@@ -104,6 +104,11 @@
   height: 24px;
   padding: 0;
 }
+.ticket-detail-status-content .form-control.form-control-date {
+  width: 164px;
+  height: 24px;
+  padding: 0;
+}
 .ticket-detail-status-content .btn {
   background: none;
   border: 1px solid #eaeced;

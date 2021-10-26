@@ -1,18 +1,11 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./TicketDetail.css";
 import { Button, Form } from "react-bootstrap";
 import { Next } from "react-bootstrap/esm/PageItem";
 import { withRouter } from "react-router-dom";
+import TicketDetailEdit from "./ticket-detail-Edit/TicketDetailEdit";
 /* const ticket = location.state.ticketDetail; */
 const TicketDetail = ({ location, match, history }) => {
-  const [editTicketDetail, setEditTicketDetail] = useState({
-    priority: false,
-    category: false,
-    From: false,
-    assignedTo: false,
-    date: false,
-  });
-
   const [ticket, setTicket] = useState([]);
   const [messageHistory, setMessageHistory] = useState({
     message: "",
@@ -155,92 +148,7 @@ Promise.all([
               ))}
           </div>
         </div>
-        <div className="col-md-4 pl-4 ticket-detail-status">
-          <div className="ticket-detail-status-header">
-            <p className="mb-0">Details</p>
-          </div>
-          <div className="ticket-detail-status-content">
-            {!editTicketDetail.priority ? (
-              <div className="row">
-                <div className="col-3 p-0">
-                  <p>priority</p>
-                </div>
-                <div className="col-9 d-flex justify-content-between">
-                  <p>Priority</p>{" "}
-                  <Button
-                    onClick={() => setEditTicketDetail({ priority: true })}
-                  >
-                    •••
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <Form.Group>
-                <div className="row">
-                  <div className="col-3 p-0">
-                    <Form.Label>Priority</Form.Label>
-                  </div>
-                  <div className="col-9 d-flex justify-content-between">
-                    <Form.Control as="select" /* value={} */>
-                      <option value="Low">Low</option>
-                      <option value="Normal">Normal</option>
-                      <option value="High">High</option>
-                      <option value="Crucial">Crucial</option>
-                    </Form.Control>
-                    <Button
-                      onClick={() => {
-                        setEditTicketDetail({ priority: false });
-                      }}
-                    >
-                      Ok
-                    </Button>
-                  </div>
-                </div>{" "}
-              </Form.Group>
-            )}
-
-            <div className="row ">
-              <div className="col-3 p-0">
-                <p>Category:</p>
-              </div>
-              <div className="col-9  d-flex justify-content-between">
-                <p>Category</p> <Button>•••</Button>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-3 p-0">
-                <p>From:</p>
-              </div>
-              <div className="col-9 d-flex justify-content-between">
-                <p>user</p> <Button>•••</Button>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-3 p-0">
-                <p>Assigned To:</p>
-              </div>
-              <div className="col-9 d-flex justify-content-between">
-                <p>Agent</p> <Button>•••</Button>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-3 p-0">
-                <p>Date:</p>
-              </div>
-              <div className="col-9 d-flex justify-content-between">
-                <p>Created At</p> <Button>•••</Button>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-3 p-0">
-                <p>From</p>
-              </div>
-              <div className="col-9 d-flex justify-content-between">
-                <p>user</p> <Button>•••</Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <TicketDetailEdit />
       </div>
     </div>
   );

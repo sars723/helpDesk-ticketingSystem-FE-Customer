@@ -1,0 +1,31 @@
+.ticket-detail-status-content p,
+.ticket-detail-status-content .form-label {
+  font-size: 14px;
+  padding-left: 10px;
+}
+.ticket-detail-status-content .form-control {
+  width: 64px;
+  height: 24px;
+  padding: 0;
+}
+.ticket-detail-status-content .form-control.form-control-date {
+  width: 164px;
+  height: 24px;
+  padding: 0;
+}
+.ticket-detail-status-content .btn {
+  background: none;
+  border: 1px solid #eaeced;
+  color: #717171;
+  background-color: #eaeced;
+  width: 35px;
+  height: 26px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ticket-detail-status-content .btn:hover {
+  background-color: #c8c9c9;
+  border: 1px solid #eaeced;
+}
