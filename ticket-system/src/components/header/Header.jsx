@@ -3,12 +3,13 @@ import TopHeader from "./headers/TopHeader";
 import MiddleHeader from "./headers/MiddleHeader";
 import BottomHeader from "./headers/BottomHeader";
 import "./Header.css";
-const Header = ({ searchQuery, setSearchQuery }) => {
+import { withRouter } from "react-router";
+const Header = ({ searchQuery, setSearchQuery, location }) => {
   return (
     <div className="header">
       <TopHeader />
-      {window.location.pathname !== "/login" &&
-      window.location.pathname !== "/register" ? (
+      {location.pathname === "/login" ||
+      location.pathname === "/register" ? null : (
         <>
           <MiddleHeader
             searchQuery={searchQuery}
@@ -16,9 +17,9 @@ const Header = ({ searchQuery, setSearchQuery }) => {
           />
           <BottomHeader />
         </>
-      ) : null}
+      )}
     </div>
   );
 };
 
-export default Header;
+export default withRouter(Header);
