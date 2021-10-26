@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { Next } from "react-bootstrap/esm/PageItem";
 import { withRouter } from "react-router-dom";
 /* const ticket = location.state.ticketDetail; */
-const TicketDetail = ({ location, match }) => {
+const TicketDetail = ({ location, match, history }) => {
   const [editTicketDetail, setEditTicketDetail] = useState({
     priority: false,
     category: false,

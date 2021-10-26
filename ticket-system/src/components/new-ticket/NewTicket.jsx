@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./NewTicket.css";
+import { withRouter } from "react-router";
 const intTicket = {
   sender: "",
   category: "",
@@ -10,7 +11,7 @@ const intTicket = {
   detailInfo: "",
   file: "",
 };
-const NewTicket = () => {
+const NewTicket = ({ history }) => {
   const [ticket, setTicket] = useState(intTicket);
 
   const handleChange = (key, value) => {
@@ -33,6 +34,9 @@ const NewTicket = () => {
       });
       if (response.ok) {
         alert("tiket saved");
+        /*  const sendedTicket = await response.json();
+        console.log(sendedTicket);
+        history.push("/ticketDetail/" + sendedTicket._id); */
       } else {
         alert("sth wrong");
       }
@@ -145,4 +149,4 @@ const NewTicket = () => {
   );
 };
 
-export default NewTicket;
+export default withRouter(NewTicket);
