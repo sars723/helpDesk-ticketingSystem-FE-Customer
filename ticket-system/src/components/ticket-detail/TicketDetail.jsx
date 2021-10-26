@@ -3,7 +3,7 @@ import "./TicketDetail.css";
 import { Button, Form } from "react-bootstrap";
 import { Next } from "react-bootstrap/esm/PageItem";
 import { withRouter } from "react-router-dom";
-const TicketDetail = ({ location }) => {
+const TicketDetail = ({ location, match }) => {
   const [editTicketDetail, setEditTicketDetail] = useState({
     priority: false,
     category: false,
@@ -11,17 +11,72 @@ const TicketDetail = ({ location }) => {
     assignedTo: false,
     date: false,
   });
-  const ticket = location.state.ticketD;
-  useEffect(async () => {
+
+  const ticket = location.state.ticketDetail;
+  const [messg, setMessg] = useState("");
+  const [messageHistory, setMessageHistory] = useState({
+    message: "",
+    sender: "",
+  });
+  const fetchSender = async () => {
     try {
-      /* const response = await fetch; */
+      const response = await fetch(
+        "http://localhost:3004/users/" + ticket.sender,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const fetchedSender = await response.json();
+        console.log(
+          messageHistory.message,
+          "messageHistory.message in fetch sender function"
+        );
+        setMessageHistory({ ...messageHistory, sender: fetchedSender.email });
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {}
+  };
+
+  const handleChange = (key, value) => {
+    setMessageHistory({
+      ...messageHistory,
+      [key]: value,
+    });
+    console.log(messageHistory, "messageHistory in handleChange function");
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("messageHistory in handleSubmit function", messageHistory);
+    try {
+      const response = await fetch(
+        "http://localhost:3004/tickets/replay/" + ticket._id,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          body: JSON.stringify({
+            messageHistory: [messageHistory],
+          }),
+        }
+      );
     } catch (error) {
       Next(error);
     }
+  };
+  useEffect(async () => {
+    fetchSender();
+    console.log("messageHistory in useEffect function", messageHistory);
   }, []);
+
   return (
     <div className="ticket-detail container-fluid">
-      {console.log("ticketdetail", location.state.ticketD)}
       <div className="row  ">
         <div className="col-md-8 pr-5">
           <div className="ticket-detail-content">
@@ -37,11 +92,29 @@ const TicketDetail = ({ location }) => {
             <div className="ticket-detail-content-text">
               <h6>{ticket.subject}</h6>
               <p>{ticket.detailInfo}</p>
-              <Form.Control
-                type="text"
-                className="ticket-detail-form-control"
-                placeholder="Reply..."
-              />
+              <Form onSubmit={handleSubmit}>
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    className="ticket-detail-form-message"
+                    placeholder="Reply..."
+                    value={messageHistory.message}
+                    onChange={(e) =>
+                      setMessageHistory({
+                        ...messageHistory,
+                        message: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Control
+                    type="file"
+                    className="ticket-detail-attach-file"
+                  />
+                </Form.Group>
+                <Button type="submit">Reply</Button>
+              </Form>
             </div>{" "}
           </div>{" "}
           <div className="ticket-detail-replay">

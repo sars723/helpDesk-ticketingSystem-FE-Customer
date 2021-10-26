@@ -31,12 +31,13 @@ const Ticket = ({ ticket, history }) => {
       {console.log("newTicket", ticket)}
       <div className="col-md-4">
         <h5
-          onClick={() =>
+          onClick={() => {
             history.push({
+              /*  "/ticketDetail/" + ticket + "/" + user */
               pathname: "/ticketDetail",
-              state: { ticketD: ticket },
-            })
-          }
+              state: { ticketDetail: ticket },
+            });
+          }}
         >
           {ticket.subject}
         </h5>
