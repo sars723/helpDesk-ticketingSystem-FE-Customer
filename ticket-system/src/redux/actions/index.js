@@ -5,6 +5,7 @@ import {
   FILL_DATA_LOADING,
   SET_SEARCH_VALUE,
   SET_CURRENT_USER,
+  SET_SELECTED_TICKET,
 } from "./types.js";
 export const setTicketsAction = () => {
   return async (dispatch) => {
@@ -56,6 +57,35 @@ export const setCurrentUserAction = () => {
       } else {
         alert("sth wrong");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const setSelectedTicketAction = (ticketID) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/tickets/" + ticketID,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const fetchedTicket = await response.json();
+        console.log(fetchedTicket);
+        dispatch({
+          type: SET_SELECTED_TICKET,
+          payload: fetchedTicket,
+        });
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

@@ -6,68 +6,26 @@ import { withRouter } from "react-router-dom";
 import TicketDetailEdit from "./ticket-detail-Edit/TicketDetailEdit";
 
 import { connect } from "react-redux";
+import { setSelectedTicketAction } from "../../redux/actions/index.js";
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser.currentUser,
+  ticket: state.selectedTicket.selectedTicket,
 });
 
-const TicketDetail = ({ match, currentUser }) => {
-  const [ticket, setTicket] = useState([]);
+const mapDispatchToProps = (dispatch) => ({
+  getSelectedTicket: (ticketId) => {
+    dispatch(setSelectedTicketAction(ticketId));
+  },
+});
+
+const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
   const [msgHistory, setMsgHistory] = useState({
     message: "",
     sender: "",
     attachments: [],
   });
 
-  const fetchTicket = async () => {
-    console.log(match.params.ticketID);
-
-    try {
-      const response = await fetch(
-        "http://localhost:3004/tickets/" + match.params.ticketID,
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const fetchedTicket = await response.json();
-
-        setTicket(fetchedTicket);
-
-        console.log(currentUser.email);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  /*   const fetchSender = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3004/users/me" ,
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const fetchedSender = await response.json();
-        console.log("fetchedsender or current user", fetchedSender);
-        setMessageHistory({ ...messageHistory, sender: fetchedSender.email });
-      } else {
-        alert("sth wrong");
-      }
-    } catch (error) {}
-  }; */
-
-  /*  const urls=[
-
-  ]
-Promise.all([
-  fetch()
-]) */
   const handleChange = (key, value) => {
     setMsgHistory({
       ...msgHistory,
@@ -96,17 +54,15 @@ Promise.all([
         }
       );
       if (response.ok) {
-        setMsgHistory({ ...msgHistory, msg: "" });
+        setMsgHistory({ ...msgHistory, message: "" });
       }
     } catch (error) {
       Next(error);
     }
   };
   useEffect(async () => {
-    fetchTicket();
-
-    /* fetchSender(); */
-  }, []);
+    getSelectedTicket(match.params.ticketID);
+  }, [msgHistory]);
 
   return (
     <div className="ticket-detail container-fluid">
@@ -122,32 +78,35 @@ Promise.all([
                 <i className="fa fa-check"></i>Close ticket
               </Button>
             </div>
-            <div className="ticket-detail-content-text">
-              <h6>{ticket.subject}</h6>
-              <p>{ticket.detailInfo}</p>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                  <Form.Control
-                    type="text"
-                    className="ticket-detail-form-message"
-                    placeholder="Reply..."
-                    value={msgHistory.message}
-                    onChange={(e) => handleChange("message", e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Control
-                    type="file"
-                    className="ticket-detail-attach-file"
-                  />
-                </Form.Group>
-                <Button type="submit">Reply</Button>
-              </Form>
-            </div>{" "}
+            {ticket && (
+              <div className="ticket-detail-content-text">
+                <h6>{ticket.subject}</h6>
+                <p>{ticket.detailInfo}</p>
+                {console.log(ticket.messageHistory.length)}
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group>
+                    <Form.Control
+                      type="text"
+                      className="ticket-detail-form-message"
+                      placeholder="Reply..."
+                      value={msgHistory.message}
+                      onChange={(e) => handleChange("message", e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Control
+                      type="file"
+                      className="ticket-detail-attach-file"
+                    />
+                  </Form.Group>
+                  <Button type="submit">Reply</Button>
+                </Form>
+              </div>
+            )}
           </div>{" "}
           <div className="ticket-detail-replay">
             {" "}
-            {ticket.messageHistory &&
+            {ticket &&
               ticket.messageHistory.map((msg, i) => (
                 <div className="row conversation">
                   <div className="col-1 conversation-avatar">
@@ -169,4 +128,7 @@ Promise.all([
   );
 };
 
-export default connect(mapStateToProps)(withRouter(TicketDetail));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TicketDetail));
