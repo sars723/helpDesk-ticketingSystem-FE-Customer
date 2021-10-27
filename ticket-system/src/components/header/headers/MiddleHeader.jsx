@@ -2,7 +2,18 @@ import React, { useState } from "react";
 import "./MiddleHeader.css";
 import { Form, FormControl, Button, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { setSearchValueAction } from "../../../redux/actions/index.js";
+import { connect } from "react-redux";
 
+const mapStateToProps = (state) => ({
+  searchQuery: state.searchValue.searchQuery,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setSearchQuery: (searchQuery) => {
+    dispatch(setSearchValueAction(searchQuery));
+  },
+});
 const MiddleHeader = ({ searchQuery, setSearchQuery }) => {
   /* const [searchQuery, setSearchQuery] = useState(""); */
   return (
@@ -42,4 +53,4 @@ const MiddleHeader = ({ searchQuery, setSearchQuery }) => {
   );
 };
 
-export default MiddleHeader;
+export default connect(mapStateToProps, mapDispatchToProps)(MiddleHeader);

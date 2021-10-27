@@ -12,8 +12,8 @@ const Header = ({ searchQuery, setSearchQuery, location }) => {
       location.pathname === "/register" ? null : (
         <>
           <MiddleHeader
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+          /*  searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery} */
           />
           <BottomHeader />
         </>

@@ -1,42 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { setTicketsAction } from "../../../../redux/actions";
 import Ticket from "./tickets/Ticket";
-import data from "../../../assets/data.json";
 
-const TicketList = ({ searchQuery }) => {
+const mapStateToProps = (state) => ({
+  tickets: state.ticket.tickets,
+  searchQuery: state.searchValue.searchQuery,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getTickets: () => dispatch(setTicketsAction()),
+});
+
+const TicketList = ({ searchQuery, getTickets, tickets }) => {
   console.log(searchQuery);
-  const [tickets, setTickets] = useState([]);
 
   useEffect(async () => {
-    try {
-      const response = await fetch("http://localhost:3004/users/me/tickets", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-        },
-      });
-      if (response.ok) {
-        const fetchedTickets = await response.json();
-        console.log("tickets =");
-        setTickets(fetchedTickets);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    getTickets();
   }, []);
   return (
     <div className="ticket-list mt-5">
       {tickets.length > 0 && console.log("tick=", tickets[0].subject)}
-      {
-        tickets.length > 0 &&
-          tickets
-            .filter((ticket, i) =>
-              ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((ticket, i) => <Ticket key={i} ticket={ticket} />)
-        /* : tickets.length > 0 &&
-          tickets.map((ticket, i) => <Ticket key={i} tickets={ticket} />) */
-      }
+      {tickets.length > 0 &&
+        tickets
+          .filter((ticket, i) =>
+            ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((ticket, i) => <Ticket key={i} ticket={ticket} />)}
     </div>
   );
 };
 
-export default TicketList;
+export default connect(mapStateToProps, mapDispatchToProps)(TicketList);

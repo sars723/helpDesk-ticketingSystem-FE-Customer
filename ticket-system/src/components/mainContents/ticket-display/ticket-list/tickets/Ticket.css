@@ -1,24 +1,33 @@
-.ticket{
-    padding-left: 20px;
+.ticket {
+  padding-left: 20px;
 }
-.ticket h5{
-margin-bottom: 0;
-
+.ticket h5 {
+  margin-bottom: 0;
 }
 
-.ticket p{
-    margin-bottom: 0;
-    margin-right: 10px;
-    font-size: 14px;
-    
+.ticket p {
+  margin-bottom: 0;
+  margin-right: 10px;
+  font-size: 14px;
 }
 .user-category {
-    display: flex;
-    
-    font-size: 12px;
-    line-height: 12px;
+  display: flex;
 
+  font-size: 12px;
+  line-height: 12px;
 }
-.user-category p{
-    font-size: 12px;
+.user-category p {
+  font-size: 12px;
+}
+#popover-positioned-left {
+  width: 50% !important;
+}
+.popover {
+  max-width: 650px !important;
+}
+.popover-body ul {
+  list-style: none;
+}
+.popover-body ul li {
+  cursor: pointer;
 }

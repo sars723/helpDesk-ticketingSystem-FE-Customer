@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import "./Ticket.css";
-/* import { useHistory } from "react-router"; */
+
 const Ticket = ({ ticket, history }) => {
   const [user, setUser] = useState(null);
-  /* let history = useHistory(); */
+
   useEffect(async () => {
     try {
       const response = await fetch(
@@ -17,7 +18,7 @@ const Ticket = ({ ticket, history }) => {
       );
       if (response.ok) {
         const fetchedUser = await response.json();
-        /* console.log(fetchedUser); */
+
         setUser(fetchedUser);
       } else {
         alert("sth wrong");
@@ -28,16 +29,10 @@ const Ticket = ({ ticket, history }) => {
   }, []);
   return (
     <div className="ticket row mb-5">
-      {/* {console.log("newTicket", ticket)} */}
       <div className="col-md-4">
         <h5
           onClick={() => {
-            history.push(
-              "/ticketDetail/" + ticket._id /* {
-              pathname: "/ticketDetail",
-              state: { ticketDetail: ticket },
-            } */
-            );
+            history.push("/ticketDetail/" + ticket._id);
           }}
         >
           {ticket.subject}
@@ -53,10 +48,32 @@ const Ticket = ({ ticket, history }) => {
         <p>11 hours ago</p>
         <p>{user && user.name}</p>
         <p>2 hours ago</p>
-        <input type="checkbox" />
+        <OverlayTrigger
+          trigger="click"
+          key="left"
+          placement="left"
+          overlay={
+            <Popover id="popover-positioned-left">
+              <Popover.Content>
+                <ul className="d-flex justify-content-between align-items-center mb-1 mt-1">
+                  <li>Delete</li>
+                  <li>Close</li>
+                  <li>Assign</li>
+                  <li>Change Priority</li>
+                  <li>Change Category</li>
+                  <li>Due</li>
+                  <li>Tag</li>
+                  <li>Print</li>
+                </ul>
+              </Popover.Content>
+            </Popover>
+          }
+        >
+          <input type="checkbox" />
+        </OverlayTrigger>
       </div>
     </div>
   );
 };
 
-export default withRouter(Ticket) /* Ticket */;
+export default withRouter(Ticket);
