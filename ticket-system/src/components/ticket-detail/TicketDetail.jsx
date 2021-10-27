@@ -4,16 +4,24 @@ import { Button, Form } from "react-bootstrap";
 import { Next } from "react-bootstrap/esm/PageItem";
 import { withRouter } from "react-router-dom";
 import TicketDetailEdit from "./ticket-detail-Edit/TicketDetailEdit";
-/* const ticket = location.state.ticketDetail; */
-const TicketDetail = ({ location, match, history }) => {
+
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser.currentUser,
+});
+
+const TicketDetail = ({ match, currentUser }) => {
   const [ticket, setTicket] = useState([]);
-  const [messageHistory, setMessageHistory] = useState({
+  const [msgHistory, setMsgHistory] = useState({
     message: "",
     sender: "",
+    attachments: [],
   });
 
   const fetchTicket = async () => {
     console.log(match.params.ticketID);
+
     try {
       const response = await fetch(
         "http://localhost:3004/tickets/" + match.params.ticketID,
@@ -25,17 +33,19 @@ const TicketDetail = ({ location, match, history }) => {
       );
       if (response.ok) {
         const fetchedTicket = await response.json();
-        console.log(fetchedTicket);
+
         setTicket(fetchedTicket);
+
+        console.log(currentUser.email);
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const fetchSender = async () => {
+  /*   const fetchSender = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3004/users/" + ticket.sender._id,
+        "http://localhost:3004/users/me" ,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
@@ -44,12 +54,14 @@ const TicketDetail = ({ location, match, history }) => {
       );
       if (response.ok) {
         const fetchedSender = await response.json();
+        console.log("fetchedsender or current user", fetchedSender);
         setMessageHistory({ ...messageHistory, sender: fetchedSender.email });
       } else {
         alert("sth wrong");
       }
     } catch (error) {}
-  };
+  }; */
+
   /*  const urls=[
 
   ]
@@ -57,16 +69,18 @@ Promise.all([
   fetch()
 ]) */
   const handleChange = (key, value) => {
-    setMessageHistory({
-      ...messageHistory,
+    setMsgHistory({
+      ...msgHistory,
       [key]: value,
     });
-
-    console.log(messageHistory, "messageHistory in handleChange function");
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("ticketId", ticket._id);
+    let messageHistory = {
+      message: msgHistory.message,
+      sender: currentUser.email,
+      attachments: msgHistory.attachments,
+    };
     try {
       const response = await fetch(
         "http://localhost:3004/tickets/reply/" + ticket._id,
@@ -82,7 +96,7 @@ Promise.all([
         }
       );
       if (response.ok) {
-        setMessageHistory({ ...messageHistory, message: "" });
+        setMsgHistory({ ...msgHistory, msg: "" });
       }
     } catch (error) {
       Next(error);
@@ -90,7 +104,8 @@ Promise.all([
   };
   useEffect(async () => {
     fetchTicket();
-    fetchSender();
+
+    /* fetchSender(); */
   }, []);
 
   return (
@@ -116,7 +131,7 @@ Promise.all([
                     type="text"
                     className="ticket-detail-form-message"
                     placeholder="Reply..."
-                    value={messageHistory.message}
+                    value={msgHistory.message}
                     onChange={(e) => handleChange("message", e.target.value)}
                   />
                 </Form.Group>
@@ -154,4 +169,4 @@ Promise.all([
   );
 };
 
-export default withRouter(TicketDetail);
+export default connect(mapStateToProps)(withRouter(TicketDetail));

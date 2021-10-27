@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import userReducer from "../reducers/userReducer.js";
 import ticketReducer from "../reducers/ticketReducer.js";
 import searchValueReducer from "../reducers/searchValueReducer.js";
+import currentUserReducer from "../reducers/currentUserReducer.js";
 
 export const initialState = {
   ticket: {
@@ -18,12 +19,14 @@ export const initialState = {
   searchValue: {
     searchQuery: "",
   },
+  currentUser: {},
 };
 
 const combinedReducers = combineReducers({
   ticket: ticketReducer,
   user: userReducer,
   searchValue: searchValueReducer,
+  currentUser: currentUserReducer,
 });
 
 const configureStore = createStore(

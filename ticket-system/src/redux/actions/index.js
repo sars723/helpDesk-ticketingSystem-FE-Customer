@@ -4,6 +4,7 @@ import {
   FILL_DATA_ERROR,
   FILL_DATA_LOADING,
   SET_SEARCH_VALUE,
+  SET_CURRENT_USER,
 } from "./types.js";
 export const setTicketsAction = () => {
   return async (dispatch) => {
@@ -31,5 +32,30 @@ export const setSearchValueAction = (searchQuery) => {
   return {
     type: SET_SEARCH_VALUE,
     payload: searchQuery,
+  };
+};
+
+export const setCurrentUserAction = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/users/me" /* + ticket.sender._id */,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const fetchedSender = await response.json();
+        console.log("fetchedsender or current user", fetchedSender);
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: fetchedSender,
+        });
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {}
   };
 };

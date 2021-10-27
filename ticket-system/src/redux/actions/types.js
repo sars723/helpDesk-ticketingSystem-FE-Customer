@@ -3,3 +3,4 @@ export const SET_TICKET = "SET_TICKET";
 export const SET_SEARCH_VALUE = "SET_SEARCH_VALUE";
 export const FILL_DATA_LOADING = "FILL_DATA_LOADING";
 export const FILL_DATA_ERROR = "FILL_DATA_ERROR";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";

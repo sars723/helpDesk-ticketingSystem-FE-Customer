@@ -2,32 +2,23 @@ import React, { useEffect, useState } from "react";
 import "./TopHeader.css";
 import { Dropdown } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
+import { setCurrentUserAction } from "../../../redux/actions";
+import { connect } from "react-redux";
 
-const TopHeader = ({ location }) => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const fetchCurrentUser = async () => {
-    try {
-      const response = await fetch("http://localhost:3004/users/me", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-        },
-      });
-      if (response.ok) {
-        const fetchedCurrentUser = await response.json();
-        console.log("current User", fetchedCurrentUser);
-        setCurrentUser(fetchedCurrentUser);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser.currentUser,
+});
 
+const mapDispatchToProps = (dispatch) => ({
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
+});
+const TopHeader = ({ location, getCurrentUser, currentUser }) => {
   useEffect(() => {
-    fetchCurrentUser();
+    getCurrentUser();
   }, [location.pathname]);
+
   return (
     <div className="top-header">
-      {/*   {currentUser && console.log("currUser", currentUser)} */}
       <div className="logo">
         <a href="#">
           <span className="logo-title">strive Helpdesk</span>
@@ -59,8 +50,6 @@ const TopHeader = ({ location }) => {
                 Log Out
               </Link>
             )}
-            {/* <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
           </Dropdown.Menu>
         </Dropdown>
       </div>
@@ -68,4 +57,7 @@ const TopHeader = ({ location }) => {
   );
 };
 
-export default withRouter(TopHeader);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TopHeader));
