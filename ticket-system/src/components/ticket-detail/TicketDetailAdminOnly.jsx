@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from "react";
-import "./TicketDetail.css";
+import "./TicketDetailAdminOnly.css";
 import { Button, Form } from "react-bootstrap";
 import { Next } from "react-bootstrap/esm/PageItem";
 import { withRouter } from "react-router-dom";
-/* import TicketDetailEdit from "./ticket-detail-Edit/TicketDetailEdit"; */
+import TicketDetailEdit from "./ticket-detail-Edit/TicketDetailEdit";
 import Moment from "moment";
 import FileBase64 from "react-file-base64";
 
 import { connect } from "react-redux";
-import { setSelectedMyTicketAction } from "../../redux/actions/index.js";
+import { setSelectedTicketAction } from "../../redux/actions/index.js";
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser.currentUser,
-  ticket: state.selectedMyTicket.selectedTicket,
+  ticket: state.selectedTicket.selectedTicket,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getSelectedTicket: (ticketId) => {
-    dispatch(setSelectedMyTicketAction(ticketId));
+    dispatch(setSelectedTicketAction(ticketId));
   },
 });
 
-const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
+const TicketDetail = ({
+  match,
+  currentUser,
+  ticket,
+  getSelectedTicket,
+  history,
+}) => {
   const [msgHistory, setMsgHistory] = useState({
     message: "",
     sender: "",
     attachments: [],
   });
 
+  let sortedMessage =
+    ticket &&
+    ticket.messageHistory.sort((a, b) => new Date(b.msgAt) - new Date(a.msgAt));
+  console.log(sortedMessage);
   const handleChange = (key, value) => {
     setMsgHistory({
       ...msgHistory,
@@ -62,7 +72,7 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
       Next(error);
     }
   };
-  /*   const handleDelete = async (msgId) => {
+  const handleDelete = async (msgId) => {
     try {
       const response = await fetch(
         "http://localhost:3004/tickets/message/" + msgId,
@@ -123,7 +133,7 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
         alert("sth wrong");
       }
     } catch (error) {}
-  }; */
+  };
   useEffect(async () => {
     getSelectedTicket(match.params.ticketID);
   }, [msgHistory]);
@@ -134,7 +144,7 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
         <div className="col-md-8 pr-5">
           <div className="ticket-detail-content">
             <div className="ticket-detail-content-header">
-              {/* <Button className="btn-reply">
+              <Button className="btn-reply">
                 <i className="fa fa-reply"></i>
               </Button>
               <Button
@@ -149,8 +159,7 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
               >
                 <i className="fa fa-check"></i>
                 Close ticket
-              </Button> */}
-              {console.log("myTicket", ticket)}
+              </Button>
             </div>
             {ticket && (
               <div className="ticket-detail-content-text">
@@ -159,11 +168,11 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                 {ticket.file && (
                   <img
                     className="activator"
-                    style={{ height: 200, marginBottom: "20px" }}
+                    style={{ height: 300 }}
                     src={ticket.file}
                   />
                 )}
-
+                {console.log(ticket.messageHistory.length)}
                 <Form onSubmit={handleSubmit}>
                   <Form.Group>
                     <Form.Control
@@ -192,7 +201,7 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
           </div>{" "}
           <div className="ticket-detail-replay">
             {" "}
-            {ticket.messageHistory &&
+            {ticket &&
               ticket.messageHistory.reverse().map((msg, i) => (
                 <div className="row conversation" key={i}>
                   <div className="col-1 conversation-avatar">
@@ -213,12 +222,12 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                       {" "}
                       {console.log(msg.sender, " kkk", currentUser.email)}
                       <h6 className="msg-sender">{msg.sender}</h6>
-                      {/*  <p>
+                      <p>
                         <i
                           class="fas fa-trash"
                           onClick={() => handleDelete(msg._id)}
                         ></i>
-                      </p> */}
+                      </p>
                     </div>
                     <p>{msg.message}</p>
                     {msg.attachments.length > 0 && (
@@ -239,7 +248,7 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
               ))}
           </div>
         </div>
-        {/*  {ticket && <TicketDetailEdit ticket={ticket} />} */}
+        {ticket && <TicketDetailEdit ticket={ticket} />}
       </div>
     </div>
   );

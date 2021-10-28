@@ -7,6 +7,8 @@ import {
   SET_CURRENT_USER,
   SET_SELECTED_TICKET,
   REMOVE_TICKET,
+  SET_ONLY_ADMIN_TICKET,
+  SET_SELECTED_MY_TICKET,
 } from "./types.js";
 export const setTicketsAction = () => {
   return async (dispatch) => {
@@ -18,7 +20,7 @@ export const setTicketsAction = () => {
       });
       if (response.ok) {
         const fetchedTickets = await response.json();
-        console.log(fetchedTickets);
+        console.log(fetchedTickets, "user ticket");
         dispatch({
           type: SET_TICKET,
           payload: fetchedTickets,
@@ -30,6 +32,27 @@ export const setTicketsAction = () => {
   };
 };
 
+export const setTicketsOnlyAdminAction = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch("http://localhost:3004/tickets", {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+        },
+      });
+      if (response.ok) {
+        const fetchedTickets = await response.json();
+        console.log("allticketsadmin", fetchedTickets);
+        dispatch({
+          type: SET_ONLY_ADMIN_TICKET,
+          payload: fetchedTickets,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 export const setSearchValueAction = (searchQuery) => {
   return {
     type: SET_SEARCH_VALUE,
@@ -80,6 +103,33 @@ export const setSelectedTicketAction = (ticketID) => {
         console.log(fetchedTicket);
         dispatch({
           type: SET_SELECTED_TICKET,
+          payload: fetchedTicket,
+        });
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const setSelectedMyTicketAction = (ticketID) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/users/me/tickets/" + ticketID,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const fetchedTicket = await response.json();
+        console.log(fetchedTicket);
+        dispatch({
+          type: SET_SELECTED_MY_TICKET,
           payload: fetchedTicket,
         });
       } else {

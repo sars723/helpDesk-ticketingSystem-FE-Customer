@@ -92,7 +92,7 @@ const TicketDetailEdit = ({ ticket }) => {
                     <option value="Low">Low</option>
                     <option value="Normal">Normal</option>
                     <option value="High">High</option>
-                    <option value="Crucial">Crucial</option>
+                    <option value="Crucial">Critical</option>
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok

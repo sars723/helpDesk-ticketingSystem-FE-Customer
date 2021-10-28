@@ -10,7 +10,7 @@
 
 .ticket p {
   margin-bottom: 0;
-  margin-right: 10px;
+  margin-right: 60px;
   font-size: 14px;
 }
 .user-category {
@@ -19,16 +19,12 @@
   font-size: 10px;
   line-height: 10px;
   color: #8e8e8e !important;
-
-  border-bottom: 1px dotted #dadbdd;
 }
 
 .user-category p,
 .user-category i {
   font-size: 10px;
   color: #8e8e8e !important;
-
-  border-bottom: 1px dotted #dadbdd;
 }
 /* #popover-positioned-left {
   width: 50% !important;

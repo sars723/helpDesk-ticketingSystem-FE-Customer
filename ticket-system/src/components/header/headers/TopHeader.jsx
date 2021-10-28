@@ -37,6 +37,9 @@ const TopHeader = ({ location, getCurrentUser, currentUser }) => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
+            <Link to="/login" href="#/action-1" className="dropdown-item">
+              Profile
+            </Link>
             {location.pathname === "/register" ? (
               <Link to="/login" href="#/action-1" className="dropdown-item">
                 Sign Up

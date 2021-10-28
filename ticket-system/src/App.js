@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import MainContent from "./components/mainContents/MainContent";
 import NewTicket from "./components/new-ticket/NewTicket";
 import TicketDetail from "./components/ticket-detail/TicketDetail";
+import TicketDetailAdminOnly from "./components/ticket-detail/TicketDetailAdminOnly";
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
         <Route path="/register" exact component={Register} />
         <Route path="/newTicket" exact component={NewTicket} />
         <Route path="/ticketDetail/:ticketID" exact component={TicketDetail} />
+        <Route
+          path="/ticketDetailAdmin/:ticketID"
+          exact
+          component={TicketDetailAdminOnly}
+        />
       </Router>
     </div>
   );

@@ -3,7 +3,7 @@ import LeftSidebar from "./left-sidebar/LeftSidebar";
 import TicketDisplay from "./ticket-display/TicketDisplay";
 const MainContent = () => {
   return (
-    <div className="container">
+    <div className="" style={{ margin: "20px 50px" }}>
       <div className="row mt-4">
         <LeftSidebar />
         <TicketDisplay />

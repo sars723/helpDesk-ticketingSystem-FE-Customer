@@ -23,7 +23,8 @@
   border-radius: 50%;
   object-fit: cover;
 }
-.conversation-msg {
+.conversation-me-msg,
+.conversation-someoneelse-msg {
   background: #fafafa;
   border-radius: 5px;
   padding: 6px !important;
@@ -32,7 +33,7 @@
 .conversation p {
   margin-bottom: 0;
 }
-.conversation-msg::after {
+.conversation-me-msg::after {
   content: "";
   position: absolute;
   top: 9px;
@@ -40,6 +41,9 @@
   border-width: 7px 7px 7px 0;
   border-style: solid;
   border-color: transparent #fafafa;
+}
+.conversation-someoneelse-msg {
+  background: #e4f8e0;
 }
 .ticket-detail-content-header {
   display: flex;

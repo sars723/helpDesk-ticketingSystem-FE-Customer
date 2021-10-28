@@ -30,3 +30,8 @@
   box-shadow: none;
   height: 22px;
 }
+div.dropdown-menu.show {
+  background: #fafafa;
+  margin-top: 10px !important;
+  padding: 0;
+}
