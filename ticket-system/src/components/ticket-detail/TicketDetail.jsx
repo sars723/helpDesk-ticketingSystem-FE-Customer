@@ -21,7 +21,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
+const TicketDetail = ({
+  match,
+  currentUser,
+  ticket,
+  getSelectedTicket,
+  history,
+}) => {
   const [msgHistory, setMsgHistory] = useState({
     message: "",
     sender: "",
@@ -62,6 +68,47 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
       Next(error);
     }
   };
+  const handleDelete = async (msgId) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/tickets/message/" + msgId,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        alert("deleted sucessfully");
+        window.location.reload(false);
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClose = async (ticketId) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/tickets/close-ticket/" + ticketId,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        alert("ticket closed");
+        history.push("/");
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {}
+  };
   useEffect(async () => {
     getSelectedTicket(match.params.ticketID);
   }, [msgHistory]);
@@ -76,14 +123,25 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                 <i className="fa fa-reply"></i>
               </Button>
               <Button className="btn-takeover">Takeover</Button>
-              <Button className="btn-close">
-                <i className="fa fa-check"></i>Close ticket
+              <Button
+                className="btn-close"
+                onClick={() => handleClose(ticket && ticket._id)}
+              >
+                <i className="fa fa-check"></i>
+                Close ticket
               </Button>
             </div>
             {ticket && (
               <div className="ticket-detail-content-text">
                 <h6>{ticket.subject}</h6>
                 <p>{ticket.detailInfo}</p>
+                {ticket.file && (
+                  <img
+                    className="activator"
+                    style={{ height: 300 }}
+                    src={ticket.file}
+                  />
+                )}
                 {console.log(ticket.messageHistory.length)}
                 <Form onSubmit={handleSubmit}>
                   <Form.Group>
@@ -131,7 +189,10 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                       {" "}
                       <h6 className="msg-sender">{msg.sender}</h6>
                       <p>
-                        <i class="fas fa-trash"></i>
+                        <i
+                          class="fas fa-trash"
+                          onClick={() => handleDelete(msg._id)}
+                        ></i>
                       </p>
                     </div>
                     <p>{msg.message}</p>

@@ -4,6 +4,7 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import "./Ticket.css";
 import { removeTicketAction } from "../../../../../redux/actions";
 import { connect } from "react-redux";
+import moment from "moment";
 
 const mapDispatchToProps = (dispatch) => ({
   removeTicket: (index) => dispatch(removeTicketAction(index)),
@@ -76,10 +77,10 @@ const Ticket = ({ ticket, history }) => {
       </div>
       <div className="col-md-8 d-flex justify-content-between align-items-center ">
         <p>{ticket.priority}</p>
-        <p>New</p>
-        <p>11 hours ago</p>
+        <p>{ticket.status}</p>
+        <p>{moment(ticket.createdAt).fromNow()}</p>
         <p>{user && user.name}</p>
-        <p>2 hours ago</p>
+        <p>{moment(ticket.updatedAt).fromNow()}</p>
         <OverlayTrigger
           trigger="click"
           key="left"
