@@ -2,10 +2,35 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import "./Ticket.css";
+import { removeTicketAction } from "../../../../../redux/actions";
+import { connect } from "react-redux";
 
+const mapDispatchToProps = (dispatch) => ({
+  removeTicket: (index) => dispatch(removeTicketAction(index)),
+});
 const Ticket = ({ ticket, history }) => {
   const [user, setUser] = useState(null);
 
+  const deleteTicket = async () => {
+    console.log();
+    try {
+      const response = await fetch(
+        "http://localhost:3004/tickets/" + ticket._id,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        alert("deleted successfully");
+        window.location.reload(false);
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {}
+  };
   useEffect(async () => {
     try {
       const response = await fetch(
@@ -27,6 +52,7 @@ const Ticket = ({ ticket, history }) => {
       console.log(error);
     }
   }, []);
+
   return (
     <div className="ticket row mb-5">
       <div className="col-md-4">
@@ -38,8 +64,14 @@ const Ticket = ({ ticket, history }) => {
           {ticket.subject}
         </h5>
         <div className="user-category">
-          <p>{user && user.name}</p>
-          <p>{ticket.category}</p>
+          <p>
+            <i class="fa fa-user"></i>
+            {user && user.name}
+          </p>
+          <p>
+            <i class="fa fa-folder-open"></i>
+            {ticket.category}
+          </p>
         </div>
       </div>
       <div className="col-md-8 d-flex justify-content-between align-items-center ">
@@ -56,7 +88,7 @@ const Ticket = ({ ticket, history }) => {
             <Popover id="popover-positioned-left">
               <Popover.Content>
                 <ul className="d-flex justify-content-between align-items-center mb-1 mt-1">
-                  <li>Delete</li>
+                  <li onClick={() => deleteTicket()}>Delete</li>
                   <li>Close</li>
                   <li>Assign</li>
                   <li>Change Priority</li>
@@ -76,4 +108,4 @@ const Ticket = ({ ticket, history }) => {
   );
 };
 
-export default withRouter(Ticket);
+export default connect(mapDispatchToProps)(withRouter(Ticket));

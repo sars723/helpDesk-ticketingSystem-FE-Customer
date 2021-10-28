@@ -26,7 +26,7 @@ const TicketList = ({ searchQuery, getTickets, tickets }) => {
           .filter((ticket, i) =>
             ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
           )
-          .map((ticket, i) => <Ticket key={i} ticket={ticket} />)}
+          .map((ticket, i) => <Ticket key={i} ticket={ticket} i={i} />)}
     </div>
   );
 };

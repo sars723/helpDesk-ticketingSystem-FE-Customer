@@ -6,6 +6,7 @@ import {
   SET_SEARCH_VALUE,
   SET_CURRENT_USER,
   SET_SELECTED_TICKET,
+  REMOVE_TICKET,
 } from "./types.js";
 export const setTicketsAction = () => {
   return async (dispatch) => {
@@ -88,4 +89,25 @@ export const setSelectedTicketAction = (ticketID) => {
       console.log(error);
     }
   };
+};
+
+export const removeTicketAction = (index) => {
+  return {
+    type: REMOVE_TICKET,
+    payload: index,
+  };
+  /*   return async(dispatch)=>{
+    try {
+      const response=await fetch("http://localhost:3004/tickets/"+ticketID,{
+        method:"PUT",
+        headers:{
+          Authorization:`Bearer ${window.localStorage.getItem("Token")}`
+        }
+      })
+      if(response.ok)
+      
+    } catch (error) {
+      
+    }
+  } */
 };

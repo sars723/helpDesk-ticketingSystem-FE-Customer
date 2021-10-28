@@ -1,3 +1,6 @@
+.ticket-detail-edit {
+  height: 400px;
+}
 .ticket-detail-status-content p,
 .ticket-detail-status-content .form-label {
   font-size: 14px;

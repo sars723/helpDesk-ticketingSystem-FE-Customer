@@ -4,6 +4,8 @@ import { Button, Form } from "react-bootstrap";
 import { Next } from "react-bootstrap/esm/PageItem";
 import { withRouter } from "react-router-dom";
 import TicketDetailEdit from "./ticket-detail-Edit/TicketDetailEdit";
+import Moment from "moment";
+import FileBase64 from "react-file-base64";
 
 import { connect } from "react-redux";
 import { setSelectedTicketAction } from "../../redux/actions/index.js";
@@ -94,12 +96,21 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                     />
                   </Form.Group>
                   <Form.Group>
-                    <Form.Control
+                    <FileBase64
+                      type="file"
+                      multiple={false}
+                      onDone={({ base64 }) =>
+                        setMsgHistory({ ...msgHistory, attachments: base64 })
+                      }
+                    />
+                    {/* <Form.Control
                       type="file"
                       className="ticket-detail-attach-file"
-                    />
+                    /> */}
                   </Form.Group>
-                  <Button type="submit">Reply</Button>
+                  <Button className="btn-reply" type="submit">
+                    Reply
+                  </Button>
                 </Form>
               </div>
             )}
@@ -116,8 +127,28 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                     />
                   </div>
                   <div className="col-11 conversation-msg">
+                    <div className="d-flex justify-content-between">
+                      {" "}
+                      <h6 className="msg-sender">{msg.sender}</h6>
+                      <p>
+                        <i class="fas fa-trash"></i>
+                      </p>
+                    </div>
                     <p>{msg.message}</p>
+                    {msg.attachments.length > 0 && (
+                      <img
+                        className="activator"
+                        style={{ width: "100%", height: 300 }}
+                        src={msg.attachments}
+                      />
+                    )}
                   </div>
+                  <p className=" msg-at text-muted">
+                    {
+                      (Moment.locale("GMT+2"),
+                      Moment(msg.msgAt).format("DD/MM/YY  hh:mm"))
+                    }
+                  </p>
                 </div>
               ))}
           </div>

@@ -3,6 +3,9 @@
 }
 .ticket h5 {
   margin-bottom: 0;
+  color: #2980b9;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
 }
 
 .ticket p {
@@ -13,11 +16,19 @@
 .user-category {
   display: flex;
 
-  font-size: 12px;
-  line-height: 12px;
+  font-size: 10px;
+  line-height: 10px;
+  color: #8e8e8e !important;
+
+  border-bottom: 1px dotted #dadbdd;
 }
-.user-category p {
-  font-size: 12px;
+
+.user-category p,
+.user-category i {
+  font-size: 10px;
+  color: #8e8e8e !important;
+
+  border-bottom: 1px dotted #dadbdd;
 }
 #popover-positioned-left {
   width: 50% !important;

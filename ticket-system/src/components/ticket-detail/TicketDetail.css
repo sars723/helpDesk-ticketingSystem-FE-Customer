@@ -1,6 +1,6 @@
 .ticket-detail {
   background: #e4e3e5;
-  height: 100vh;
+  height: 100%;
 }
 .ticket-detail > .row {
   padding: 64px;
@@ -93,7 +93,33 @@
   border: 1px solid #c8c9c9;
   color: #717171;
 }
+.btn-reply.btn-primary {
+  background: #3f8cc9;
+  border: 1px solid #3f8cc9;
+  height: 26px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+}
+.btn-reply.btn-primary:hover {
+  background: #3777ab;
+  border: 1px solid #3f8cc9;
+}
+.msg-sender {
+  color: #2980b9;
+}
+.fa-trash {
+  opacity: 0.5;
+}
+.fa-trash:hover {
+  opacity: 1;
+  color: red;
+}
 
+.msg-at {
+  margin-left: auto;
+  font-size: 12px;
+}
 /* .ticket-detail-status-content p,
 .ticket-detail-status-content .form-label {
   font-size: 14px;

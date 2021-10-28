@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./NewTicket.css";
 import { withRouter } from "react-router";
+import FileBase64 from "react-file-base64";
 const intTicket = {
   sender: "",
   category: "",
@@ -133,11 +134,16 @@ const NewTicket = ({ history }) => {
               />
             </Form.Group>
             <Form.Group>
-              <Form.Control
+              <FileBase64
+                type="file"
+                multiple={false}
+                onDone={({ base64 }) => setTicket({ ...ticket, file: base64 })}
+              />
+              {/* <Form.Control
                 type="file"
                 name="attach file"
                 onChange={(e) => handleChange("file", e.target.files[0])}
-              />
+              /> */}
             </Form.Group>
             <Button className="btn-submit" type="submit">
               submit

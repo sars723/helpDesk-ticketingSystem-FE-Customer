@@ -8,10 +8,17 @@
 .logo a {
   text-decoration: none;
 }
+.logo a:hover {
+  text-decoration: none;
+  color: white;
+}
 .logo .logo-title {
-  color: #fff;
+  color: rgba(252, 249, 249, 0.808);
   font-size: 27px;
   font-weight: bold;
+}
+.logo .logo-title:hover {
+  color: white;
 }
 .user-info .loged-user-info button {
   color: #bbb;

@@ -1,5 +1,5 @@
 import { initialState } from "../store/index.js";
-import { SET_TICKET } from "../actions/types.js";
+import { REMOVE_TICKET, SET_TICKET } from "../actions/types.js";
 
 const ticketReducer = (state = initialState.ticket, action) => {
   switch (action.type) {
@@ -8,7 +8,11 @@ const ticketReducer = (state = initialState.ticket, action) => {
         ...state,
         tickets: action.payload,
       };
-
+    case REMOVE_TICKET:
+      return {
+        ...state,
+        tickets: state.tickets.filter((ticket, i) => i !== action.payload),
+      };
     default:
       return state;
   }
