@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { OverlayTrigger, Popover } from "react-bootstrap";
+import { Badge, OverlayTrigger, Popover } from "react-bootstrap";
 import "./Ticket.css";
 import { removeTicketAction } from "../../../../../redux/actions";
 import { connect } from "react-redux";
@@ -77,7 +77,12 @@ const Ticket = ({ ticket, history }) => {
       </div>
       <div className="col-md-8 d-flex justify-content-between align-items-center ">
         <p>{ticket.priority}</p>
-        <p>{ticket.status}</p>
+        <p>
+          <Badge variant={ticket.status === "closed" ? "secondary" : "success"}>
+            {ticket.status}
+          </Badge>
+        </p>
+
         <p>{moment(ticket.createdAt).fromNow()}</p>
         <p>{user && user.name}</p>
         <p>{moment(ticket.updatedAt).fromNow()}</p>

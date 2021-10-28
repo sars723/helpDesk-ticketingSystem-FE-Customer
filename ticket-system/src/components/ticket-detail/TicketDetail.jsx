@@ -34,6 +34,10 @@ const TicketDetail = ({
     attachments: [],
   });
 
+  let sortedMessage =
+    ticket &&
+    ticket.messageHistory.sort((a, b) => new Date(b.msgAt) - new Date(a.msgAt));
+  console.log(sortedMessage);
   const handleChange = (key, value) => {
     setMsgHistory({
       ...msgHistory,
@@ -176,7 +180,7 @@ const TicketDetail = ({
           <div className="ticket-detail-replay">
             {" "}
             {ticket &&
-              ticket.messageHistory.map((msg, i) => (
+              ticket.messageHistory.reverse().map((msg, i) => (
                 <div className="row conversation">
                   <div className="col-1 conversation-avatar">
                     <img
@@ -214,7 +218,7 @@ const TicketDetail = ({
               ))}
           </div>
         </div>
-        <TicketDetailEdit />
+        {ticket && <TicketDetailEdit ticket={ticket} />}
       </div>
     </div>
   );
