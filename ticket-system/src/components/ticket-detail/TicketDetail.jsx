@@ -192,7 +192,9 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
           </div>{" "}
           <div className="ticket-detail-replay">
             {" "}
-            {ticket.messageHistory &&
+            {console.log(ticket)}
+            {ticket &&
+              ticket.messageHistory.length > 0 &&
               ticket.messageHistory.reverse().map((msg, i) => (
                 <div className="row conversation" key={i}>
                   <div className="col-1 conversation-avatar">
@@ -224,7 +226,7 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                     {msg.attachments.length > 0 && (
                       <img
                         className="activator"
-                        style={{ width: "100%", height: 300 }}
+                        style={{ width: "100%", height: 200 }}
                         src={msg.attachments}
                       />
                     )}

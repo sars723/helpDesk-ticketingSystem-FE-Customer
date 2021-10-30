@@ -3,7 +3,7 @@ import "./TicketHeader.css";
 
 const TicketHeader = () => {
   return (
-    <div className="ticket-header row flex-wrap text-center">
+    <div className="ticket-header row flex-wrap ">
       <div className="col-md-5 ">
         <p>Subject</p>
       </div>

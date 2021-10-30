@@ -79,9 +79,9 @@ const NewTicket = ({ history }) => {
                 >
                   <option>General Issues</option>
                   <option value="General Sales">General Sales</option>
-                  <option value="Payment Issues">Payment Issues</option>
-                  <option value="Software Issues">Software Issues</option>
-                  <option value="Hardware Issues">Hardware Issues</option>
+                  <option value="Payment Issue">Payment Issue</option>
+                  <option value="Software Issue">Software Issue</option>
+                  <option value="Hardware Issue">Hardware Issue</option>
                 </Form.Control>
               </Col>
             </Form.Group>
@@ -95,9 +95,9 @@ const NewTicket = ({ history }) => {
                   vlaue={ticket.priority}
                   onChange={(e) => handleChange("priority", e.target.value)}
                 >
-                  <option value="low">Low</option>
-                  <option value="normal">Normal</option>
-                  <option value="high">High</option>
+                  <option value="Low">Low</option>
+                  <option value="Normal">Normal</option>
+                  <option value="High">High</option>
                   <option value="Critical">Critical</option>
                 </Form.Control>
               </Col>

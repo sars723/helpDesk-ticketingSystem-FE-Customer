@@ -7,13 +7,16 @@ import { connect } from "react-redux";
 import moment from "moment";
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser.currentUser,
+  currentUser: state.currentUser,
+  users: state.user.users,
 });
 const mapDispatchToProps = (dispatch) => ({
   removeTicket: (index) => dispatch(removeTicketAction(index)),
 });
-const Ticket = ({ ticket, history, currentUser }) => {
+const Ticket = ({ ticket, history, currentUser, users }) => {
   const [user, setUser] = useState(null);
+  const [deleted, setDeleted] = useState(false);
+
   const deleteTicket = async () => {
     console.log();
     try {
@@ -28,7 +31,8 @@ const Ticket = ({ ticket, history, currentUser }) => {
       );
       if (response.ok) {
         alert("deleted successfully");
-        window.location.reload(false);
+        /*  window.location.reload(false); */
+        setDeleted(true);
       } else {
         alert("sth wrong");
       }
@@ -55,7 +59,7 @@ const Ticket = ({ ticket, history, currentUser }) => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [deleted]);
 
   return (
     <div className="ticket row mb-5 flex-wrap ">
@@ -68,10 +72,17 @@ const Ticket = ({ ticket, history, currentUser }) => {
           {ticket.subject}
         </h5>
         <div className="user-category">
-          <p>
-            <i class="fa fa-user"></i>
-            {user && user.name}
-          </p>
+          {users &&
+            users
+              .filter((user) => user._id === ticket.sender._id)
+              .map((user) => (
+                <p>
+                  <i class="fa fa-user"></i>
+
+                  {user.name}
+                </p>
+              ))}
+
           <p>
             <i class="fa fa-folder-open"></i>
             {ticket.category}
@@ -100,7 +111,18 @@ const Ticket = ({ ticket, history, currentUser }) => {
       </div>
       <div className="col-2">
         {" "}
-        <p>{ticket.assignedTo ? currentUser.email : user ? user.name : ""}</p>
+        <p>
+          {" "}
+          {ticket.assignedTo !== ""
+            ? users &&
+              users
+                .filter((user) => user._id === ticket.assignedTo)
+                .map((user) => user.email)
+            : users &&
+              users
+                .filter((user) => user._id === ticket.sender._id)
+                .map((user) => user.name)}
+        </p>
       </div>
       <div className="col-1">
         {" "}

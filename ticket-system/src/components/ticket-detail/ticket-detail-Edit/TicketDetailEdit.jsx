@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./TicketDetailEdit.css";
 import { Button, Form } from "react-bootstrap";
-const TicketDetailEdit = ({ ticket }) => {
+import { connect } from "react-redux";
+import { setUsersAction } from "../../../redux/actions";
+
+const mapStateToProps = (state) => ({
+  users: state.user.users,
+  tickets: state.ticket.tickets,
+});
+const mapDispatchToProps = (dispatch) => ({
+  getUsers: () => dispatch(setUsersAction()),
+});
+const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
   const [editTicketDetail, setEditTicketDetail] = useState({
     priority: false,
     category: false,
@@ -38,11 +48,11 @@ const TicketDetailEdit = ({ ticket }) => {
             Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
           },
           body: JSON.stringify(ticketDetail),
-          /*  body: JSON.stringify({ ticketDetail }), */
         }
       );
       if (response.ok) {
         alert("ticket updated");
+        getUsers();
       } else {
         alert("sth wrong");
       }
@@ -50,7 +60,10 @@ const TicketDetailEdit = ({ ticket }) => {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    getUsers();
+  }, []);
+  console.log(users, "usrs dropdown");
   return (
     <div className="ticket-detail-edit col-md-4 pl-4 ticket-detail-status">
       <div className="ticket-detail-status-header">
@@ -64,7 +77,7 @@ const TicketDetailEdit = ({ ticket }) => {
               <p>priority</p>
             </div>
             <div className="col-9 d-flex justify-content-between">
-              <p>Priority</p>{" "}
+              <p>{ticket.priority}</p>{" "}
               <Button
                 onClick={() =>
                   setEditTicketDetail({
@@ -89,10 +102,16 @@ const TicketDetailEdit = ({ ticket }) => {
                     value={ticketDetail.priority}
                     onChange={(e) => handleChange("priority", e.target.value)}
                   >
-                    <option value="Low">Low</option>
+                    {tickets &&
+                      tickets.map((ticket) => (
+                        <option value={ticket.priority}>
+                          {ticket.priority}
+                        </option>
+                      ))}
+                    {/*  <option value="Low">Low</option>
                     <option value="Normal">Normal</option>
                     <option value="High">High</option>
-                    <option value="Crucial">Critical</option>
+                    <option value="Crucial">Critical</option> */}
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok
@@ -117,7 +136,7 @@ const TicketDetailEdit = ({ ticket }) => {
               <p>Category:</p>
             </div>
             <div className="col-9  d-flex justify-content-between">
-              <p>Category</p>{" "}
+              <p>{ticket.category}</p>{" "}
               <Button
                 onClick={() =>
                   setEditTicketDetail({
@@ -142,11 +161,17 @@ const TicketDetailEdit = ({ ticket }) => {
                     value={ticketDetail.category}
                     onChange={(e) => handleChange("category", e.target.value)}
                   >
-                    <option value="General Issue">General Issue</option>
+                    {tickets &&
+                      tickets.map((ticket) => (
+                        <option value={ticket.category}>
+                          {ticket.category}
+                        </option>
+                      ))}
+                    {/* <option value="General Issue">General Issue</option>
                     <option value="General Sales">General Sales</option>
                     <option value="Payment Issue">Payment Issue</option>
                     <option value="Hardware Issue">Hardware Issue</option>
-                    <option value="Software Issue">Software Issue</option>
+                    <option value="Software Issue">Software Issue</option> */}
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok
@@ -169,7 +194,11 @@ const TicketDetailEdit = ({ ticket }) => {
               <p>User:</p>
             </div>
             <div className="col-9  d-flex justify-content-between">
-              <p>User</p>{" "}
+              {console.log("is user exist", users)}
+              {users &&
+                users
+                  .filter((user) => user._id === ticket.sender._id)
+                  .map((user) => <p>{user.name}</p>)}{" "}
               <Button
                 onClick={() =>
                   setEditTicketDetail({
@@ -189,16 +218,19 @@ const TicketDetailEdit = ({ ticket }) => {
                   <Form.Label>User</Form.Label>
                 </div>
                 <div className="col-9 d-flex justify-content-between">
+                  {console.log(users, "users dropdown")}
                   <Form.Control
                     as="select"
+                    name="assignTo"
                     value={ticketDetail.sender}
                     onChange={(e) => handleChange("sender", e.target.value)}
                   >
-                    <option value="yohana-1">Yohana</option>
-                    <option value="yafet-2">Yafet</option>
-                    <option value="elias-3">Elias</option>
-                    <option value="naomi-4">Naomi</option>
-                    <option value="kirubel-5">Kirubel</option>
+                    {users &&
+                      users
+                        .filter((user) => user.role === "user")
+                        .map((team) => (
+                          <option value={team._id}>{team.name}</option>
+                        ))}
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok
@@ -222,7 +254,10 @@ const TicketDetailEdit = ({ ticket }) => {
               <p>Assigned To:</p>
             </div>
             <div className="col-9  d-flex justify-content-between">
-              <p>Agent</p>{" "}
+              {users &&
+                users
+                  .filter((user) => user._id === ticket.assignedTo)
+                  .map((user) => <p>{user.name}</p>)}
               <Button
                 onClick={() =>
                   setEditTicketDetail({
@@ -247,11 +282,16 @@ const TicketDetailEdit = ({ ticket }) => {
                     value={ticketDetail.assignedTo}
                     onChange={(e) => handleChange("assignedTo", e.target.value)}
                   >
-                    <option value="yohana-1">Yohana</option>
-                    <option value="yafet-2">Yafet</option>
-                    <option value="elias-3">Elias</option>
-                    <option value="naomi-4">Naomi</option>
-                    <option value="kirubel-5">Kirubel</option>
+                    {users &&
+                      users
+                        .filter(
+                          (user) =>
+                            user.role === "support-team" ||
+                            user.role === "admin"
+                        )
+                        .map((team) => (
+                          <option value={team._id}>{team.name}</option>
+                        ))}
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok
@@ -320,4 +360,4 @@ const TicketDetailEdit = ({ ticket }) => {
   );
 };
 
-export default TicketDetailEdit;
+export default connect(mapStateToProps, mapDispatchToProps)(TicketDetailEdit);

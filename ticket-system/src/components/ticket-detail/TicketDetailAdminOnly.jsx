@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import { setSelectedTicketAction } from "../../redux/actions/index.js";
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser.currentUser,
+  currentUser: state.currentUser,
   ticket: state.selectedTicket.selectedTicket,
 });
 
@@ -85,7 +85,8 @@ const TicketDetail = ({
       );
       if (response.ok) {
         alert("deleted sucessfully");
-        window.location.reload(false);
+        /*  window.location.reload(false); */
+        getSelectedTicket(match.params.ticketID);
       } else {
         alert("sth wrong");
       }
@@ -134,7 +135,7 @@ const TicketDetail = ({
       }
     } catch (error) {}
   };
-  useEffect(async () => {
+  useEffect(() => {
     getSelectedTicket(match.params.ticketID);
   }, [msgHistory]);
 
@@ -202,6 +203,7 @@ const TicketDetail = ({
           <div className="ticket-detail-replay">
             {" "}
             {ticket &&
+              ticket.messageHistory.length > 0 &&
               ticket.messageHistory.reverse().map((msg, i) => (
                 <div className="row conversation" key={i}>
                   <div className="col-1 conversation-avatar">

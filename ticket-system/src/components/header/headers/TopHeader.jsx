@@ -6,7 +6,7 @@ import { setCurrentUserAction } from "../../../redux/actions";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser.currentUser,
+  currentUser: state.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,20 +37,26 @@ const TopHeader = ({ location, getCurrentUser, currentUser }) => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Link to="/login" href="#/action-1" className="dropdown-item">
-              Profile
+            <Link
+              to="/profile"
+              href="#/action-1"
+              className="dropdown-item"
+              style={{ borderBottom: "1px solid #dad5d5" }}
+            >
+              <i class="fa fa-fw fa-user"></i>
+              <span className="ml-1">Profile</span>
             </Link>
             {location.pathname === "/register" ? (
               <Link to="/login" href="#/action-1" className="dropdown-item">
-                Sign Up
+                <span className="ml-2 ">Sign Up</span>
               </Link>
             ) : location.pathname === "/login" ? (
               <Link to="/" href="#/action-1" className="dropdown-item">
-                Log In
+                <span className="ml-2 ">Log In</span>
               </Link>
             ) : (
               <Link to="/login" href="#/action-1" className="dropdown-item">
-                Log Out
+                <span className="ml-2 "> Log Out</span>
               </Link>
             )}
           </Dropdown.Menu>

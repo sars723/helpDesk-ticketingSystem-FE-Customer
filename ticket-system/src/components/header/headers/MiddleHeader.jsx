@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state) => ({
   searchQuery: state.searchValue.searchQuery,
+  currentUser: state.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -14,7 +15,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setSearchValueAction(searchQuery));
   },
 });
-const MiddleHeader = ({ searchQuery, setSearchQuery }) => {
+const MiddleHeader = ({ searchQuery, setSearchQuery, currentUser }) => {
   /* const [searchQuery, setSearchQuery] = useState(""); */
   return (
     <div className="middle-header">
@@ -22,12 +23,23 @@ const MiddleHeader = ({ searchQuery, setSearchQuery }) => {
         <Link to="/" className="nav-link">
           <i className="fa fa-inbox"></i>Tickets
         </Link>
-        <Nav.Link href="#link">
+
+        <Link to="/reports" className="nav-link">
           <i className="far fa-chart-bar"></i>Reports
-        </Nav.Link>
-        <Nav.Link href="#home">
-          <i className="fa fa-cog"></i>Administration
-        </Nav.Link>
+        </Link>
+
+        {currentUser.role === "admin" ? (
+          <>
+            <Link to="/manageUsers" className="nav-link">
+              <i className="fa fa-fw fa-users mr-2"></i>ManageUsers
+            </Link>
+            <Link to="/addUsers" className="nav-link">
+              <i className="fa fa-fw fa-plus"></i>Add Users
+            </Link>
+          </>
+        ) : (
+          ""
+        )}
       </Nav>
       <div className="left-newTicket-search ">
         <Link

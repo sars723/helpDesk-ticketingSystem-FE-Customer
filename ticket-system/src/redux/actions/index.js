@@ -10,6 +10,28 @@ import {
   SET_ONLY_ADMIN_TICKET,
   SET_SELECTED_MY_TICKET,
 } from "./types.js";
+
+export const setUsersAction = () => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch("http://localhost:3004/users", {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+        },
+      });
+      if (response.ok) {
+        const fetchedUsers = await response.json();
+        console.log("fetched users in manage user component", fetchedUsers);
+        dispatch({
+          type: SET_USER,
+          payload: fetchedUsers,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 export const setTicketsAction = () => {
   return async (dispatch) => {
     try {
@@ -127,7 +149,7 @@ export const setSelectedMyTicketAction = (ticketID) => {
       );
       if (response.ok) {
         const fetchedTicket = await response.json();
-        console.log(fetchedTicket);
+        console.log("my ticket redux action", fetchedTicket);
         dispatch({
           type: SET_SELECTED_MY_TICKET,
           payload: fetchedTicket,
