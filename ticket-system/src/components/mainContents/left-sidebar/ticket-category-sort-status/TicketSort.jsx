@@ -1,9 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./TicketSort.css";
-import { Form, FormControl } from "react-bootstrap";
-const TicketSort = () => {
-  const [ascending, setAcending] = useState(true);
-  const [sortValue, setSortValue] = useState("");
+import { Form } from "react-bootstrap";
+import { setSortingKeyAction } from "../../../../redux/actions";
+import { connect } from "react-redux";
+
+const mapDispatchToProps = (dispatch) => ({
+  setSortKey: (sortKey) => dispatch(setSortingKeyAction(sortKey)),
+});
+const TicketSort = ({ setSortKey }) => {
+  const [sortKeys, setSortKeys] = useState({
+    sortKey: "priority",
+    ascending: true,
+  });
+
+  useEffect(() => {
+    setSortKey(sortKeys);
+  }, [sortKeys]);
   return (
     <div className="ticket-sort ">
       <div className="col-12">
@@ -12,10 +24,13 @@ const TicketSort = () => {
             {
               <Form.Control
                 as="select"
-                value={sortValue}
-                onChange={(e) => setSortValue(e.target.value)}
+                value={sortKeys.sortKey}
+                onChange={(e) =>
+                  setSortKeys({ ...sortKeys, sortKey: e.target.value })
+                }
               >
                 <option value="_id">Ticket Number</option>
+                <option value="subject">Subject</option>
                 <option value="priority" selected>
                   Priority
                 </option>
@@ -27,10 +42,18 @@ const TicketSort = () => {
           </div>
           <div className="col-3 px-0 sort-btn">
             <span>
-              {ascending ? (
-                <button onClick={() => setAcending(false)}>A → Z</button>
+              {sortKeys.ascending ? (
+                <button
+                  onClick={() => setSortKeys({ ...sortKeys, ascending: false })}
+                >
+                  A → Z
+                </button>
               ) : (
-                <button onClick={() => setAcending(true)}>Z → A</button>
+                <button
+                  onClick={() => setSortKeys({ ...sortKeys, ascending: true })}
+                >
+                  Z → A
+                </button>
               )}
             </span>
           </div>
@@ -56,5 +79,4 @@ const TicketSort = () => {
     </div>
   );
 };
-
-export default TicketSort;
+export default connect((s) => s, mapDispatchToProps)(TicketSort);

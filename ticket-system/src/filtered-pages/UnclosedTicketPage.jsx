@@ -9,17 +9,26 @@ const mapStateToProps = (state) => ({
   tickets: state.ticketAdminOnly.tickets,
   searchQuery: state.searchValue.searchQuery,
   currentUser: state.currentUser.currentUser,
+  sortKeys: state.sortingKey,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getTickets: () => dispatch(setTicketsOnlyAdminAction()),
 });
-const UnclosedTicketPage = ({ searchQuery, getTickets, tickets }) => {
-  console.log(searchQuery);
+const UnclosedTicketPage = ({ searchQuery, getTickets, tickets, sortKeys }) => {
+  const [sortedTickets, setSortedTickets] = useState(null);
+  const { sortKey, ascending } = sortKeys;
+  const sortTickets = (field, sortAsc) => {
+    const sortedTickets = sortAsc
+      ? [].concat(tickets).sort((a, b) => (a[field] > b[field] ? 1 : -1))
+      : [].concat(tickets).sort((a, b) => (a[field] > b[field] ? -1 : 1));
+    setSortedTickets(sortedTickets);
+  };
 
   useEffect(async () => {
     getTickets();
-  }, []);
+    sortTickets(sortKey, ascending);
+  }, [sortKey, ascending]);
   return (
     <div className="" style={{ margin: "20px 50px" }}>
       <div className="row mt-4">
@@ -28,8 +37,8 @@ const UnclosedTicketPage = ({ searchQuery, getTickets, tickets }) => {
           <TicketHeader />
           <div className="ticket-list mt-5">
             {/*  {tickets.length > 0 && console.log("tick=", tickets[0].subject)} */}
-            {tickets.length > 0 &&
-              tickets
+            {sortedTickets &&
+              sortedTickets
                 .filter(
                   (ticket, i) =>
                     ticket.subject

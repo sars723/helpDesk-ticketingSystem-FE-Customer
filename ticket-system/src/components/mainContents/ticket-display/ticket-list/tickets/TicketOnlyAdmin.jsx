@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Badge, OverlayTrigger, Popover } from "react-bootstrap";
 import "./TicketOnlyAdmin.css";
-import { removeTicketAction } from "../../../../../redux/actions";
+
 import { connect } from "react-redux";
 import moment from "moment";
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser,
   users: state.user.users,
 });
-const mapDispatchToProps = (dispatch) => ({
-  removeTicket: (index) => dispatch(removeTicketAction(index)),
-});
-const Ticket = ({ ticket, history, currentUser, users }) => {
+
+const Ticket = ({ ticket, history, users }) => {
   const [user, setUser] = useState(null);
   const [deleted, setDeleted] = useState(false);
 
@@ -31,35 +28,11 @@ const Ticket = ({ ticket, history, currentUser, users }) => {
       );
       if (response.ok) {
         alert("deleted successfully");
-        /*  window.location.reload(false); */
-        setDeleted(true);
       } else {
         alert("sth wrong");
       }
     } catch (error) {}
   };
-
-  useEffect(async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3004/users/" + ticket.sender._id,
-        {
-          headers: {
-            authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
-        }
-      );
-      if (response.ok) {
-        const fetchedUser = await response.json();
-
-        setUser(fetchedUser);
-      } else {
-        alert("sth wrong ticket.jsx component fetching ticket sender");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [deleted]);
 
   return (
     <div className="ticket row mb-5 flex-wrap ">
@@ -151,4 +124,4 @@ const Ticket = ({ ticket, history, currentUser, users }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Ticket));
+export default connect(mapStateToProps)(withRouter(Ticket));

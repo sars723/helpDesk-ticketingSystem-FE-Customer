@@ -9,6 +9,7 @@ import {
   REMOVE_TICKET,
   SET_ONLY_ADMIN_TICKET,
   SET_SELECTED_MY_TICKET,
+  SET_SORTING_KEY,
 } from "./types.js";
 
 export const setUsersAction = () => {
@@ -168,6 +169,7 @@ export const removeTicketAction = (index) => {
     type: REMOVE_TICKET,
     payload: index,
   };
+
   /*   return async(dispatch)=>{
     try {
       const response=await fetch("http://localhost:3004/tickets/"+ticketID,{
@@ -182,4 +184,10 @@ export const removeTicketAction = (index) => {
       
     }
   } */
+};
+export const setSortingKeyAction = (sortKey) => {
+  return {
+    type: SET_SORTING_KEY,
+    payload: sortKey,
+  };
 };

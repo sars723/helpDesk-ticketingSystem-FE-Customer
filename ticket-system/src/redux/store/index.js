@@ -7,6 +7,7 @@ import currentUserReducer from "../reducers/currentUserReducer.js";
 import selectedTicketReducer from "../reducers/selectedTicketReducer.js";
 import ticketAdminOnlyReducer from "../reducers/ticketAdminOnlyReducer.js";
 import selectedMyTicketReducer from "../reducers/selectedMyTicketReducer.js";
+import sortingKeyReducer from "../reducers/sortingKeyReducer.js";
 
 export const initialState = {
   ticket: {
@@ -30,6 +31,7 @@ export const initialState = {
     loading: false,
     error: false,
   },
+  sortingKey: "",
 };
 
 const combinedReducers = combineReducers({
@@ -40,6 +42,7 @@ const combinedReducers = combineReducers({
   selectedTicket: selectedTicketReducer,
   selectedMyTicket: selectedMyTicketReducer,
   ticketAdminOnly: ticketAdminOnlyReducer,
+  sortingKey: sortingKeyReducer,
 });
 
 const configureStore = createStore(
