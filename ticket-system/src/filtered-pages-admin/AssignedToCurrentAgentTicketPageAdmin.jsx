@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import LeftSidebar from "../components/mainContents/left-sidebar/LeftSidebar";
-import TicketHeader from "../components/mainContents/ticket-display/ticket-list/TicketHeader";
 import TicketOnlyAdmin from "../components/mainContents/ticket-display/ticket-list/tickets/TicketOnlyAdmin";
 import { setTicketsOnlyAdminAction } from "../redux/actions";
-
+import { Table } from "react-bootstrap";
 const mapStateToProps = (state) => ({
   tickets: state.ticketAdminOnly.tickets,
   searchQuery: state.searchValue.searchQuery,
@@ -22,8 +21,6 @@ const AssignedToCurrentAgentTicketPage = ({
   currentUser,
   sortKeys,
 }) => {
-  /*  console.log(searchQuery); */
-
   const [sortedTickets, setSortedTickets] = useState(null);
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
@@ -37,29 +34,46 @@ const AssignedToCurrentAgentTicketPage = ({
     getTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
-  console.log(sortedTickets, "ascending");
+  /*  console.log(sortedTickets, "ascending"); */
   return (
-    <div className="" style={{ margin: "20px 50px" }}>
+    <div className="" style={{ margin: "20px 100px" }}>
       <div className="row mt-4">
         <LeftSidebar />
         <div className=" ticket-display col-12 col-md-9">
-          <TicketHeader />
-          <div className="ticket-list mt-5">
-            {/*  {tickets.length > 0 && console.log("tick=", tickets[0].subject)} */}
-            {sortedTickets &&
-              sortedTickets
-                .filter(
-                  (ticket, i) =>
-                    ticket.subject
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase()) &&
-                    ticket.assignedTo === currentUser._id
-                )
-                .map((ticket, i) => (
-                  <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-                ))}
-          </div>{" "}
-        </div>
+          <div className="ticket-list ">
+            <Table hover>
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th>Due Date</th>
+                  <th>Agent</th>
+                  <th>Updated</th>
+                  <th>
+                    <input type="checkbox" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {" "}
+                {sortedTickets &&
+                  sortedTickets
+                    .filter(
+                      (ticket, i) =>
+                        ticket.subject
+                          .toLowerCase()
+                          .includes(searchQuery.toLowerCase()) &&
+                        ticket.assignedTo === currentUser._id
+                    )
+                    .map((ticket, i) => (
+                      <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
+                    ))}
+              </tbody>
+            </Table>
+          </div>
+        </div>{" "}
       </div>
     </div>
   );

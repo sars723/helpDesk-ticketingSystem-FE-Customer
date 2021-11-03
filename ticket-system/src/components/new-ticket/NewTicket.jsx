@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import "./NewTicket.css";
 import { withRouter } from "react-router";
 import FileBase64 from "react-file-base64";
+import { connect } from "react-redux";
+import { setCurrentUserAction } from "../../redux/actions";
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+});
+const mapDispatchToProps = (dispatch) => ({
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
+});
 const intTicket = {
   sender: "",
   category: "",
@@ -12,7 +20,7 @@ const intTicket = {
   detailInfo: "",
   file: "",
 };
-const NewTicket = ({ history }) => {
+const NewTicket = ({ history, currentUser, getCurrentUser }) => {
   const [ticket, setTicket] = useState(intTicket);
 
   const handleChange = (key, value) => {
@@ -36,16 +44,20 @@ const NewTicket = ({ history }) => {
       if (response.ok) {
         alert("tiket saved");
         const sendedTicket = await response.json();
-        console.log(sendedTicket._id);
-        history.push("/ticketDetail/" + sendedTicket._id);
+        /*   console.log(currentUser, "Cu"); */
+        currentUser.role === "admin" || currentUser.role === "support-team"
+          ? history.push("/ticketDetailAdmin/" + sendedTicket._id)
+          : history.push("/ticketDetail/" + sendedTicket._id);
       } else {
-        alert("sth wrong");
+        alert("sth wrong with saving ticket, new ticket component");
       }
     } catch (error) {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
   return (
     <div className="new-ticket container-fluid  ">
       <div className="row flex-column">
@@ -155,4 +167,7 @@ const NewTicket = ({ history }) => {
   );
 };
 
-export default withRouter(NewTicket);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(NewTicket));

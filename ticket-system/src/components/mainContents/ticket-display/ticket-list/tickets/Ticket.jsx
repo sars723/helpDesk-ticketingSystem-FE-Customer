@@ -2,25 +2,65 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Badge, OverlayTrigger, Popover } from "react-bootstrap";
 import "./Ticket.css";
-/* import { removeTicketAction } from "../../../../../redux/actions"; */
 import { connect } from "react-redux";
 import moment from "moment";
+import { setCurrentUserAction } from "../../../../../redux/actions";
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser.currentUser,
+  currentUser: state.currentUser,
 });
-/* const mapDispatchToProps = (dispatch) => ({
-  removeTicket: (index) => dispatch(removeTicketAction(index)),
-}); */
-const Ticket = ({ ticket, history, currentUser }) => {
-  const [user, setUser] = useState(null);
+const mapDispatchToProps = (dispatch) => ({
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
+});
 
-  useEffect(async () => {}, []);
+const Ticket = ({ ticket, history, currentUser }) => {
+  /* const [user, setUser] = useState(null); */
+  const deleteTicket = async () => {
+    console.log();
+    try {
+      const response = await fetch(
+        "http://localhost:3004/tickets/" + ticket._id,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        alert("deleted successfully");
+      } else {
+        alert("sth wrong");
+      }
+    } catch (error) {}
+  };
+
+  /*   const fetchUser = async () => {
+    console.log();
+    try {
+      const response = await fetch(
+        "http://localhost:3004/users/" + ticket.assignedTo,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const user = await response.json();
+        setUser(user);
+      } else {
+        alert("sth wrong fetching user tc");
+      }
+    } catch (error) {}
+  }; */
+  useEffect(() => {
+    /*  fetchUser(); */
+  }, [ticket]);
 
   return (
-    <div className="ticket row mb-5 flex-wrap ">
-      <div className="col-md-5">
-        {console.log(ticket, "ticketlistcheck")}
+    <tr>
+      <td>
         <h5
           onClick={() => {
             history.push("/ticketDetail/" + ticket._id);
@@ -30,45 +70,56 @@ const Ticket = ({ ticket, history, currentUser }) => {
         </h5>
         <div className="user-category">
           <p>
-            <i class="fa fa-user"></i>
-            {user && user.name}
+            <i className="fa fa-user"></i>
+
+            {currentUser.name}
           </p>
+
           <p>
-            <i class="fa fa-folder-open"></i>
+            <i className="fa fa-folder-open"></i>
             {ticket.category}
           </p>
         </div>
-      </div>
-      <div className="col-1">
-        {" "}
+      </td>
+      <td>
         {ticket.priority === "Critical" ? (
           <Badge variant="danger">{ticket.priority}</Badge>
         ) : (
           <p>{ticket.priority}</p>
         )}
-      </div>
-      <div className="col-1">
+      </td>
+      <td>
         <p>
           <Badge variant={ticket.status === "closed" ? "secondary" : "success"}>
             {ticket.status}
           </Badge>
         </p>
-      </div>
-
-      <div className="col-1">
+      </td>
+      <td>
         {" "}
         <p>{moment(ticket.createdAt).fromNow()}</p>
-      </div>
-      {/* problem */}
-      <div className="col-2">
+      </td>
+      <td>
+        <p>{ticket.dueDate && moment(ticket.dueDate).fromNow()}</p>
+      </td>
+      <td>
         {" "}
-        <p>{ticket.assignedTo ? currentUser.email : user ? user.name : ""}</p>
-      </div>
-      <div className="col-1">
+        {/* <p> {ticket.assignedTo !== "" && user && user.name}</p> */}
+        <p>
+          {" "}
+          {ticket.sender === "" ? (
+            <span style={{ color: "lightgrey" }}>not assigned</span>
+          ) : (
+            ticket.sender.email
+          )}
+        </p>
+      </td>
+      <td>
         {" "}
         <p>{moment(ticket.updatedAt).fromNow()}</p>
-      </div>
-      <div className="col-1 d-flex justify-content-center">
+      </td>
+      <td>
+        {" "}
         <OverlayTrigger
           trigger="click"
           key="left"
@@ -77,6 +128,7 @@ const Ticket = ({ ticket, history, currentUser }) => {
             <Popover id="popover-positioned-left">
               <Popover.Content>
                 <ul className="d-flex justify-content-between align-items-center mb-1 mt-1">
+                  <li onClick={() => deleteTicket()}>Delete</li>
                   <li>Print</li>
                 </ul>
               </Popover.Content>
@@ -85,9 +137,9 @@ const Ticket = ({ ticket, history, currentUser }) => {
         >
           <input type="checkbox" />
         </OverlayTrigger>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };
 
-export default connect(mapStateToProps)(withRouter(Ticket));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Ticket));

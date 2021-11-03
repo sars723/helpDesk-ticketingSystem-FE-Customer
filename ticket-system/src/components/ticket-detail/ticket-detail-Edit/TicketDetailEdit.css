@@ -7,7 +7,8 @@
   padding-left: 10px;
 }
 .ticket-detail-status-content .form-control {
-  width: 64px;
+  /*  width: 64px; */
+  margin-right: 20px;
   height: 24px;
   padding: 0;
 }

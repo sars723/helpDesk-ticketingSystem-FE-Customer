@@ -3,17 +3,23 @@ import "./TicketCategories.css";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {
+  setCurrentUserAction,
   setTicketsAction,
   setTicketsOnlyAdminAction,
 } from "../../../../redux/actions";
-
 const mapStateToProps = (state) => ({
-  tickets: state.ticketAdminOnly.tickets,
+  currentUser: state.currentUser,
 });
+
 const mapDispatchToProps = (dispatch) => ({
-  getTickets: () => dispatch(setTicketsOnlyAdminAction()),
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
 });
-const TicketCategories = ({ tickets, getTickets }) => {
+const TicketCategories = ({
+  tickets,
+  getTickets,
+  currentUser,
+  getCurrentUser,
+}) => {
   const [generalIssueCT, setGeneralIssueCT] = useState([]);
   const [paymentIssueCT, setPaymentIssueCT] = useState([]);
   const [HardwareIssueCT, setHardwareIssueCT] = useState([]);
@@ -40,51 +46,115 @@ const TicketCategories = ({ tickets, getTickets }) => {
   };
 
   useEffect(() => {
+    getCurrentUser();
     getTickets();
     filterCategories();
   }, []);
-  console.log("tickets ticket categoriess", tickets);
+  /*  console.log("tickets ticket categoriess", tickets); */
   return (
     <div className="ticket-categories ">
       <div className="ticket-categories-title">
         <p>Ticket Categories</p>
       </div>
       <div className="categories">
-        <ul>
-          <li className="category">
-            <Link to="/" className="nav-link">
-              <p>All categories</p>
-            </Link>
-
-            <p>{tickets && tickets.length}</p>
-          </li>
+        {(currentUser && currentUser.role === "admin") ||
+        (currentUser && currentUser.role === "support-team") ? (
           <ul>
             <li className="category">
-              <Link to="/generalSalesCategoryTickets" className="nav-link">
-                <p>General Sales</p>
-              </Link>{" "}
-              <p>{tickets && generalIssueCT.length}</p>
+              <Link to="/" className="nav-link">
+                <p>All categories</p>
+              </Link>
+
+              <p>{tickets && tickets.length}</p>
             </li>
-            <li className="category">
-              <Link to="/paymentIssueCategoryTickets" className="nav-link">
-                <p>Payment Issue</p>
-              </Link>{" "}
-              <p>{tickets && paymentIssueCT.length}</p>
-            </li>
-            <li className="category">
-              <Link to="/hardwareIssueCategoryTickets" className="nav-link">
-                <p>Hardware Issue</p>
-              </Link>{" "}
-              <p>{tickets && HardwareIssueCT.length}</p>
-            </li>
-            <li className="category">
-              <Link to="/softwareIssueCategoryTickets" className="nav-link">
-                <p>Software Issue</p>
-              </Link>{" "}
-              <p>{tickets && softwareIssueCT.length}</p>
-            </li>
+            <ul>
+              <li className="category">
+                <Link
+                  to="/generalSalesCategoryTicketsAdmin"
+                  className="nav-link"
+                >
+                  <p>General Sales</p>
+                </Link>{" "}
+                <p>{tickets && generalIssueCT.length}</p>
+              </li>
+              <li className="category">
+                <Link
+                  to="/paymentIssueCategoryTicketsAdmin"
+                  className="nav-link"
+                >
+                  <p>Payment Issue</p>
+                </Link>{" "}
+                <p>{tickets && paymentIssueCT.length}</p>
+              </li>
+              <li className="category">
+                <Link
+                  to="/hardwareIssueCategoryTicketsAdmin"
+                  className="nav-link"
+                >
+                  <p>Hardware Issue</p>
+                </Link>{" "}
+                <p>{tickets && HardwareIssueCT.length}</p>
+              </li>
+              <li className="category">
+                <Link
+                  to="/softwareIssueCategoryTicketsAdmin"
+                  className="nav-link"
+                >
+                  <p>Software Issue</p>
+                </Link>{" "}
+                <p>{tickets && softwareIssueCT.length}</p>
+              </li>
+            </ul>
           </ul>
-        </ul>
+        ) : (
+          <ul>
+            <li className="category">
+              <Link to="/" className="nav-link">
+                <p>All categories</p>
+              </Link>
+
+              <p>{tickets && tickets.length}</p>
+            </li>
+            <ul>
+              <li className="category">
+                <Link
+                  to="/generalSalesCategoryTicketsUser"
+                  className="nav-link"
+                >
+                  <p>General Sales</p>
+                </Link>{" "}
+                <p>{tickets && generalIssueCT.length}</p>
+              </li>
+              <li className="category">
+                <Link
+                  to="/paymentIssueCategoryTicketsUser"
+                  className="nav-link"
+                >
+                  <p>Payment Issue</p>
+                </Link>{" "}
+                <p>{tickets && paymentIssueCT.length}</p>
+              </li>
+              <li className="category">
+                <Link
+                  to="/hardwareIssueCategoryTicketsUser"
+                  className="nav-link"
+                >
+                  <p>Hardware Issue</p>
+                </Link>{" "}
+                <p>{tickets && HardwareIssueCT.length}</p>
+              </li>
+              <li className="category">
+                <Link
+                  to="/softwareIssueCategoryTicketsUser"
+                  className="nav-link"
+                >
+                  <p>Software Issue</p>
+                </Link>{" "}
+                <p>{tickets && softwareIssueCT.length}</p>
+              </li>
+            </ul>
+          </ul>
+        )}
       </div>
     </div>
   );

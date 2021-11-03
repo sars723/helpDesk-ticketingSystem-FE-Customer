@@ -9,7 +9,7 @@ const selectedMyTicketReducer = (
     case SET_SELECTED_MY_TICKET:
       return {
         ...state,
-        selectedTicket: action.payload,
+        ...action.payload,
       };
 
     default:

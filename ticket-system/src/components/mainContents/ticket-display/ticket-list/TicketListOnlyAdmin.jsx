@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { setTicketsOnlyAdminAction } from "../../../../redux/actions";
-
+import { Table } from "react-bootstrap";
 import TicketOnlyAdmin from "./tickets/TicketOnlyAdmin";
 
 const mapStateToProps = (state) => ({
@@ -30,16 +30,34 @@ const TicketList = ({ searchQuery, getTickets, tickets, sortKeys }) => {
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
   return (
-    <div className="ticket-list mt-5">
-      {/*  {tickets.length > 0 && console.log("tick=", tickets[0].subject)} */}
-      {sortedTickets &&
-        sortedTickets
-          .filter((ticket, i) =>
-            ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
-          )
-          .map((ticket, i) => (
-            <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-          ))}
+    <div className="ticket-list ">
+      <Table hover>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Due Date</th>
+            <th>Agent</th>
+            <th>Updated</th>
+            <th>
+              <input type="checkbox" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {" "}
+          {sortedTickets &&
+            sortedTickets
+              .filter((ticket, i) =>
+                ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((ticket, i) => (
+                <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
+              ))}
+        </tbody>
+      </Table>
     </div>
   );
 };

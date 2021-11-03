@@ -2,17 +2,30 @@ import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Badge, OverlayTrigger, Popover } from "react-bootstrap";
 import "./TicketOnlyAdmin.css";
-
 import { connect } from "react-redux";
 import moment from "moment";
+import {
+  setTicketsOnlyAdminAction,
+  setUsersAction,
+} from "../../../../../redux/actions";
 
 const mapStateToProps = (state) => ({
   users: state.user.users,
+  /*   tickets: state.ticketAdminOnly.tickets, */
+});
+const mapDispatchToProps = (dispatch) => ({
+  getUsers: () => dispatch(setUsersAction()),
+  /* getTickets: () => dispatch(setTicketsOnlyAdminAction()), */
 });
 
-const Ticket = ({ ticket, history, users }) => {
+const Ticket = ({
+  ticket,
+  history,
+  users,
+  getUsers,
+  tickets /* getTickets */,
+}) => {
   const [user, setUser] = useState(null);
-  const [deleted, setDeleted] = useState(false);
 
   const deleteTicket = async () => {
     console.log();
@@ -27,31 +40,40 @@ const Ticket = ({ ticket, history, users }) => {
         }
       );
       if (response.ok) {
-        alert("deleted successfully");
+        alert("ticket deleted successfully");
+        /*  getTickets(); */
       } else {
-        alert("sth wrong");
+        alert("sth wrong deleting ticket toAc");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  useEffect(() => {
+    getUsers();
+    /* getTickets(); */
+  }, [tickets]);
+  /* console.log(ticket, "ticket in ticketOnlyAdmin component"); */
   return (
-    <div className="ticket row mb-5 flex-wrap ">
-      <div className="col-md-5">
+    <tr>
+      <td>
         <h5
           onClick={() => {
+            /*  path="/ticketDetailAdmin/:ticketID" */
             history.push("/ticketDetailAdmin/" + ticket._id);
           }}
         >
           {ticket.subject}
         </h5>
         <div className="user-category">
+          {/*  {console.log(users, "is user exist")} */}
           {users &&
             users
               .filter((user) => user._id === ticket.sender._id)
               .map((user) => (
                 <p>
                   <i class="fa fa-user"></i>
-
+                  {/* {console.log("usercheck", user)} */}
                   {user.name}
                 </p>
               ))}
@@ -61,31 +83,32 @@ const Ticket = ({ ticket, history, users }) => {
             {ticket.category}
           </p>
         </div>
-      </div>
-      <div className="col-1">
-        {" "}
+      </td>
+      <td>
         {ticket.priority === "Critical" ? (
           <Badge variant="danger">{ticket.priority}</Badge>
         ) : (
           <p>{ticket.priority}</p>
         )}
-      </div>
-      <div className="col-1">
+      </td>
+      <td>
         <p>
           <Badge variant={ticket.status === "closed" ? "secondary" : "success"}>
             {ticket.status}
           </Badge>
         </p>
-      </div>
-
-      <div className="col-1">
+      </td>
+      <td>
         {" "}
         <p>{moment(ticket.createdAt).fromNow()}</p>
-      </div>
-      <div className="col-2">
+      </td>
+      <td>
+        <p>{ticket.dueDate && moment(ticket.dueDate).fromNow()}</p>
+      </td>
+      <td>
         {" "}
         <p>
-          {" "}
+          {/*  {" "}
           {ticket.assignedTo !== ""
             ? users &&
               users
@@ -94,14 +117,20 @@ const Ticket = ({ ticket, history, users }) => {
             : users &&
               users
                 .filter((user) => user._id === ticket.sender._id)
-                .map((user) => user.name)}
+                .map((user) => user.name)} */}
+          {ticket.assignedTo === "" ? (
+            <span style={{ color: "lightgrey" }}>not assigned</span>
+          ) : (
+            ticket.sender.email
+          )}
         </p>
-      </div>
-      <div className="col-1">
+      </td>
+      <td>
         {" "}
         <p>{moment(ticket.updatedAt).fromNow()}</p>
-      </div>
-      <div className="col-md-1 d-flex justify-content-center ">
+      </td>
+      <td>
+        {" "}
         <OverlayTrigger
           trigger="click"
           key="left"
@@ -119,9 +148,9 @@ const Ticket = ({ ticket, history, users }) => {
         >
           <input type="checkbox" />
         </OverlayTrigger>
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };
 
-export default connect(mapStateToProps)(withRouter(Ticket));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Ticket));

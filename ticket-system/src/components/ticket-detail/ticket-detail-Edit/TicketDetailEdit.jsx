@@ -54,7 +54,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
         alert("ticket updated");
         getUsers();
       } else {
-        alert("sth wrong");
+        alert("sth wrong with updating a ticket, ticket detail edit component");
       }
     } catch (error) {
       console.log(error);
@@ -63,7 +63,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
   useEffect(() => {
     getUsers();
   }, []);
-  console.log(users, "usrs dropdown");
+  console.log(users, "usrs dropdown", ticket, "ticket");
   return (
     <div className="ticket-detail-edit col-md-4 pl-4 ticket-detail-status">
       <div className="ticket-detail-status-header">
@@ -102,16 +102,10 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
                     value={ticketDetail.priority}
                     onChange={(e) => handleChange("priority", e.target.value)}
                   >
-                    {tickets &&
-                      tickets.map((ticket) => (
-                        <option value={ticket.priority}>
-                          {ticket.priority}
-                        </option>
-                      ))}
-                    {/*  <option value="Low">Low</option>
+                    <option value="Low">Low</option>
                     <option value="Normal">Normal</option>
                     <option value="High">High</option>
-                    <option value="Crucial">Critical</option> */}
+                    <option value="Crucial">Critical</option>
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok
@@ -161,19 +155,19 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
                     value={ticketDetail.category}
                     onChange={(e) => handleChange("category", e.target.value)}
                   >
-                    {tickets &&
+                    {/*      {tickets &&
                       tickets.map((ticket) => (
                         <option value={ticket.category}>
                           {ticket.category}
                         </option>
-                      ))}
-                    {/* <option value="General Issue">General Issue</option>
+                      ))} */}
+                    <option value="General Issue">General Issue</option>
                     <option value="General Sales">General Sales</option>
                     <option value="Payment Issue">Payment Issue</option>
                     <option value="Hardware Issue">Hardware Issue</option>
-                    <option value="Software Issue">Software Issue</option> */}
+                    <option value="Software Issue">Software Issue</option>
                   </Form.Control>
-                  <Button className="btn-submit" type="submit">
+                  <Button className="btn-submit mr-2" type="submit">
                     ok
                   </Button>
                   <Button
@@ -194,7 +188,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
               <p>User:</p>
             </div>
             <div className="col-9  d-flex justify-content-between">
-              {console.log("is user exist", users)}
+              {/*   {console.log("is user exist", users)} */}
               {users &&
                 users
                   .filter((user) => user._id === ticket.sender._id)
@@ -218,7 +212,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
                   <Form.Label>User</Form.Label>
                 </div>
                 <div className="col-9 d-flex justify-content-between">
-                  {console.log(users, "users dropdown")}
+                  {/* {console.log(users, "users dropdown")} */}
                   <Form.Control
                     as="select"
                     name="assignTo"
@@ -257,7 +251,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
               {users &&
                 users
                   .filter((user) => user._id === ticket.assignedTo)
-                  .map((user) => <p>{user.name}</p>)}
+                  .map((user) => <p>{user.name ? user.name : "none"}</p>)}
               <Button
                 onClick={() =>
                   setEditTicketDetail({

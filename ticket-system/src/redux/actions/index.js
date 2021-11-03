@@ -22,11 +22,13 @@ export const setUsersAction = () => {
       });
       if (response.ok) {
         const fetchedUsers = await response.json();
-        console.log("fetched users in manage user component", fetchedUsers);
+        /*    console.log("fetched users in manage user component", fetchedUsers); */
         dispatch({
           type: SET_USER,
           payload: fetchedUsers,
         });
+      } else {
+        alert("sth wrong with setUsersAction");
       }
     } catch (error) {
       console.log(error);
@@ -43,11 +45,13 @@ export const setTicketsAction = () => {
       });
       if (response.ok) {
         const fetchedTickets = await response.json();
-        console.log(fetchedTickets, "user ticket");
+        /*  console.log(fetchedTickets, "user ticket"); */
         dispatch({
           type: SET_TICKET,
           payload: fetchedTickets,
         });
+      } else {
+        alert("sth wrong with setTicketsAction");
       }
     } catch (error) {
       console.log(error);
@@ -65,11 +69,13 @@ export const setTicketsOnlyAdminAction = () => {
       });
       if (response.ok) {
         const fetchedTickets = await response.json();
-        console.log("allticketsadmin", fetchedTickets);
+        /* console.log("allticketsadmin", fetchedTickets); */
         dispatch({
           type: SET_ONLY_ADMIN_TICKET,
           payload: fetchedTickets,
         });
+      } else {
+        alert("sth wrong with setTicketsOnlyAdminAction ");
       }
     } catch (error) {
       console.log(error);
@@ -96,13 +102,13 @@ export const setCurrentUserAction = () => {
       );
       if (response.ok) {
         const fetchedSender = await response.json();
-        console.log("fetchedsender or current user", fetchedSender);
+        /*  console.log("fetchedsender or current user", fetchedSender); */
         dispatch({
           type: SET_CURRENT_USER,
           payload: fetchedSender,
         });
       } else {
-        alert("sth wrong");
+        alert("sth wrong with setCurrentUserAction");
       }
     } catch (error) {
       console.log(error);
@@ -123,13 +129,13 @@ export const setSelectedTicketAction = (ticketID) => {
       );
       if (response.ok) {
         const fetchedTicket = await response.json();
-        console.log(fetchedTicket);
+        console.log(fetchedTicket, "fetched ticket set selected action ");
         dispatch({
           type: SET_SELECTED_TICKET,
           payload: fetchedTicket,
         });
       } else {
-        alert("sth wrong");
+        alert("sth wrong with setSelectedTicketAction");
       }
     } catch (error) {
       console.log(error);
@@ -150,13 +156,13 @@ export const setSelectedMyTicketAction = (ticketID) => {
       );
       if (response.ok) {
         const fetchedTicket = await response.json();
-        console.log("my ticket redux action", fetchedTicket);
+        /*  console.log("my ticket redux action", fetchedTicket); */
         dispatch({
           type: SET_SELECTED_MY_TICKET,
           payload: fetchedTicket,
         });
       } else {
-        alert("sth wrong");
+        alert("sth wrong with setSelectedMyTicketAction  ");
       }
     } catch (error) {
       console.log(error);

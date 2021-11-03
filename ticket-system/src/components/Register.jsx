@@ -33,7 +33,7 @@ const Register = (props) => {
         window.localStorage.setItem("id", data);
         props.history.push("/login");
       } else {
-        alert("sth wrong");
+        alert("sth wrong with registering");
       }
     } catch (error) {
       console.log(error);
@@ -44,7 +44,7 @@ const Register = (props) => {
       <div className="register-container">
         <Form onSubmit={handleSubmit}>
           <h1 className="text-center">
-            <span className="font-weight-bold ">Strive HelpDesk</span>.com
+            <span className="font-weight-bold ">HelpDeskTS</span>.com
           </h1>
           <p className="no-account text-center">
             Already have an account??

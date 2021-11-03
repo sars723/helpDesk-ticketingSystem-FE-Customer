@@ -1,4 +1,3 @@
-import "./App.css";
 import Login from "./components/Login";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Register from "./components/Register";
@@ -11,27 +10,35 @@ import Profile from "./profile/Profile";
 import AddUser from "./add-user/AddUser";
 import ManageUser from "./manage-user/ManageUser";
 import Reports from "./reports/Reports";
-import UnassignedTicketPage from "./filtered-pages/UnassignedTicketPage";
-import UnclosedTicketPage from "./filtered-pages/UnclosedTicketPage";
-import AssignedToCurrentAgentTicketPage from "./filtered-pages/AssignedToCurrentAgentTicketPage";
-import HardwareIssueCategoryTicket from "./filtered-pages/HardwareIssueCategoryTicket";
-import SoftwareIssueCategoryTicket from "./filtered-pages/SoftwareIssueCategoryTicket";
-import PaymentIssueCategoryTicketPage from "./filtered-pages/PaymentIssueCategoryTicketPage";
-import GeneralSalesCategoryTicket from "./filtered-pages/GeneralSalesCategoryTicket";
-
+import UnassignedTicketPageAdmin from "./filtered-pages-admin/UnassignedTicketPageAdmin";
+import UnclosedTicketPageAdmin from "./filtered-pages-admin/UnclosedTicketPageAdmin";
+import AssignedToCurrentAgentTicketPageAdmin from "./filtered-pages-admin/AssignedToCurrentAgentTicketPageAdmin";
+import HardwareIssueCategoryTicketPageAdmin from "./filtered-pages-admin/HardwareIssueCategoryTicketPageAdmin";
+import SoftwareIssueCategoryTicketPageAdmin from "./filtered-pages-admin/SoftwareIssueCategoryTicketPageAdmin";
+import PaymentIssueCategoryTicketPageAdmin from "./filtered-pages-admin/PaymentIssueCategoryTicketPageAdmin";
+import GeneralSalesCategoryTicketPageAdmin from "./filtered-pages-admin/GeneralSalesCategoryTicketPageAdmin";
+import EditUsers from "./manage-user/EditUsers";
+import UnansweredTicketPageAdmin from "./filtered-pages-admin/UnansweredTicketPageAdmin";
+import UnclosedTicketPageUser from "./filtered-pages-user/UnclosedTicketPageUser";
+import UnansweredTicketPageUser from "./filtered-pages-user/UnansweredTicketPageUser";
+import UnassignedTicketPageUser from "./filtered-pages-user/UnassignedTicketPageUser";
+import GeneralSalesCategoryTicketPageUser from "./filtered-pages-user/GeneralSalesCategoryTicketPageUser";
+import HardwareIssueCategoryTicketPageUser from "./filtered-pages-user/HardwareIssueCategoryTicketPageUser";
+import PaymentIssueCategoryTicketPageUser from "./filtered-pages-user/PaymentIssueCategoryTicketPageUser";
+import SoftwareIssueCategoryTicketPageUser from "./filtered-pages-user/SoftwareIssueCategoryTicketPageUser";
 function App() {
   return (
     <div className="App">
       <Router>
         <Header />
-
+        <Route path="/login" exact component={Login} />
+        <Route path="/register" exact component={Register} />
         <Route
           path="/"
           exact
           render={(routerProps) => <MainContent {...routerProps} />}
         />
-        <Route path="/login" exact component={Login} />
-        <Route path="/register" exact component={Register} />
+
         <Route path="/newTicket" exact component={NewTicket} />
         <Route path="/ticketDetail/:ticketID" exact component={TicketDetail} />
         <Route
@@ -44,36 +51,83 @@ function App() {
         <Route path="/addUsers" exact component={AddUser} />
         <Route path="/reports" exact component={Reports} />
         <Route
-          path="/unassignedTickets"
+          path="/unansweredTicketsAdmin"
           exact
-          component={UnassignedTicketPage}
-        />
-        <Route path="/unclosedTickets" exact component={UnclosedTicketPage} />
-        <Route
-          path="/assignedToCurrentAgentTickets"
-          exact
-          component={AssignedToCurrentAgentTicketPage}
+          component={UnansweredTicketPageAdmin}
         />
         <Route
-          path="/generalSalesCategoryTickets"
+          path="/unassignedTicketsAdmin"
           exact
-          component={GeneralSalesCategoryTicket}
+          component={UnassignedTicketPageAdmin}
         />
         <Route
-          path="/paymentIssueCategoryTickets"
+          path="/unclosedTicketsAdmin"
           exact
-          component={PaymentIssueCategoryTicketPage}
+          component={UnclosedTicketPageAdmin}
         />
         <Route
-          path="/softwareIssueCategoryTickets"
+          path="/assignedToCurrentAgentTicketsAdmin"
           exact
-          component={SoftwareIssueCategoryTicket}
+          component={AssignedToCurrentAgentTicketPageAdmin}
         />
         <Route
-          path="/hardwareIssueCategoryTickets"
+          path="/generalSalesCategoryTicketsAdmin"
           exact
-          component={HardwareIssueCategoryTicket}
+          component={GeneralSalesCategoryTicketPageAdmin}
         />
+        <Route
+          path="/paymentIssueCategoryTicketsAdmin"
+          exact
+          component={PaymentIssueCategoryTicketPageAdmin}
+        />
+        <Route
+          path="/softwareIssueCategoryTicketsAdmin"
+          exact
+          component={SoftwareIssueCategoryTicketPageAdmin}
+        />
+        <Route
+          path="/hardwareIssueCategoryTicketsAdmin"
+          exact
+          component={HardwareIssueCategoryTicketPageAdmin}
+        />
+
+        {/* user */}
+        <Route
+          path="/generalSalesCategoryTicketsUser"
+          exact
+          component={GeneralSalesCategoryTicketPageUser}
+        />
+        <Route
+          path="/hardwareIssueCategoryTicketsUser"
+          exact
+          component={HardwareIssueCategoryTicketPageUser}
+        />
+        <Route
+          path="/paymentIssueCategoryTicketsUser"
+          exact
+          component={PaymentIssueCategoryTicketPageUser}
+        />
+        <Route
+          path="/softwareIssueCategoryTicketsUser"
+          exact
+          component={SoftwareIssueCategoryTicketPageUser}
+        />
+        <Route
+          path="/unansweredTicketsUser"
+          exact
+          component={UnansweredTicketPageUser}
+        />
+        <Route
+          path="/unassignedTicketsUser"
+          exact
+          component={UnassignedTicketPageUser}
+        />
+        <Route
+          path="/unclosedTicketsUser"
+          exact
+          component={UnclosedTicketPageUser}
+        />
+        <Route path="/editUsers/:userId" exact component={EditUsers} />
       </Router>
     </div>
   );

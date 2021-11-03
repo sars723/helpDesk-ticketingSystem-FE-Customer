@@ -22,10 +22,12 @@ const Login = (props) => {
         body: JSON.stringify(user),
       });
       if (response.ok) {
-        alert("sucessfully logedin");
+        alert("successfully logged in");
         const token = await response.json();
         window.localStorage.setItem("Token", token.accessToken);
         props.history.push("/");
+      } else {
+        alert("sth during login");
       }
     } catch ({ error }) {
       console.log(error);
@@ -36,7 +38,7 @@ const Login = (props) => {
       <div className="login-container">
         <Form onSubmit={handleSubmit}>
           <h1 className="text-center">
-            <span className="font-weight-bold ">Strive HelpDesk</span>.com
+            <span className="font-weight-bold ">HelpDeskTS</span>.com
           </h1>
           <p className="no-account text-center">
             Don't have an account?
@@ -49,7 +51,7 @@ const Login = (props) => {
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"
-              vlaue={email}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />

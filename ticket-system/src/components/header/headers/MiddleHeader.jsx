@@ -24,12 +24,11 @@ const MiddleHeader = ({ searchQuery, setSearchQuery, currentUser }) => {
           <i className="fa fa-inbox"></i>Tickets
         </Link>
 
-        <Link to="/reports" className="nav-link">
-          <i className="far fa-chart-bar"></i>Reports
-        </Link>
-
         {currentUser.role === "admin" ? (
           <>
+            <Link to="/reports" className="nav-link">
+              <i className="far fa-chart-bar"></i>Reports
+            </Link>
             <Link to="/manageUsers" className="nav-link">
               <i className="fa fa-fw fa-users mr-2"></i>ManageUsers
             </Link>
@@ -37,6 +36,10 @@ const MiddleHeader = ({ searchQuery, setSearchQuery, currentUser }) => {
               <i className="fa fa-fw fa-plus"></i>Add Users
             </Link>
           </>
+        ) : currentUser.role === "support-team" ? (
+          <Link to="/addUsers" className="nav-link">
+            <i className="fa fa-fw fa-plus"></i>Add Users
+          </Link>
         ) : (
           ""
         )}

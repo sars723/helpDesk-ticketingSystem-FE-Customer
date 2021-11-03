@@ -97,6 +97,10 @@
   border: 1px solid #c8c9c9;
   color: #717171;
 }
+.ticket-detail-content-text h5 {
+  font-weight: bold;
+}
+
 .btn-reply.btn-primary {
   background: #3f8cc9;
   border: 1px solid #3f8cc9;

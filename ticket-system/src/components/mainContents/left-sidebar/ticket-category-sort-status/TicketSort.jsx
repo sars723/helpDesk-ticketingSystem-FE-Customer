@@ -13,13 +13,19 @@ const TicketSort = ({ setSortKey }) => {
     ascending: true,
   });
 
+  const [checked, setChecked] = useState(true);
+
+  const handleChange = () => {
+    setChecked(!checked);
+  };
+
   useEffect(() => {
     setSortKey(sortKeys);
   }, [sortKeys]);
   return (
     <div className="ticket-sort ">
       <div className="col-12">
-        <div className="row align-items-center">
+        <div className="row align-items-center pb-3">
           <div className="col-9 select-form">
             {
               <Form.Control
@@ -31,9 +37,7 @@ const TicketSort = ({ setSortKey }) => {
               >
                 <option value="_id">Ticket Number</option>
                 <option value="subject">Subject</option>
-                <option value="priority" selected>
-                  Priority
-                </option>
+                <option value="priority">Priority</option>
                 <option value="status">Status</option>
                 <option value="updatedAt">Updated</option>
                 <option value="sender">agent</option>
@@ -58,23 +62,39 @@ const TicketSort = ({ setSortKey }) => {
             </span>
           </div>
         </div>
-        <div className="row">
+        {/*  <div className="row">
           <div className="col-12">
             <p>select columns to display...</p>
             <Form.Group>
-              <Form.Check type="checkbox" label="Priority" />
+              <Form.Check
+                type="checkbox"
+                checked={checked}
+                label="Priority"
+                onChange={(e) => handleChange("priority", e.target.checked)}
+              />
             </Form.Group>
             <Form.Group>
-              <Form.Check type="checkbox" label="Status" />
+              <Form.Check type="checkbox" checked={checked} label="Status" onChange={(e)=>handleChange("priority",e.target.checked)} />
             </Form.Group>
             <Form.Group>
-              <Form.Check type="checkbox" label="Tech" />
+              <Form.Check
+                type="checkbox"
+                checked={checked}
+                label="Updated At"
+              />
             </Form.Group>
             <Form.Group>
-              <Form.Check type="checkbox" label="Updated" />
+              <Form.Check type="checkbox" checked={checked} label="Agent" onChange={(e)=>handleChange("priority",e.target.checked)} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Check
+                type="checkbox"
+                checked={checked}
+                label="Created At" onChange={(e)=>handleChange("createdAt",e.target.checked)}
+              />
             </Form.Group>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

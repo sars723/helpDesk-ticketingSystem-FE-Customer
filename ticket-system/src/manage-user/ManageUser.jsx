@@ -3,6 +3,8 @@ import "./ManageUser.css";
 import { Button, Table, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setUsersAction } from "../redux/actions";
+import { withRouter } from "react-router";
+import Moment from "moment";
 
 const mapStateToProps = (state) => ({
   users: state.user.users,
@@ -10,7 +12,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getUsers: () => dispatch(setUsersAction()),
 });
-const ManageUser = ({ users, getUsers }) => {
+const ManageUser = ({ users, getUsers, history }) => {
   /* const [users, setUsers] = useState([]); */
 
   const [editUser, setEditUser] = useState(false);
@@ -30,22 +32,24 @@ const ManageUser = ({ users, getUsers }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
-  /* const fetchUsers = async () => {
+  const deleteUser = async (userId) => {
     try {
-      const response = await fetch("http://localhost:3004/users", {
+      const response = await fetch("http://localhost:3004/users/" + userId, {
+        method: "DELETE",
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
         },
       });
       if (response.ok) {
-        const fetchedUsers = await response.json();
-        console.log("fetched users in manage user component", fetchedUsers);
-        setUsers(fetchedUsers);
+        alert("user deleted successfully");
+        getUsers();
+      } else {
+        alert("sth wrong with deleting user");
       }
     } catch (error) {
       console.log(error);
     }
-  }; */
+  };
   useEffect(() => {
     getUsers();
   }, []);
@@ -60,114 +64,43 @@ const ManageUser = ({ users, getUsers }) => {
             <th>Role</th>
             <th>Department</th>
             <th>Date added</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {users.length > 0 &&
             users.map((user, i) => (
               <tr key={i}>
-                <td>{i}</td>
+                <td>{i + 1}</td>
                 <td>{user.name}</td> <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>{user.department}</td>
-                <td>{user.createdAt}</td>
-                <td>
-                  <Button variant="secondary" onClick={() => setEditUser(true)}>
+                <td>{Moment(user.createdAt).format("DD/MM/YY")}</td>
+                <td className="d-flex justify-content-between">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => history.push("/editUsers/" + user._id)}
+                  >
                     <i class="fas fa-pencil-alt"></i> Edit
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => deleteUser(user._id)}
+                  >
+                    <i class="fas fa-trash"></i> Delete
                   </Button>
                 </td>
               </tr>
             ))}
-          {/* {!editUser
-            ? users.length > 0 &&
-              users.map((user, i) => (
-                <tr key={i}>
-                  <td>{i}</td>
-                  <td>{user.name}</td> <td>{user.email}</td>
-                  <td>{user.role}</td>
-                  <td>{user.department}</td>
-                  <td>{user.createdAt}</td>
-                  <td>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setEditUser(true)}
-                    >
-                      <i class="fas fa-pencil-alt"></i> Edit
-                    </Button>
-                  </td>
-                </tr>
-              ))
-            : users.length > 0 &&
-              users.map((user, i) => (
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group>
-                    <tr>
-                      {" "}
-                      <td>
-                        {" "}
-                        <Form.Control
-                          type="text"
-                          value={user.name}
-                          onChange={(e) => handleChange("name", e.target.value)}
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <Form.Control
-                          type="email"
-                          value={user.email}
-                          onChange={(e) =>
-                            handleChange("email", e.target.value)
-                          }
-                        />
-                      </td>
-                      <td>
-                        <Form.Control
-                          as="select"
-                          value={user.role}
-                          onChange={(e) => handleChange("role", e.target.value)}
-                        >
-                          <option value="user">user</option>
-                          <option value="employee">employee</option>
-                          <option value="support-team">support-team</option>
-                          <option value="admin">admin</option>
-                        </Form.Control>
-                      </td>
-                      <td>
-                        <Form.Control
-                          as="select"
-                          value={user.department}
-                          onChange={(e) =>
-                            handleChange("department", e.target.value)
-                          }
-                        >
-                          <option value="none">none</option>
-                          <option value="IT">IT</option>
-                          <option value="support">support</option>
-                          <option value="sales">sales</option>
-                          <option value="marketing">marketing</option>
-                          <option value="administration">administration</option>
-                        </Form.Control>
-                      </td>
-                      <td>{user.createdAt}</td>
-                      <Button className="btn-submit" type="submit">
-                        ok
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setEditUser(false);
-                        }}
-                      >
-                        cancel
-                      </Button>{" "}
-                    </tr>{" "}
-                  </Form.Group>
-                </Form>
-              ))} */}
         </tbody>
       </Table>
     </div>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageUser);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ManageUser));

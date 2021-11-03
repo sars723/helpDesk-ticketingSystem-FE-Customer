@@ -1,15 +1,14 @@
 .ticket {
   padding-left: 20px;
 }
-.ticket h5 {
-  margin-bottom: 0;
+h5 {
   color: #2980b9;
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
+  cursor: pointer;
 }
 
-.ticket p {
-  margin-bottom: 0;
+p {
   margin-right: 10px;
   font-size: 14px;
 }
@@ -19,16 +18,12 @@
   font-size: 10px;
   line-height: 10px;
   color: #8e8e8e !important;
-
-  border-bottom: 1px dotted #dadbdd;
 }
 
 .user-category p,
 .user-category i {
   font-size: 10px;
   color: #8e8e8e !important;
-
-  border-bottom: 1px dotted #dadbdd;
 }
 /* #popover-positioned-left {
   width: 50% !important;
@@ -43,3 +38,11 @@
   cursor: pointer;
   margin-left: 20px;
 }
+/* @media (max-width: 580px) {
+  .ticket-list table thead {
+    display: none;
+  }
+  .ticket-list table td {
+    display: block;
+  }
+} */

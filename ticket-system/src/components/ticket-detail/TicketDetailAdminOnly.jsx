@@ -12,20 +12,17 @@ import { setSelectedTicketAction } from "../../redux/actions/index.js";
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
-  ticket: state.selectedTicket.selectedTicket,
+  ticket: state.selectedTicket,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSelectedTicket: (ticketId) => {
-    dispatch(setSelectedTicketAction(ticketId));
-  },
+  getSelectedTicket: (ticketId) => dispatch(setSelectedTicketAction(ticketId)),
 });
 
-const TicketDetail = ({
+const TicketDetailAdminOnly = ({
   match,
   currentUser,
-  ticket,
-  getSelectedTicket,
+
   history,
 }) => {
   const [msgHistory, setMsgHistory] = useState({
@@ -33,17 +30,36 @@ const TicketDetail = ({
     sender: "",
     attachments: [],
   });
+  const [ticket, setTicket] = useState(null);
 
-  let sortedMessage =
-    ticket &&
-    ticket.messageHistory.sort((a, b) => new Date(b.msgAt) - new Date(a.msgAt));
-  console.log(sortedMessage);
   const handleChange = (key, value) => {
     setMsgHistory({
       ...msgHistory,
       [key]: value,
     });
   };
+  const fetchTicket = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/tickets/" + match.params.ticketID,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const fetchedTicket = await response.json();
+        /*   console.log(fetchedTicket, "fetched ticket  "); */
+        setTicket(fetchedTicket);
+      } else {
+        alert("sth wrong with setSelectedTicketAction");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let messageHistory = {
@@ -67,6 +83,7 @@ const TicketDetail = ({
       );
       if (response.ok) {
         setMsgHistory({ ...msgHistory, message: "" });
+        fetchTicket();
       }
     } catch (error) {
       Next(error);
@@ -85,10 +102,9 @@ const TicketDetail = ({
       );
       if (response.ok) {
         alert("deleted sucessfully");
-        /*  window.location.reload(false); */
-        getSelectedTicket(match.params.ticketID);
+        fetchTicket();
       } else {
-        alert("sth wrong");
+        alert("sth wrong deleting message ticketdetailAdminOnly");
       }
     } catch (error) {
       console.log(error);
@@ -110,7 +126,7 @@ const TicketDetail = ({
       if (response.ok) {
         alert("ticket assigned to you");
       } else {
-        alert("sth wrong");
+        alert("sth wrong takeover ticket ticketDetailAdminonly");
       }
     } catch (error) {
       console.log(error);
@@ -128,17 +144,28 @@ const TicketDetail = ({
         }
       );
       if (response.ok) {
-        alert("ticket closed");
+        if (ticket.status === "new" || ticket.status === "assigned")
+          alert("ticket closed");
+        else alert("ticket reopened");
+
         history.push("/");
       } else {
-        alert("sth wrong");
+        alert("sth wrong closing or opening ticket ticketdetailAdminOnly");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
-    getSelectedTicket(match.params.ticketID);
-  }, [msgHistory]);
-
+    fetchTicket();
+    /*  getSelectedTicket(match.params.ticketID); */
+  }, []);
+  /*   console.log(
+    ticket && ticket,
+    "maaa",
+    match.params.ticketID,
+    "tttttttttttttttttttttttt"
+  ); */
   return (
     <div className="ticket-detail container-fluid">
       <div className="row  ">
@@ -159,21 +186,24 @@ const TicketDetail = ({
                 onClick={() => handleClose(ticket && ticket._id)}
               >
                 <i className="fa fa-check"></i>
-                Close ticket
+                {(ticket && ticket.status === "new") ||
+                (ticket && ticket.status === "assigned")
+                  ? "Close ticket"
+                  : "Open ticket"}
               </Button>
             </div>
             {ticket && (
               <div className="ticket-detail-content-text">
-                <h6>{ticket.subject}</h6>
+                <h5>{ticket.subject}</h5>
                 <p>{ticket.detailInfo}</p>
                 {ticket.file && (
                   <img
-                    className="activator"
-                    style={{ height: 300 }}
+                    className="activator mb-3"
+                    style={{ width: "300px" }}
                     src={ticket.file}
                   />
                 )}
-                {console.log(ticket.messageHistory.length)}
+                {/*  {console.log(ticket.messageHistory.length)} */}
                 <Form onSubmit={handleSubmit}>
                   <Form.Group>
                     <Form.Control
@@ -203,6 +233,7 @@ const TicketDetail = ({
           <div className="ticket-detail-replay">
             {" "}
             {ticket &&
+              ticket.messageHistory &&
               ticket.messageHistory.length > 0 &&
               ticket.messageHistory.reverse().map((msg, i) => (
                 <div className="row conversation" key={i}>
@@ -241,15 +272,13 @@ const TicketDetail = ({
                     )}
                   </div>
                   <p className=" msg-at text-muted">
-                    {
-                      (Moment.locale("GMT+2"),
-                      Moment(msg.msgAt).format("DD/MM/YY  hh:mm"))
-                    }
+                    {Moment(msg.msgAt).format("DD/MM/YY  hh:mm")}
                   </p>
                 </div>
               ))}
           </div>
         </div>
+        {/*  {console.log(ticket && ticket, "ticketttt")} */}
         {ticket && <TicketDetailEdit ticket={ticket} />}
       </div>
     </div>
@@ -259,4 +288,4 @@ const TicketDetail = ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(TicketDetail));
+)(withRouter(TicketDetailAdminOnly));

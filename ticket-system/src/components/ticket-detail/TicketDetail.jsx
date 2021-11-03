@@ -11,8 +11,8 @@ import { connect } from "react-redux";
 import { setSelectedMyTicketAction } from "../../redux/actions/index.js";
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser.currentUser,
-  ticket: state.selectedMyTicket.selectedTicket,
+  currentUser: state.currentUser,
+  ticket: state.selectedMyTicket,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -21,12 +21,39 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
+const TicketDetail = ({
+  match,
+  currentUser /*  ticket, getSelectedTicket */,
+}) => {
   const [msgHistory, setMsgHistory] = useState({
     message: "",
     sender: "",
     attachments: [],
   });
+
+  const [ticket, setTicket] = useState(null);
+
+  const fetchTicket = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3004/users/me/tickets/" + match.params.ticketID,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const fetchedTicket = await response.json();
+        /*  console.log("my ticket redux action", fetchedTicket); */
+        setTicket(fetchedTicket);
+      } else {
+        alert("sth wrong with setSelectedMyTicketAction  ");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (key, value) => {
     setMsgHistory({
@@ -57,76 +84,22 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
       );
       if (response.ok) {
         setMsgHistory({ ...msgHistory, message: "" });
+        fetchTicket();
       }
     } catch (error) {
       Next(error);
     }
   };
-  /*   const handleDelete = async (msgId) => {
-    try {
-      const response = await fetch(
-        "http://localhost:3004/tickets/message/" + msgId,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
-        }
-      );
-      if (response.ok) {
-        alert("deleted sucessfully");
-        window.location.reload(false);
-      } else {
-        alert("sth wrong");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const takeOver = async (ticketId) => {
-    try {
-      const response = await fetch(
-        "http://localhost:3004/tickets/" + ticketId,
-        {
-          method: "PUT",
-          headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
-          body: JSON.stringify({ assignedTo: currentUser._id }),
-        }
-      );
-      if (response.ok) {
-        alert("ticket assigned to you");
-      } else {
-        alert("sth wrong");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleClose = async (ticketId) => {
-    try {
-      const response = await fetch(
-        "http://localhost:3004/tickets/close-ticket/" + ticketId,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-          },
-        }
-      );
-      if (response.ok) {
-        alert("ticket closed");
-        history.push("/");
-      } else {
-        alert("sth wrong");
-      }
-    } catch (error) {}
-  }; */
-  useEffect(async () => {
-    getSelectedTicket(match.params.ticketID);
-  }, [msgHistory]);
+
+  useEffect(
+    async () => {
+      fetchTicket();
+      /* getSelectedTicket(match.params.ticketID); */
+    },
+    [
+      /* msgHistory, ticket.messageHistory */
+    ]
+  );
 
   return (
     <div className="ticket-detail container-fluid">
@@ -134,32 +107,16 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
         <div className="col-md-8 pr-5">
           <div className="ticket-detail-content">
             <div className="ticket-detail-content-header">
-              {/* <Button className="btn-reply">
-                <i className="fa fa-reply"></i>
-              </Button>
-              <Button
-                className="btn-takeover"
-                onClick={() => takeOver(ticket && ticket._id)}
-              >
-                Takeover
-              </Button>
-              <Button
-                className="btn-close"
-                onClick={() => handleClose(ticket && ticket._id)}
-              >
-                <i className="fa fa-check"></i>
-                Close ticket
-              </Button> */}
-              {console.log("myTicket", ticket)}
+              {/* {console.log("myTicket", ticket)} */}
             </div>
             {ticket && (
               <div className="ticket-detail-content-text">
-                <h6>{ticket.subject}</h6>
+                <h5>{ticket.subject}</h5>
                 <p>{ticket.detailInfo}</p>
                 {ticket.file && (
                   <img
-                    className="activator"
-                    style={{ height: 200, marginBottom: "20px" }}
+                    className="activator mb-3"
+                    style={{ width: "200px" }}
                     src={ticket.file}
                   />
                 )}
@@ -192,8 +149,9 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
           </div>{" "}
           <div className="ticket-detail-replay">
             {" "}
-            {console.log(ticket)}
+            {/*  {console.log(ticket)} */}
             {ticket &&
+              ticket.messageHistory &&
               ticket.messageHistory.length > 0 &&
               ticket.messageHistory.reverse().map((msg, i) => (
                 <div className="row conversation" key={i}>
@@ -213,20 +171,14 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
                   >
                     <div className="d-flex justify-content-between">
                       {" "}
-                      {console.log(msg.sender, " kkk", currentUser.email)}
+                      {/*  {console.log(msg.sender, " kkk", currentUser.email)} */}
                       <h6 className="msg-sender">{msg.sender}</h6>
-                      {/*  <p>
-                        <i
-                          class="fas fa-trash"
-                          onClick={() => handleDelete(msg._id)}
-                        ></i>
-                      </p> */}
                     </div>
                     <p>{msg.message}</p>
                     {msg.attachments.length > 0 && (
                       <img
-                        className="activator"
-                        style={{ width: "100%", height: 200 }}
+                        className="activator my-3"
+                        style={{ height: "400px", objectFit: "contain" }}
                         src={msg.attachments}
                       />
                     )}
@@ -241,7 +193,6 @@ const TicketDetail = ({ match, currentUser, ticket, getSelectedTicket }) => {
               ))}
           </div>
         </div>
-        {/*  {ticket && <TicketDetailEdit ticket={ticket} />} */}
       </div>
     </div>
   );
