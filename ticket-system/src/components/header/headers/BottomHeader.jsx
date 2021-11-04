@@ -63,17 +63,17 @@ const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
         <ul className="bottom-header-ticket-menu">
           <li className={unansweredClass}>
             <Link className="nav-link " to="/unansweredTicketsAdmin">
-              Unanswered <span>{tickets && unanswerdT.length}</span>
+              Unanswered <span>({tickets && unanswerdT.length})</span>
             </Link>
           </li>
           <li className={unclosedClass}>
             <Link className="nav-link " to="/unclosedTicketsAdmin">
-              Unclosed <span>{tickets && unclosedT.length}</span>
+              Unclosed <span>({tickets && unclosedT.length})</span>
             </Link>
           </li>
           <li className={unassignedClass}>
             <Link className="nav-link " to="/unassignedTicketsAdmin">
-              Unassigned <span>{tickets && unassignedT.length}</span>
+              Unassigned <span>({tickets && unassignedT.length})</span>
             </Link>
           </li>
           <li className={assignedToYouClass}>
@@ -83,12 +83,12 @@ const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
             >
               Assigned to you{" "}
               {/*  {console.log(assignedToCurrentUserT, "lengthhhhhhhhh")} */}
-              <span>{tickets && assignedToCurrentUserT.length}</span>
+              <span>({tickets && assignedToCurrentUserT.length})</span>
             </Link>
           </li>{" "}
           <li className={allClass}>
             <Link className="nav-link " to="/">
-              All <span>{tickets && tickets.length}</span>
+              All <span>({tickets && tickets.length})</span>
             </Link>
           </li>
         </ul>
@@ -96,7 +96,7 @@ const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
         <ul className="bottom-header-ticket-menu">
           <li className={unansweredClass}>
             <Link className="nav-link " to="/unansweredTicketsUser">
-              Unanswered <span>{tickets && unanswerdT.length}</span>
+              Unanswered <span>({tickets && unanswerdT.length})</span>
             </Link>
           </li>
           <li className={unclosedClass}>
@@ -106,12 +106,12 @@ const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
           </li>
           <li className={unassignedClass}>
             <Link className="nav-link " to="/unassignedTicketsUser">
-              Unassigned <span>{tickets && unassignedT.length}</span>
+              Unassigned <span>({tickets && unassignedT.length})</span>
             </Link>
           </li>
           <li className={allClass}>
             <Link className="nav-link " to="/">
-              All <span>{tickets && tickets.length}</span>
+              All <span>({tickets && tickets.length})</span>
             </Link>
           </li>
         </ul>

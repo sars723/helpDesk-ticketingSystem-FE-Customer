@@ -34,7 +34,7 @@ const LeftSidebar = ({
   }, []);
   /*  console.log(currentUser, "curenttttttttttttttUserrrrrrrrrrr"); */
   return (
-    <div className="col-12 col-md-3">
+    <div className="leftSidebar col-12 col-lg-3">
       {(currentUser && currentUser.role === "admin") ||
       (currentUser && currentUser.role === "support-team") ? (
         <TicketCategories tickets={tickets} getTickets={getTickets} />

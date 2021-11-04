@@ -3,6 +3,7 @@ import "./TicketDetailEdit.css";
 import { Button, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setUsersAction } from "../../../redux/actions";
+import { withRouter } from "react-router";
 
 const mapStateToProps = (state) => ({
   users: state.user.users,
@@ -11,7 +12,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getUsers: () => dispatch(setUsersAction()),
 });
-const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
+const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
   const [editTicketDetail, setEditTicketDetail] = useState({
     priority: false,
     category: false,
@@ -53,6 +54,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
       if (response.ok) {
         alert("ticket updated");
         getUsers();
+        history.push("/");
       } else {
         alert("sth wrong with updating a ticket, ticket detail edit component");
       }
@@ -105,7 +107,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
                     <option value="Low">Low</option>
                     <option value="Normal">Normal</option>
                     <option value="High">High</option>
-                    <option value="Crucial">Critical</option>
+                    <option value="Critical">Critical</option>
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok
@@ -354,4 +356,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets }) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TicketDetailEdit);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(TicketDetailEdit));

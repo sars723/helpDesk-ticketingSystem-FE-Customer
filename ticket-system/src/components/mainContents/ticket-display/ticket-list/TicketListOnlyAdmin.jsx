@@ -37,10 +37,10 @@ const TicketList = ({ searchQuery, getTickets, tickets, sortKeys }) => {
             <th>Subject</th>
             <th>Priority</th>
             <th>Status</th>
-            <th>Created</th>
+            <th className="createdAt">Created</th>
             <th>Due Date</th>
             <th>Agent</th>
-            <th>Updated</th>
+            <th className="updatedAt">Updated</th>
             <th>
               <input type="checkbox" />
             </th>

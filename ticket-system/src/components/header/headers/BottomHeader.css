@@ -1,14 +1,19 @@
 .bottom-header {
   background-color: #4c5b6b;
 }
+@media only screen and (max-width: 600px) {
+  .bottom-header {
+    display: none;
+  }
+}
 .bottom-header-ticket-menu {
   display: flex;
   align-items: center;
   font-size: 12px;
   margin: 0;
   padding: 0 30px;
-  height: 37px;
-  line-height: 36px;
+  min-height: 37px;
+  /* line-height: 36px; */
   box-shadow: 0 6px 10px -5px rgb(0 0 0 / 40%);
 }
 .bottom-header-ticket-menu li {
@@ -22,6 +27,6 @@
 }
 .bottom-header-ticket-menu li.active a {
   background-color: #1d252f;
-  padding: 0 10px;
-  border-radius: px;
+  padding: 3px 10px;
+  border-radius: 5px;
 }

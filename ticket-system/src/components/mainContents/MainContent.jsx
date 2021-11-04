@@ -1,4 +1,5 @@
 import React from "react";
+import "./MainContent.css";
 import LeftSidebar from "./left-sidebar/LeftSidebar";
 import { connect } from "react-redux";
 import TicketList from "./ticket-display/ticket-list/TicketList";
@@ -11,7 +12,7 @@ const MainContent = ({ currentUser }) => {
     <div className="" style={{ margin: "20px 50px" }}>
       <div className="row mt-4">
         <LeftSidebar />
-        <div className=" ticket-display col-12 col-md-9 ">
+        <div className=" ticket-display col-12 col-lg-9 ">
           {currentUser.role === "admin" ? (
             <TicketListOnlyAdmin />
           ) : (

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { withRouter } from "react-router";
 import "./AddUser.css";
-const AddUser = () => {
+const AddUser = ({ history }) => {
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -36,6 +37,7 @@ const AddUser = () => {
         const data = await response.json();
         console.log("registered", data);
         alert("sucessfully registered ");
+        history.push("/manageUsers");
       } else {
         alert("sth wrong with the registration");
       }
@@ -145,4 +147,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default withRouter(AddUser);

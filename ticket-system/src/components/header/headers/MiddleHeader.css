@@ -4,6 +4,26 @@
   color: #c7d4e2;
   align-items: center;
 }
+@media only screen and (max-width: 900px) {
+  .middle-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .left-newTicket-search {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .new-ticket-btn {
+    margin-bottom: 20px;
+  }
+}
 .middle-header a {
   color: #c7d4e2;
   text-decoration: none;

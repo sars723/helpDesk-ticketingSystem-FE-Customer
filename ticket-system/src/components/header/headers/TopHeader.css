@@ -5,6 +5,12 @@
   display: flex;
   justify-content: space-between;
 }
+@media screen and(max-width:850px) {
+  .top-header {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .logo a {
   text-decoration: none;
 }

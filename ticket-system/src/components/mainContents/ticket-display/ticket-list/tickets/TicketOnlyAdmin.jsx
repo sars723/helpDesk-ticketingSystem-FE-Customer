@@ -11,20 +11,14 @@ import {
 
 const mapStateToProps = (state) => ({
   users: state.user.users,
-  /*   tickets: state.ticketAdminOnly.tickets, */
+  tickets: state.ticketAdminOnly.tickets,
 });
 const mapDispatchToProps = (dispatch) => ({
   getUsers: () => dispatch(setUsersAction()),
-  /* getTickets: () => dispatch(setTicketsOnlyAdminAction()), */
+  getTickets: () => dispatch(setTicketsOnlyAdminAction()),
 });
 
-const Ticket = ({
-  ticket,
-  history,
-  users,
-  getUsers,
-  tickets /* getTickets */,
-}) => {
+const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
   const [user, setUser] = useState(null);
 
   const deleteTicket = async () => {
@@ -41,7 +35,7 @@ const Ticket = ({
       );
       if (response.ok) {
         alert("ticket deleted successfully");
-        /*  getTickets(); */
+        getTickets();
       } else {
         alert("sth wrong deleting ticket toAc");
       }
@@ -67,17 +61,21 @@ const Ticket = ({
         </h5>
         <div className="user-category">
           {/*  {console.log(users, "is user exist")} */}
-          {users &&
+          {/*     {users &&
             users
               .filter((user) => user._id === ticket.sender._id)
               .map((user) => (
                 <p>
                   <i class="fa fa-user"></i>
-                  {/* {console.log("usercheck", user)} */}
+                  {console.log("usercheck", user)}
                   {user.name}
                 </p>
-              ))}
+              ))} */}
+          <p>
+            <i class="fa fa-user"></i>
 
+            {ticket.sender.name}
+          </p>
           <p>
             <i class="fa fa-folder-open"></i>
             {ticket.category}
