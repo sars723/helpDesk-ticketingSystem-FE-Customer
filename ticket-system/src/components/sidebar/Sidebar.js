@@ -167,34 +167,29 @@ const Sidebar = ({
           <h2>Categories</h2>
           <div className="sidebar__link">
             <Link to="/" className="nav-link">
-              <p>All categories</p>
+              All categories <span>({tickets && tickets.length})</span>
             </Link>
-            <span>{tickets && tickets.length}</span>
           </div>
           <div className="sidebar__link">
             <Link to="/generalSalesCategoryTicketsAdmin" className="nav-link">
-              <p>General Sales</p>
+              General Sales <span>({tickets && generalIssueCT.length})</span>
             </Link>
-            <span>{tickets && generalIssueCT.length}</span>
           </div>
           <div className="sidebar__link">
             <Link to="/paymentIssueCategoryTicketsAdmin" className="nav-link">
-              <p>Payment Issue</p>
+              Payment Issue <span>({tickets && paymentIssueCT.length})</span>
             </Link>
-            <span>{tickets && paymentIssueCT.length}</span>
           </div>
           <div className="sidebar__link">
             <Link to="/hardwareIssueCategoryTicketsAdmin" className="nav-link">
-              <p>Hardware Issue</p>
+              Hardware Issue <span>({tickets && HardwareIssueCT.length})</span>
             </Link>
-            <span>{tickets && HardwareIssueCT.length}</span>
           </div>
 
           <div className="sidebar__link">
             <Link to="/softwareIssueCategoryTicketsAdmin" className="nav-link">
-              <p>Software Issue</p>
+              Software Issue <span>({tickets && softwareIssueCT.length})</span>
             </Link>
-            <span>{tickets && softwareIssueCT.length}</span>
           </div>
 
           <div className="sidebar__logout mt-0">

@@ -120,7 +120,10 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
           {ticket.assignedTo === "" ? (
             <span style={{ color: "lightgrey" }}>not assigned</span>
           ) : (
-            ticket.sender.email
+            users &&
+            users
+              .filter((user) => user._id === ticket.assignedTo)
+              .map((user) => user.email)
           )}
         </p>
       </td>

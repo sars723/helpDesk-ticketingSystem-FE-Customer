@@ -191,10 +191,11 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
             </div>
             <div className="col-9  d-flex justify-content-between">
               {/*   {console.log("is user exist", users)} */}
-              {users &&
+              {/* {users &&
                 users
                   .filter((user) => user._id === ticket.sender._id)
-                  .map((user) => <p>{user.name}</p>)}{" "}
+                  .map((user) => <p>{user.name}</p>)} */}{" "}
+              <p>{ticket.sender.name}</p>
               <Button
                 onClick={() =>
                   setEditTicketDetail({
@@ -217,7 +218,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
                   {/* {console.log(users, "users dropdown")} */}
                   <Form.Control
                     as="select"
-                    name="assignTo"
+                    name="sender"
                     value={ticketDetail.sender}
                     onChange={(e) => handleChange("sender", e.target.value)}
                   >
@@ -275,6 +276,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
                 <div className="col-9 d-flex justify-content-between">
                   <Form.Control
                     as="select"
+                    name="assignedTo"
                     value={ticketDetail.assignedTo}
                     onChange={(e) => handleChange("assignedTo", e.target.value)}
                   >

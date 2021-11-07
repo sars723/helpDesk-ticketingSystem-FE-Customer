@@ -28,6 +28,7 @@
 body {
   box-sizing: border-box;
   font-family: "Lato", sans-serif;
+  height: 100% !important;
 }
 
 .text-primary-p {
@@ -58,6 +59,11 @@ body {
 
 .text-green {
   color: #3b9668;
+}
+
+input:focus,
+button:focus {
+  box-shadow: none !important;
 }
 
 .container-fluid {
