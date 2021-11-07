@@ -54,49 +54,51 @@ const ManageUser = ({ users, getUsers, history }) => {
     getUsers();
   }, []);
   return (
-    <div className="container mt-5">
-      <Table responsive="sm">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Department</th>
-            <th>Date added</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.length > 0 &&
-            users.map((user, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{user.name}</td> <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>{user.department}</td>
-                <td>{Moment(user.createdAt).format("DD/MM/YY")}</td>
-                <td className="d-flex justify-content-between">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => history.push("/editUsers/" + user._id)}
-                  >
-                    <i class="fas fa-pencil-alt"></i> Edit
-                  </Button>
-                  <Button
-                    variant="danger"
-                    size="sm"
-                    onClick={() => deleteUser(user._id)}
-                  >
-                    <i class="fas fa-trash"></i> Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
-    </div>
+    <main>
+      <div className="main__container">
+        <Table responsive="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Department</th>
+              <th>Date added</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length > 0 &&
+              users.map((user, i) => (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{user.name}</td> <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  <td>{user.department}</td>
+                  <td>{Moment(user.createdAt).format("DD/MM/YY")}</td>
+                  <td className="d-flex justify-content-between">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => history.push("/editUsers/" + user._id)}
+                    >
+                      <i class="fas fa-pencil-alt"></i> Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => deleteUser(user._id)}
+                    >
+                      <i class="fas fa-trash"></i> Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      </div>
+    </main>
   );
 };
 

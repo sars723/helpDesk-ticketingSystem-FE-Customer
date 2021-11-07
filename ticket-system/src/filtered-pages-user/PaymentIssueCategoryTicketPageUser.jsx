@@ -2,23 +2,36 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import LeftSidebar from "../components/mainContents/left-sidebar/LeftSidebar";
 import TicketOnlyAdmin from "../components/mainContents/ticket-display/ticket-list/tickets/TicketOnlyAdmin";
-import { setTicketsAction, setTicketsOnlyAdminAction } from "../redux/actions";
+import {
+  setCurrentUserAction,
+  setTicketsAction,
+  setTicketsOnlyAdminAction,
+} from "../redux/actions";
 import { Table } from "react-bootstrap";
+import BottomHeader from "../components/header/headers/BottomHeader";
+import Ticket from "../components/mainContents/ticket-display/ticket-list/tickets/Ticket";
 const mapStateToProps = (state) => ({
   tickets: state.ticket.tickets,
   searchQuery: state.searchValue.searchQuery,
   currentUser: state.currentUser,
   sortKeys: state.sortingKey,
+  myTickets: state.ticket.tickets,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTickets: () => dispatch(setTicketsAction()),
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
+  getTickets: () => dispatch(setTicketsOnlyAdminAction()),
+  getMyTickets: () => dispatch(setTicketsAction()),
 });
 const PaymentIssueCategoryTicketPageUser = ({
   searchQuery,
+  getCurrentUser,
+  getMyTickets,
   getTickets,
   tickets,
+  myTickets,
   sortKeys,
+  currentUser,
 }) => {
   const [sortedTickets, setSortedTickets] = useState(null);
   const { sortKey, ascending } = sortKeys;
@@ -30,50 +43,58 @@ const PaymentIssueCategoryTicketPageUser = ({
   };
 
   useEffect(async () => {
-    getTickets();
+    getCurrentUser();
+    /* if (currentUser?.role === "admin") {
+     getTickets();
+   } */
+    getMyTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
+  useEffect(() => {
+    sortTickets(sortKey, ascending);
+  }, [tickets]);
   return (
-    <div className="" style={{ margin: "20px 50px" }}>
-      <div className="row mt-4">
-        <LeftSidebar />
-        <div className=" ticket-display col-12 col-md-9">
-          <div className="ticket-list ">
-            <Table hover>
-              <thead>
-                <tr>
-                  <th>Subject</th>
-                  <th>Priority</th>
-                  <th>Status</th>
-                  <th>Created</th>
-                  <th>Due Date</th>
-                  <th>Agent</th>
-                  <th>Updated</th>
-                  <th>
-                    <input type="checkbox" />
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {" "}
-                {sortedTickets &&
-                  sortedTickets
-                    .filter(
-                      (ticket, i) =>
-                        ticket.subject
-                          .toLowerCase()
-                          .includes(searchQuery.toLowerCase()) &&
-                        ticket.category === "Payment Issue"
-                    )
-                    .map((ticket, i) => (
-                      <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-                    ))}
-              </tbody>
-            </Table>
-          </div>{" "}
-        </div>
+    <main>
+      <div className="main__container">
+        {/*   {(currentUser && currentUser.role === "admin") ||
+        (currentUser && currentUser.role === "support-team") ? (
+          <BottomHeader tickets={tickets} getTickets={getTickets} />
+        ) : ( */}
+        <BottomHeader tickets={myTickets} getTickets={getMyTickets} />
+        {/*  )} */}
+        <div className="ticket-list ticket-display mt-3 row ">
+          <Table hover>
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Due Date</th>
+                <th>Agent</th>
+                <th>Updated</th>
+                <th>
+                  <input type="checkbox" />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {" "}
+              {sortedTickets &&
+                sortedTickets
+                  .filter(
+                    (ticket, i) =>
+                      ticket.subject
+                        .toLowerCase()
+                        .includes(searchQuery.toLowerCase()) &&
+                      ticket.category === "Payment Issue"
+                  )
+                  .map((ticket, i) => <Ticket key={i} ticket={ticket} i={i} />)}
+            </tbody>
+          </Table>
+        </div>{" "}
       </div>
-    </div>
+    </main>
   );
 };
 

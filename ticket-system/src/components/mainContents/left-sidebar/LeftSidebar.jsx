@@ -29,7 +29,9 @@ const LeftSidebar = ({
 }) => {
   useEffect(() => {
     getCurrentUser();
-    getTickets();
+    if (currentUser.role === "admin") {
+      getTickets();
+    }
     getMyTickets();
   }, []);
   /*  console.log(currentUser, "curenttttttttttttttUserrrrrrrrrrr"); */

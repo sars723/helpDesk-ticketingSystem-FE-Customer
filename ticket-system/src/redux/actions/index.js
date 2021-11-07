@@ -102,7 +102,7 @@ export const setCurrentUserAction = () => {
       );
       if (response.ok) {
         const fetchedSender = await response.json();
-        /*  console.log("fetchedsender or current user", fetchedSender); */
+        console.log("fetchedsender or current user", fetchedSender);
         dispatch({
           type: SET_CURRENT_USER,
           payload: fetchedSender,

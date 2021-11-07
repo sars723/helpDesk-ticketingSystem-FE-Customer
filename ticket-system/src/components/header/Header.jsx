@@ -31,7 +31,9 @@ const Header = ({
 }) => {
   useEffect(() => {
     getCurrentUser();
-    getTickets();
+    if (currentUser.role === "admin") {
+      getTickets();
+    }
     getMyTickets();
   }, []);
   return (
@@ -41,13 +43,12 @@ const Header = ({
       location.pathname === "/register" ? null : (
         <>
           <MiddleHeader />
-
-          {(currentUser && currentUser.role === "admin") ||
+          {/*  {(currentUser && currentUser.role === "admin") ||
           (currentUser && currentUser.role === "support-team") ? (
             <BottomHeader tickets={tickets} getTickets={getTickets} />
           ) : (
             <BottomHeader tickets={myTickets} getTickets={getMyTickets} />
-          )}
+          )} */}
         </>
       )}
     </div>

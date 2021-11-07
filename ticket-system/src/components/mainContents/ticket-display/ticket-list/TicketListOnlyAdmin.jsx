@@ -25,12 +25,17 @@ const TicketList = ({ searchQuery, getTickets, tickets, sortKeys }) => {
     setSortedTickets(sortedTickets);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     getTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
+
+  useEffect(() => {
+    sortTickets(sortKey, ascending);
+  }, [tickets]);
+
   return (
-    <div className="ticket-list ">
+    <div className="ticket-list ticket-display mt-3 row ">
       <Table hover>
         <thead>
           <tr>

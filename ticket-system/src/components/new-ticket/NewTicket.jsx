@@ -59,111 +59,115 @@ const NewTicket = ({ history, currentUser, getCurrentUser }) => {
     getCurrentUser();
   }, []);
   return (
-    <div className="new-ticket container-fluid  ">
-      <div className="row flex-column">
-        <div className="col-8 mx-auto mt-5 new-ticket-wrapper">
-          <div className="new-ticket-header  ">
-            <p className="mb-0 p-3">New Ticket</p>
-          </div>
-          <Form className=" new-ticket-form p-3" onSubmit={handleSubmit}>
-            <Form.Group as={Row}>
-              <Form.Label column sm={3}>
-                Your email address
-              </Form.Label>
-              <Col sm={8}>
+    <main>
+      <div className="main__container  ">
+        <div className="row flex-column">
+          <div className="col-8 mx-auto mt-3 new-ticket-wrapper">
+            <div className="new-ticket-header  ">
+              <p className="mb-0 p-3">New Ticket</p>
+            </div>
+            <Form className=" new-ticket-form p-3" onSubmit={handleSubmit}>
+              <Form.Group as={Row}>
+                <Form.Label column sm={3}>
+                  Your email address
+                </Form.Label>
+                <Col sm={8}>
+                  <Form.Control
+                    type="email"
+                    value={ticket.sender}
+                    onChange={(e) => handleChange("sender", e.target.value)}
+                  />
+                </Col>
+              </Form.Group>
+              {/* <div className="new-ticket-form-select row"> */}
+              <Form.Group as={Row}>
+                <Form.Label column sm={3}>
+                  Category
+                </Form.Label>
+                <Col sm={3}>
+                  <Form.Control
+                    as="select"
+                    value={ticket.category}
+                    onChange={(e) => handleChange("category", e.target.value)}
+                  >
+                    <option>General Issues</option>
+                    <option value="General Sales">General Sales</option>
+                    <option value="Payment Issue">Payment Issue</option>
+                    <option value="Software Issue">Software Issue</option>
+                    <option value="Hardware Issue">Hardware Issue</option>
+                  </Form.Control>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm={3}>
+                  Priority{" "}
+                </Form.Label>
+                <Col sm={3}>
+                  <Form.Control
+                    as="select"
+                    vlaue={ticket.priority}
+                    onChange={(e) => handleChange("priority", e.target.value)}
+                  >
+                    <option value="Low">Low</option>
+                    <option value="Normal">Normal</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                  </Form.Control>
+                </Col>
+              </Form.Group>
+              <Form.Group as={Row}>
+                <Form.Label column sm={3}>
+                  Due Date
+                </Form.Label>
+                <Col sm={3}>
+                  <Form.Control
+                    type="date"
+                    value={ticket.dueDate}
+                    onChange={(e) => handleChange("dueDate", e.target.value)}
+                  />
+                </Col>
+              </Form.Group>
+              {/* </div> */}
+              <Form.Group>
+                <Form.Label>Subject</Form.Label>
                 <Form.Control
-                  type="email"
-                  value={ticket.sender}
-                  onChange={(e) => handleChange("sender", e.target.value)}
+                  type="text"
+                  placeholder="Subject"
+                  value={ticket.subject}
+                  onChange={(e) => handleChange("subject", e.target.value)}
                 />
-              </Col>
-            </Form.Group>
-            {/* <div className="new-ticket-form-select row"> */}
-            <Form.Group as={Row}>
-              <Form.Label column sm={3}>
-                Category
-              </Form.Label>
-              <Col sm={3}>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Detail</Form.Label>
                 <Form.Control
-                  as="select"
-                  value={ticket.category}
-                  onChange={(e) => handleChange("category", e.target.value)}
-                >
-                  <option>General Issues</option>
-                  <option value="General Sales">General Sales</option>
-                  <option value="Payment Issue">Payment Issue</option>
-                  <option value="Software Issue">Software Issue</option>
-                  <option value="Hardware Issue">Hardware Issue</option>
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={3}>
-                Priority{" "}
-              </Form.Label>
-              <Col sm={3}>
-                <Form.Control
-                  as="select"
-                  vlaue={ticket.priority}
-                  onChange={(e) => handleChange("priority", e.target.value)}
-                >
-                  <option value="Low">Low</option>
-                  <option value="Normal">Normal</option>
-                  <option value="High">High</option>
-                  <option value="Critical">Critical</option>
-                </Form.Control>
-              </Col>
-            </Form.Group>
-            <Form.Group as={Row}>
-              <Form.Label column sm={3}>
-                Due Date
-              </Form.Label>
-              <Col sm={3}>
-                <Form.Control
-                  type="date"
-                  value={ticket.dueDate}
-                  onChange={(e) => handleChange("dueDate", e.target.value)}
+                  as="textarea"
+                  rows={3}
+                  vlaue={ticket.detailInfo}
+                  onChange={(e) => handleChange("detailInfo", e.target.value)}
                 />
-              </Col>
-            </Form.Group>
-            {/* </div> */}
-            <Form.Group>
-              <Form.Label>Subject</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Subject"
-                value={ticket.subject}
-                onChange={(e) => handleChange("subject", e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Detail</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                vlaue={ticket.detailInfo}
-                onChange={(e) => handleChange("detailInfo", e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group>
-              <FileBase64
-                type="file"
-                multiple={false}
-                onDone={({ base64 }) => setTicket({ ...ticket, file: base64 })}
-              />
-              {/* <Form.Control
+              </Form.Group>
+              <Form.Group>
+                <FileBase64
+                  type="file"
+                  multiple={false}
+                  onDone={({ base64 }) =>
+                    setTicket({ ...ticket, file: base64 })
+                  }
+                />
+                {/* <Form.Control
                 type="file"
                 name="attach file"
                 onChange={(e) => handleChange("file", e.target.files[0])}
               /> */}
-            </Form.Group>
-            <Button className="btn-submit" type="submit">
-              submit
-            </Button>
-          </Form>
+              </Form.Group>
+              <Button className="btn-submit" type="submit">
+                submit
+              </Button>
+            </Form>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

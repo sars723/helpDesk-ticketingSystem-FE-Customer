@@ -12,7 +12,13 @@ const mapDispatchToProps = (dispatch) => ({
   getCurrentUser: () => dispatch(setCurrentUserAction()),
 });
 
-const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
+const BottomHeader = ({
+  location,
+  tickets,
+  getTickets,
+  currentUser,
+  getCurrentUser,
+}) => {
   const [unanswerdT, setUnanswerdT] = useState([]);
   const [unclosedT, setUnclosedT] = useState([]);
   const [unassignedT, setUnassignedT] = useState([]);
@@ -48,19 +54,86 @@ const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
       (ticket) => ticket.assignedTo === currentUser._id
     );
     setAssignedToCurrentUserT(assignedToCurrentUserTickets);
-    getTickets();
   };
 
   useEffect(() => {
+    getCurrentUser();
     getTickets();
-    filterTickets();
   }, []);
 
+  useEffect(() => {
+    filterTickets();
+  }, [tickets]);
+
   return (
-    <div className="bottom-header">
+    <div className="main__cards">
+      <div className="card">
+        {/* icon */}
+        <div className="card_inner">
+          <p className="text-primary-p">Unanswered Tickets</p>
+          <span className="font-bold text-title">
+            {tickets && unanswerdT.length}
+          </span>
+        </div>
+      </div>
+
+      <div className="card">
+        {/* icon */}
+        <div className="card_inner">
+          <p className="text-primary-p">Unclosed Tickets</p>
+          <span className="font-bold text-title">
+            {tickets && unclosedT.length}
+          </span>
+        </div>
+      </div>
+
+      <div className="card">
+        {/* icon */}
+        <div className="card_inner">
+          <p className="text-primary-p">Unassigned Tickets</p>
+          <span className="font-bold text-title">
+            {tickets && unassignedT.length}
+          </span>
+        </div>
+      </div>
+      {console.log(currentUser, " current user")}
+      {currentUser.role === "admin" || currentUser.role === "support-team" ? (
+        <div className="card">
+          {/* icon */}
+
+          <div className="card_inner">
+            <p className="text-primary-p">Assigned to you</p>
+            <span className="font-bold text-title">
+              {console.log(
+                assignedToCurrentUserT.length,
+                "assigned to current user"
+              )}
+              {tickets && assignedToCurrentUserT.length}
+            </span>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      <div className="card">
+        {/* icon */}
+        <div className="card_inner">
+          <p className="text-primary-p">All Tickets</p>
+          <span className="font-bold text-title">
+            {tickets && tickets.length}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+{
+  /* <div className="bottom-header ">
       {(currentUser && currentUser.role === "admin") ||
       (currentUser && currentUser.role === "support-team") ? (
-        <ul className="bottom-header-ticket-menu">
+        <ul className="bottom-header-ticket-menu d-flex justify-content-between">
           <li className={unansweredClass}>
             <Link className="nav-link " to="/unansweredTicketsAdmin">
               Unanswered <span>({tickets && unanswerdT.length})</span>
@@ -82,7 +155,7 @@ const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
               to="/assignedToCurrentAgentTicketsAdmin"
             >
               Assigned to you{" "}
-              {/*  {console.log(assignedToCurrentUserT, "lengthhhhhhhhh")} */}
+             
               <span>({tickets && assignedToCurrentUserT.length})</span>
             </Link>
           </li>{" "}
@@ -116,9 +189,8 @@ const BottomHeader = ({ location, tickets, getTickets, currentUser }) => {
           </li>
         </ul>
       )}
-    </div>
-  );
-};
+    </div> */
+}
 
 export default connect(
   mapStateToProps,

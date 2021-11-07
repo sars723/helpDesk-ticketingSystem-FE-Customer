@@ -67,7 +67,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
   }, []);
   console.log(users, "usrs dropdown", ticket, "ticket");
   return (
-    <div className="ticket-detail-edit col-md-4 pl-4 ticket-detail-status">
+    <div className="ticket-detail-edit col-md-5 pl-4 ticket-detail-status">
       <div className="ticket-detail-status-header">
         {console.log(ticketDetail.priority)}
         <p className="mb-0">Details</p>

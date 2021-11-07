@@ -50,6 +50,9 @@ const TicketCategories = ({
     getTickets();
     filterCategories();
   }, []);
+  useEffect(() => {
+    filterCategories();
+  }, [tickets]);
   /*  console.log("tickets ticket categoriess", tickets); */
   return (
     <div className="ticket-categories ">

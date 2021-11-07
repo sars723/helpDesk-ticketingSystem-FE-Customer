@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
-  const [user, setUser] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   const deleteTicket = async () => {
     console.log();
@@ -36,6 +36,7 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
       if (response.ok) {
         alert("ticket deleted successfully");
         getTickets();
+        setShowPopup(false);
       } else {
         alert("sth wrong deleting ticket toAc");
       }
@@ -130,6 +131,7 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
       <td>
         {" "}
         <OverlayTrigger
+          show={showPopup}
           trigger="click"
           key="left"
           placement="left"
@@ -144,7 +146,11 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
             </Popover>
           }
         >
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={showPopup}
+            onChange={() => setShowPopup(!showPopup)}
+          />
         </OverlayTrigger>
       </td>
     </tr>
