@@ -139,7 +139,7 @@ export default App;
 import { useState } from "react";
 import Login from "./components/Login";
 import "./App.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Register from "./components/Register";
 import Header from "./components/header/Header";
 import MainContent from "./components/mainContents/MainContent";
@@ -180,7 +180,7 @@ function App() {
     <div className="container-fluid px-0">
       <Router>
         {/* <Header /> */}
-        {/*  {console.log(window.location.pathname)}
+        {console.log(window.location.pathname)}
         {window.location.pathname !== "/register" &&
         window.location.pathname !== "/login" ? (
           <>
@@ -189,13 +189,14 @@ function App() {
           </>
         ) : (
           ""
-        )} */}
-        <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
-        <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+        )}
+        <Route exact path="/" render={() => <Redirect to="/login" />} />
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
+        {/*  <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
+        <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} /> */}
         <Route
-          path="/"
+          path="/home"
           exact
           render={(routerProps) => <MainContent {...routerProps} />}
         />

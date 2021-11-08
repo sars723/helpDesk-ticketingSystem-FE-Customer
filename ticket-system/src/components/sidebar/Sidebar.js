@@ -1,8 +1,8 @@
 import "./Sidebar.css";
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import Logo from "../assets/helpDeskLogo.png";
+import { Link, NavLink } from "react-router-dom";
+import Logo from "../assets/logoHelpDesk2.png";
 
 import {
   setCurrentUserAction,
@@ -75,6 +75,21 @@ const Sidebar = ({
     setAssignedToCurrentUserT(assignedToCurrentUserTickets);
   };
 
+  /*   const allClass =
+    location.pathname === "/home" ? "nav-link active" : "nav-link ";
+  const manageUserClass = location.pathname.match(/^\/manageUsers/)
+    ? "nav-link active"
+    : "nav-link ";
+  const addUserClass = location.pathname.match(/^\/addUsers/)
+    ? "nav-link active"
+    : "nav-link";
+  const newTicketClass = location.pathname.match(/^\/newTicket/)
+    ? "nav-link active"
+    : "nav-link ";
+  const newTicketClass = location.pathname.match(/^\/newTicket/)
+    ? "nav-link active"
+    : "nav-link "; */
+
   useEffect(() => {
     getCurrentUser();
 
@@ -110,165 +125,275 @@ const Sidebar = ({
       {(currentUser && currentUser.role === "admin") ||
       (currentUser && currentUser.role === "support-team") ? (
         <div className="sidebar__menu">
-          <div className="sidebar__link active_menu_link">
-            <Link to="/" className="nav-link">
+          <div className="sidebar__link ">
+            <NavLink
+              to="/home"
+              className="nav-link"
+              activeClassName="active_menu_link"
+            >
               <i className="fa fa-inbox mr-2"></i>Tickets
-            </Link>
+            </NavLink>
           </div>
           <div className="only-mobile d-none">
             <div className="sidebar__link active_menu_link">
-              <Link to="/manageUsers" className="nav-link">
+              <NavLink
+                activeClassName="active_menu_link"
+                to="/manageUsers"
+                className="nav-link"
+              >
                 <i className="fa fa-fw fa-users mr-2"></i>ManageUsers
-              </Link>
+              </NavLink>
             </div>
             <div className="sidebar__link active_menu_link">
-              <Link to="/addUsers" className="nav-link">
+              <NavLink
+                activeClassName="active_menu_link"
+                to="/addUsers"
+                className="nav-link"
+              >
                 <i className="fa fa-fw fa-plus mr-2"></i>Add Users
-              </Link>
+              </NavLink>
             </div>
             <div className="sidebar__link active_menu_link">
-              <Link to="/newTicket" className="nav-link">
+              <NavLink
+                activeClassName="active_menu_link"
+                to="/newTicket"
+                className="nav-link"
+              >
                 <i className="fa fa-plus-square mr-2"></i>New ticket
-              </Link>
+              </NavLink>
             </div>
           </div>
           <h2> Status</h2>
           <div className="sidebar__link">
-            <Link className="nav-link " to="/unansweredTicketsAdmin">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/unansweredTicketsAdmin"
+            >
               Unanswered <span>({tickets && unanswerdT.length})</span>
-            </Link>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link className="nav-link " to="/unclosedTicketsAdmin">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/unclosedTicketsAdmin"
+            >
               Unclosed <span>({tickets && unclosedT.length})</span>
-            </Link>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link className="nav-link " to="/unassignedTicketsAdmin">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/unassignedTicketsAdmin"
+            >
               Unassigned <span>({tickets && unassignedT.length})</span>
-            </Link>
+            </NavLink>
           </div>
 
           <div className="sidebar__link">
-            <Link
+            <NavLink
+              activeClassName="active_menu_link"
               className="nav-link "
               to="/assignedToCurrentAgentTicketsAdmin"
             >
               Assigned to you{" "}
               <span>({tickets && assignedToCurrentUserT.length})</span>
-            </Link>
+            </NavLink>
           </div>
 
-          <div className="sidebar__link">
-            <Link className="nav-link " to="/">
+          {/*     <div className="sidebar__link">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/home"
+            >
               All <span>({tickets && tickets.length})</span>
-            </Link>
-          </div>
+            </NavLink>
+          </div> */}
           <h2>Categories</h2>
-          <div className="sidebar__link">
-            <Link to="/" className="nav-link">
+          {/*    <div className="sidebar__link">
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/home"
+              className="nav-link"
+            >
               All categories <span>({tickets && tickets.length})</span>
-            </Link>
-          </div>
+            </NavLink>
+          </div> */}
           <div className="sidebar__link">
-            <Link to="/generalSalesCategoryTicketsAdmin" className="nav-link">
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/generalSalesCategoryTicketsAdmin"
+              className="nav-link"
+            >
               General Sales <span>({tickets && generalIssueCT.length})</span>
-            </Link>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link to="/paymentIssueCategoryTicketsAdmin" className="nav-link">
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/paymentIssueCategoryTicketsAdmin"
+              className="nav-link"
+            >
               Payment Issue <span>({tickets && paymentIssueCT.length})</span>
-            </Link>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link to="/hardwareIssueCategoryTicketsAdmin" className="nav-link">
+            <NavLink
+              to="/hardwareIssueCategoryTicketsAdmin"
+              className="nav-link"
+              activeClassName="active_menu_link"
+            >
               Hardware Issue <span>({tickets && HardwareIssueCT.length})</span>
-            </Link>
+            </NavLink>
           </div>
 
           <div className="sidebar__link">
-            <Link to="/softwareIssueCategoryTicketsAdmin" className="nav-link">
+            <NavLink
+              to="/softwareIssueCategoryTicketsAdmin"
+              className="nav-link"
+              activeClassName="active_menu_link"
+            >
               Software Issue <span>({tickets && softwareIssueCT.length})</span>
-            </Link>
+            </NavLink>
           </div>
 
           <div className="sidebar__logout mt-0">
-            <Link to="/login" className=" nav-link">
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/login"
+              className=" nav-link"
+            >
               {" "}
               <i className="fa fa-power-off mr-2"></i>
               Log Out
-            </Link>
+            </NavLink>
           </div>
         </div>
       ) : (
         <div className="sidebar__menu">
-          <div className="sidebar__link active_menu_link">
-            <Link to="/" className="nav-link">
-              <i className="fa fa-inbox"></i>Tickets
-            </Link>
+          <div className="sidebar__link ">
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/home"
+              className="nav-link"
+            >
+              <i className="fa fa-inbox mr-2"></i>Tickets
+            </NavLink>
+          </div>
+          <div className="only-mobile d-none">
+            <div className="sidebar__link ">
+              <NavLink
+                activeClassName="active_menu_link"
+                to="/newTicket"
+                className="nav-link"
+              >
+                <i className="fa fa-plus-square mr-2"></i>New ticket
+              </NavLink>
+            </div>
           </div>
           <h2> Status</h2>
           <div className="sidebar__link">
-            <Link className="nav-link " to="/unansweredTicketsUser">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/unansweredTicketsUser"
+            >
               Unanswered <span>({myTickets && unanswerdT.length})</span>
-            </Link>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link className="nav-link " to="/unclosedTicketsUser">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/unclosedTicketsUser"
+            >
               Unclosed <span>({myTickets && unclosedT.length})</span>
-            </Link>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link className="nav-link " to="/unassignedTicketsUser">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/unassignedTicketsUser"
+            >
               Unassigned <span>({myTickets && unassignedT.length})</span>
-            </Link>
+            </NavLink>
           </div>
 
-          <div className="sidebar__link">
-            <Link className="nav-link " to="/">
+          {/*  <div className="sidebar__link">
+            <NavLink
+              activeClassName="active_menu_link"
+              className="nav-link "
+              to="/home"
+            >
               All <span>({myTickets && myTickets.length})</span>
-            </Link>
-          </div>
+            </NavLink>
+          </div> */}
           <h2>Categories</h2>
-          <div className="sidebar__link">
-            <Link to="/" className="nav-link">
+          {/* <div className="sidebar__link">
+            <Link
+              activeClassName="active_menu_link"
+              to="/home"
+              className="nav-link"
+            >
               <p>All categories</p>
             </Link>
             <span>{myTickets && myTickets.length}</span>
+          </div> */}
+          <div className="sidebar__link">
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/generalSalesCategoryTicketsUser"
+              className="nav-link"
+            >
+              General Sales <span>({myTickets && generalIssueCT.length})</span>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link to="/generalSalesCategoryTicketsUser" className="nav-link">
-              <p>General Sales</p>
-            </Link>
-            <span>{myTickets && generalIssueCT.length}</span>
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/paymentIssueCategoryTicketsUser"
+              className="nav-link"
+            >
+              Payment Issue <span>({myTickets && paymentIssueCT.length})</span>
+            </NavLink>
           </div>
           <div className="sidebar__link">
-            <Link to="/paymentIssueCategoryTicketsUser" className="nav-link">
-              <p>Payment Issue</p>
-            </Link>
-            <span>{myTickets && paymentIssueCT.length}</span>
-          </div>
-          <div className="sidebar__link">
-            <Link to="/hardwareIssueCategoryTicketsUser" className="nav-link">
-              <p>Hardware Issue</p>
-            </Link>
-            <span>{myTickets && HardwareIssueCT.length}</span>
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/hardwareIssueCategoryTicketsUser"
+              className="nav-link"
+            >
+              Hardware Issue{" "}
+              <span>({myTickets && HardwareIssueCT.length})</span>
+            </NavLink>
           </div>
 
           <div className="sidebar__link">
-            <Link to="/softwareIssueCategoryTicketsUser" className="nav-link">
-              <p>Software Issue</p>
-            </Link>
-            <span>{myTickets && softwareIssueCT.length}</span>
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/softwareIssueCategoryTicketsUser"
+              className="nav-link"
+            >
+              Software Issue{" "}
+              <span>({myTickets && softwareIssueCT.length})</span>
+            </NavLink>
           </div>
 
           <div className="sidebar__logout">
-            <Link to="/login" className=" nav-link">
+            <NavLink
+              activeClassName="active_menu_link"
+              to="/login"
+              className=" nav-link"
+            >
               <p className="ml-2 ">
                 {" "}
                 <i className="fa fa-power-off"></i> Log Out
               </p>
-            </Link>
+            </NavLink>
           </div>
         </div>
       )}

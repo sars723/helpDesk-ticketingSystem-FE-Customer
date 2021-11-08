@@ -128,7 +128,7 @@ const Ticket = ({ ticket, history, currentUser }) => {
             <Popover id="popover-positioned-left">
               <Popover.Content>
                 <ul className="d-flex justify-content-between align-items-center mb-1 mt-1">
-                  <li onClick={() => deleteTicket()}>Delete</li>
+                  {/* <li onClick={() => deleteTicket()}>Delete</li> */}
                   <li>Print</li>
                 </ul>
               </Popover.Content>

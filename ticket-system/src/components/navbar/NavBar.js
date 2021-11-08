@@ -27,7 +27,8 @@ const NavBar = ({
   getCurrentUser,
   location,
 }) => {
-  const allClass = location.pathname === "/" ? "nav-link active" : "nav-link ";
+  const allClass =
+    location.pathname === "/home" ? "nav-link active" : "nav-link ";
   const manageUserClass = location.pathname.match(/^\/manageUsers/)
     ? "nav-link active"
     : "nav-link ";
@@ -47,7 +48,7 @@ const NavBar = ({
         <i className="fa fa-bars" aria-hidden="true"></i>
       </div>
       <div className="navbar__left ">
-        <Link to="/" className={allClass}>
+        <Link to="/home" className={allClass}>
           <i className="fa fa-inbox mr-2"></i>Tickets
         </Link>
         <Link to="/newTicket" className={newTicketClass}>
@@ -116,7 +117,7 @@ const NavBar = ({
                   <span className="ml-2 ">Sign Up</span>
                 </Link>
               ) : location.pathname === "/login" ? (
-                <Link to="/" className="dropdown-item nav-link">
+                <Link to="/home" className="dropdown-item nav-link">
                   <span className="ml-2 ">Log In</span>
                 </Link>
               ) : (

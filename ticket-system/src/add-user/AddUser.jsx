@@ -49,7 +49,7 @@ const AddUser = ({ history }) => {
     <main>
       <div className="main__container">
         <div className="row  mt-3">
-          <div className="col-md-4 pr-5 mx-auto ">
+          <div className="col-md-6 pr-5 mx-auto ">
             <div className="add-user-content">
               <h2 className="text-center">Add User</h2>
               <Form onSubmit={handleSubmit}>

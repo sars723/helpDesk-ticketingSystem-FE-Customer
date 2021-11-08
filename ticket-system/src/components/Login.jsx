@@ -25,7 +25,7 @@ const Login = (props) => {
         alert("successfully logged in");
         const token = await response.json();
         window.localStorage.setItem("Token", token.accessToken);
-        props.history.push("/");
+        props.history.push("/home");
       } else {
         alert("sth during login");
       }

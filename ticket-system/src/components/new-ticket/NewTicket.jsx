@@ -64,7 +64,7 @@ const NewTicket = ({ history, currentUser, getCurrentUser }) => {
         <div className="row flex-column">
           <div className="col-8 mx-auto mt-3 new-ticket-wrapper">
             <div className="new-ticket-header  ">
-              <p className="mb-0 p-3">New Ticket</p>
+              <h3 className="text-center mb-0 p-3">New Ticket</h3>
             </div>
             <Form className=" new-ticket-form p-3" onSubmit={handleSubmit}>
               <Form.Group as={Row}>

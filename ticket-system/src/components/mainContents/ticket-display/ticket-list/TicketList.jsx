@@ -34,31 +34,33 @@ const TicketList = ({ searchQuery, getTickets, tickets, sortKeys }) => {
     getTickets();
   }, []);
   return (
-    <Table hover>
-      <thead>
-        <tr>
-          <th>Subject</th>
-          <th>Priority</th>
-          <th>Status</th>
-          <th>Created</th>
-          <th>Due Date</th>
-          <th>Agent</th>
-          <th>Updated</th>
-          <th>
-            <input type="checkbox" />
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {" "}
-        {sortedTickets &&
-          sortedTickets
-            .filter((ticket, i) =>
-              ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            .map((ticket, i) => <Ticket key={i} ticket={ticket} i={i} />)}
-      </tbody>
-    </Table>
+    <div className="ticket-list ticket-display mt-3 row ">
+      <Table hover>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Due Date</th>
+            <th>Agent</th>
+            <th>Updated</th>
+            <th>
+              <input type="checkbox" />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {" "}
+          {sortedTickets &&
+            sortedTickets
+              .filter((ticket, i) =>
+                ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+              .map((ticket, i) => <Ticket key={i} ticket={ticket} i={i} />)}
+        </tbody>
+      </Table>
+    </div>
   );
 };
 

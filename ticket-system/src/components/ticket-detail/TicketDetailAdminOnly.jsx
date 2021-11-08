@@ -430,6 +430,7 @@ const TicketDetailAdminOnly = ({
       );
       if (response.ok) {
         alert("ticket assigned to you");
+        history.push("/home");
       } else {
         alert("sth wrong takeover ticket ticketDetailAdminonly");
       }
@@ -453,7 +454,7 @@ const TicketDetailAdminOnly = ({
           alert("ticket closed");
         else alert("ticket reopened");
 
-        history.push("/");
+        history.push("/home");
       } else {
         alert("sth wrong closing or opening ticket ticketdetailAdminOnly");
       }

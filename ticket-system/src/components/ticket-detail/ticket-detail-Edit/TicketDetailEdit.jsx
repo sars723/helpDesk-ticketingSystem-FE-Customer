@@ -54,7 +54,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
       if (response.ok) {
         alert("ticket updated");
         getUsers();
-        history.push("/");
+        history.push("/home");
       } else {
         alert("sth wrong with updating a ticket, ticket detail edit component");
       }
