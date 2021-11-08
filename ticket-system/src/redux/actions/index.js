@@ -116,6 +116,11 @@ export const setCurrentUserAction = () => {
   };
 };
 
+export const setUserCurrentUser = (payload) => ({
+  type: "SET_CURRENT_USER",
+  payload: payload,
+});
+
 export const setSelectedTicketAction = (ticketID) => {
   return async (dispatch) => {
     try {

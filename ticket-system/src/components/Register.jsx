@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Register.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import logo from "../components/assets/helpDeskLogo.png";
 
 const Register = (props) => {
   const [user, setUser] = useState({
@@ -42,16 +43,23 @@ const Register = (props) => {
   return (
     <main>
       <div className="register ">
+        <div className="nav-register">
+          <div className="row">
+            <div className="col-12">
+              <img src={logo} alt="" />
+            </div>
+          </div>
+        </div>
         <div className="register-container">
           <Form onSubmit={handleSubmit}>
-            <h1 className="text-center">
+            <h2 className="text-center">
               <span className="font-weight-bold ">HelpDeskTS</span>.com
-            </h1>
-            <p className="no-account text-center">
-              Already have an account??
+            </h2>
+            <p className="have-account text-center">
+              Already have an account?{"  "}
               <span className="have-account-login">
                 {" "}
-                <Link to="/login">Log in</Link>
+                <Link to="/login"> Log in</Link>
               </span>
             </p>
             <Form.Group>

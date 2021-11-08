@@ -27,6 +27,13 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
     assignedTo: ticket.assignedTo,
     createdAt: ticket.createdAt,
   });
+  const [sidebarOpen, setsidebarOpen] = useState(false);
+  const openSidebar = () => {
+    setsidebarOpen(true);
+  };
+  const closeSidebar = () => {
+    setsidebarOpen(false);
+  };
 
   const handleChange = (key, value) => {
     setTicketDetail({
@@ -223,11 +230,9 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
                     onChange={(e) => handleChange("sender", e.target.value)}
                   >
                     {users &&
-                      users
-                        .filter((user) => user.role === "user")
-                        .map((team) => (
-                          <option value={team._id}>{team.name}</option>
-                        ))}
+                      users.map((team) => (
+                        <option value={team._id}>{team.name}</option>
+                      ))}
                   </Form.Control>
                   <Button className="btn-submit" type="submit">
                     ok

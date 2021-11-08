@@ -9,9 +9,7 @@ const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getCurrentUser: () => dispatch(setCurrentUserAction()),
-});
+const mapDispatchToProps = (dispatch) => ({});
 const TopHeader = ({ location, getCurrentUser, currentUser }) => {
   const uploadAvatar = async () => {
     /*  try {

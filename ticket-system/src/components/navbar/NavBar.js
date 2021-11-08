@@ -1,12 +1,9 @@
 import "./NavBar.css";
 import { useEffect } from "react";
 import { Form, FormControl, Button, Dropdown, Nav } from "react-bootstrap";
-import { Link, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import {
-  setCurrentUserAction,
-  setSearchValueAction,
-} from "../../redux/actions";
+import { Link, withRouter, Redirect, useHistory } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { setSearchValueAction, setUserCurrentUser } from "../../redux/actions";
 const mapStateToProps = (state) => ({
   searchQuery: state.searchValue.searchQuery,
   currentUser: state.currentUser,
@@ -16,8 +13,8 @@ const mapDispatchToProps = (dispatch) => ({
   setSearchQuery: (searchQuery) => {
     dispatch(setSearchValueAction(searchQuery));
   },
-  getCurrentUser: () => dispatch(setCurrentUserAction()),
 });
+
 const NavBar = ({
   sidebarOpen,
   openSidebar,
@@ -39,9 +36,15 @@ const NavBar = ({
     ? "nav-link active"
     : "nav-link ";
 
-  useEffect(() => {
-    getCurrentUser();
-  }, []);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  useEffect(() => {}, []);
+
+  const logout = () => {
+    dispatch(setUserCurrentUser({}));
+    window.localStorage.clear();
+    history.push("/login");
+  };
   return (
     <nav className="navbar">
       <div className="nav_icon" onClick={() => openSidebar()}>
@@ -121,9 +124,9 @@ const NavBar = ({
                   <span className="ml-2 ">Log In</span>
                 </Link>
               ) : (
-                <Link to="/login" className="dropdown-item nav-link">
+                <a onClick={logout} className="dropdown-item nav-link">
                   <span className="ml-2 "> Log Out</span>
-                </Link>
+                </a>
               )}
             </Dropdown.Item>
           </Dropdown.Menu>

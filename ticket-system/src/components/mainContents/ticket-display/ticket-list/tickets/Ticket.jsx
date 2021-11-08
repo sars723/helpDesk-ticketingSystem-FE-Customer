@@ -5,19 +5,52 @@ import "./Ticket.css";
 import { connect } from "react-redux";
 import moment from "moment";
 import { setCurrentUserAction } from "../../../../../redux/actions";
-
+import axios from "axios";
+import { saveAs } from "file-saver";
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
-const mapDispatchToProps = (dispatch) => ({
-  getCurrentUser: () => dispatch(setCurrentUserAction()),
-});
+const mapDispatchToProps = (dispatch) => ({});
 
-const Ticket = ({ ticket, history, currentUser }) => {
+const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
   /* const [user, setUser] = useState(null); */
-  const deleteTicket = async () => {
-    console.log();
-    try {
+  const createAndDownloadpdf = async () => {
+    /*     const res = await fetch("http://localhost:3004/tickets/create-pdf", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/pdf",
+      },
+      body: JSON.stringify(ticket),
+    });
+    if (res.ok) {
+      alert("success");
+    } */
+
+    axios
+      .post("http://localhost:3004/tickets/create-pdf", ticket, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+        },
+      })
+      .then(() =>
+        axios.get(
+          "http://localhost:3004/tickets/get-pdf",
+          {
+            headers: {
+              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            },
+          },
+          {
+            responseType: "blob",
+          }
+        )
+      )
+      .then((res) => {
+        const pdfBlob = new Blob([res.data], { type: "application/pdf" });
+        saveAs(pdfBlob, "newPdf.pdf");
+      });
+    /* try {
+     
       const response = await fetch(
         "http://localhost:3004/tickets/" + ticket._id,
         {
@@ -32,7 +65,7 @@ const Ticket = ({ ticket, history, currentUser }) => {
       } else {
         alert("sth wrong");
       }
-    } catch (error) {}
+    } catch (error) {} */
   };
 
   /*   const fetchUser = async () => {
@@ -129,7 +162,8 @@ const Ticket = ({ ticket, history, currentUser }) => {
               <Popover.Content>
                 <ul className="d-flex justify-content-between align-items-center mb-1 mt-1">
                   {/* <li onClick={() => deleteTicket()}>Delete</li> */}
-                  <li>Print</li>
+                  <li /* onClick={createAndPrintpdf} */>Print</li>
+                  <li onClick={createAndDownloadpdf}>Download</li>
                 </ul>
               </Popover.Content>
             </Popover>

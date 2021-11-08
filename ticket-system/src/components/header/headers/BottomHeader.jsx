@@ -8,9 +8,7 @@ import "./BottomHeader.css";
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
-const mapDispatchToProps = (dispatch) => ({
-  getCurrentUser: () => dispatch(setCurrentUserAction()),
-});
+const mapDispatchToProps = (dispatch) => ({});
 
 const BottomHeader = ({
   location,
@@ -57,7 +55,6 @@ const BottomHeader = ({
   };
 
   useEffect(() => {
-    getCurrentUser();
     getTickets();
   }, []);
 

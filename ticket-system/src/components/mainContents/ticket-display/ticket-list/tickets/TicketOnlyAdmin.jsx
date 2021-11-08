@@ -58,6 +58,10 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
             history.push("/ticketDetailAdmin/" + ticket._id);
           }}
         >
+          {" "}
+          <span id="hide" className="hide ">
+            Subject:{" "}
+          </span>
           {ticket.subject}
         </h5>
         <div className="user-category">
@@ -77,21 +81,40 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
 
             {ticket.sender.name}
           </p>
+
           <p>
             <i class="fa fa-folder-open"></i>
+            <span id="hide" className="hide ml-2 ">
+              Category:{" "}
+            </span>{" "}
             {ticket.category}
           </p>
         </div>
       </td>
       <td>
         {ticket.priority === "Critical" ? (
-          <Badge variant="danger">{ticket.priority}</Badge>
+          <>
+            <span id="hide" className="hide  ">
+              Priority:
+            </span>
+            <Badge variant="danger">{ticket.priority}</Badge>
+          </>
         ) : (
-          <p>{ticket.priority}</p>
+          <p>
+            {" "}
+            <span id="hide" className="hide ">
+              Priority:{" "}
+            </span>
+            {ticket.priority}
+          </p>
         )}
       </td>
       <td>
         <p>
+          {" "}
+          <span id="hide" className="hide ">
+            Status:{" "}
+          </span>
           <Badge variant={ticket.status === "closed" ? "secondary" : "success"}>
             {ticket.status}
           </Badge>
@@ -99,10 +122,22 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
       </td>
       <td>
         {" "}
-        <p>{moment(ticket.createdAt).fromNow()}</p>
+        <p>
+          {" "}
+          <span id="hide" className="hide ">
+            Created At:{" "}
+          </span>
+          {moment(ticket.createdAt).fromNow()}
+        </p>
       </td>
       <td>
-        <p>{ticket.dueDate && moment(ticket.dueDate).fromNow()}</p>
+        <p>
+          {" "}
+          <span id="hide" className="hide ">
+            Due date:{" "}
+          </span>
+          {ticket.dueDate && moment(ticket.dueDate).fromNow()}
+        </p>
       </td>
       <td>
         {" "}
@@ -123,13 +158,27 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
             users &&
             users
               .filter((user) => user._id === ticket.assignedTo)
-              .map((user) => user.email)
+              .map((user) => (
+                <p>
+                  {" "}
+                  <span id="hide" className="hide ">
+                    Assigned to:{" "}
+                  </span>
+                  {user.email}
+                </p>
+              ))
           )}
         </p>
       </td>
       <td>
         {" "}
-        <p>{moment(ticket.updatedAt).fromNow()}</p>
+        <p>
+          {" "}
+          <span id="hide" className="hide ">
+            Updated At:{" "}
+          </span>
+          {moment(ticket.updatedAt).fromNow()}
+        </p>
       </td>
       <td>
         {" "}

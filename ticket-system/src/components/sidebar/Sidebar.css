@@ -5,6 +5,9 @@
   padding: 20px;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
+
+  /*  width: 300px;
+  position: absolute; */
 }
 
 .sidebar__title {
@@ -108,6 +111,7 @@
   z-index: 9999 !important;
   left: 0 !important;
   position: absolute;
+  /*  top: 0; */
 }
 
 @media only screen and (max-width: 978px) {
@@ -119,7 +123,7 @@
     display: inline;
   }
 }
-@media only screen and (max-width: 978px) {
+@media only screen and (max-width: 1180px) {
   #sidebar .only-mobile {
     display: inline !important;
   }

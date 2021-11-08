@@ -9,6 +9,12 @@
   tr {
     display: block;
   }
+  @media only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+    span.hide {
+      display: inline;
+    }
+  }
 
   /* Hide table headers (but not display: none;, for accessibility) */
   thead tr {
@@ -244,8 +250,8 @@ main {
     margin-bottom: 0;
   }
 
-  .charts {
+  /*  .charts {
     grid-template-columns: 1fr;
     margin-top: 30px;
-  }
+  } */
 }

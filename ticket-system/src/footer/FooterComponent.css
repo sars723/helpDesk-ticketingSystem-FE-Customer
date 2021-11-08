@@ -1,0 +1,16 @@
+.footer {
+  height: 60px;
+  grid-area: footer;
+  background: white;
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  padding-top: 20px;
+  /*  margin-top: 20px; */
+  color: #3d4b64;
+  font-weight: 600;
+  z-index: 9999;
+  /* margin-bottom: 20px; */
+}

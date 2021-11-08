@@ -94,6 +94,8 @@ import {
 } from "../redux/actions";
 import { Table } from "react-bootstrap";
 import BottomHeader from "../components/header/headers/BottomHeader";
+import NavBar from "../components/navbar/NavBar";
+import Sidebar from "../components/sidebar/Sidebar";
 const mapStateToProps = (state) => ({
   tickets: state.ticketAdminOnly.tickets,
   searchQuery: state.searchValue.searchQuery,
@@ -103,7 +105,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCurrentUser: () => dispatch(setCurrentUserAction()),
   getTickets: () => dispatch(setTicketsOnlyAdminAction()),
   getMyTickets: () => dispatch(setTicketsAction()),
 });
@@ -118,6 +119,13 @@ const UnansweredTicketPage = ({
   currentUser,
 }) => {
   const [sortedTickets, setSortedTickets] = useState(null);
+  const [sidebarOpen, setsidebarOpen] = useState(false);
+  const openSidebar = () => {
+    setsidebarOpen(true);
+  };
+  const closeSidebar = () => {
+    setsidebarOpen(false);
+  };
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
@@ -127,7 +135,6 @@ const UnansweredTicketPage = ({
   };
 
   useEffect(async () => {
-    getCurrentUser();
     /* if (currentUser?.role === "admin") { */
     getTickets();
     /*   } */
@@ -138,49 +145,53 @@ const UnansweredTicketPage = ({
     sortTickets(sortKey, ascending);
   }, [tickets]);
   return (
-    <main>
-      <div className="main__container">
-        {/*  {(currentUser && currentUser.role === "admin") ||
+    <div className="container-fluid px-0">
+      <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
+      <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+      <main>
+        <div className="main__container">
+          {/*  {(currentUser && currentUser.role === "admin") ||
         (currentUser && currentUser.role === "support-team") ? ( */}
-        <BottomHeader tickets={tickets} getTickets={getTickets} />
-        {/*  ) : (
+          <BottomHeader tickets={tickets} getTickets={getTickets} />
+          {/*  ) : (
           <BottomHeader tickets={myTickets} getTickets={getMyTickets} />
         )} */}
-        <div className="ticket-list ticket-display mt-3 row ">
-          <Table hover>
-            <thead>
-              <tr>
-                <th>Subject</th>
-                <th>Priority</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Due Date</th>
-                <th>Agent</th>
-                <th>Updated</th>
-                <th>
-                  <input type="checkbox" />
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {" "}
-              {sortedTickets &&
-                sortedTickets
-                  .filter(
-                    (ticket, i) =>
-                      ticket.subject
-                        .toLowerCase()
-                        .includes(searchQuery.toLowerCase()) &&
-                      ticket.messageHistory.length === 0
-                  )
-                  .map((ticket, i) => (
-                    <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-                  ))}
-            </tbody>
-          </Table>
+          <div className="ticket-list ticket-display mt-3 row ">
+            <Table hover>
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th>Due Date</th>
+                  <th>Agent</th>
+                  <th>Updated</th>
+                  <th>
+                    <input type="checkbox" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {" "}
+                {sortedTickets &&
+                  sortedTickets
+                    .filter(
+                      (ticket, i) =>
+                        ticket.subject
+                          .toLowerCase()
+                          .includes(searchQuery.toLowerCase()) &&
+                        ticket.messageHistory.length === 0
+                    )
+                    .map((ticket, i) => (
+                      <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
+                    ))}
+              </tbody>
+            </Table>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 };
 

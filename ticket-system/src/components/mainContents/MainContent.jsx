@@ -66,7 +66,7 @@ export default connect(
 )(withRouter(MainContent));
  */
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./MainContent.css";
 import LeftSidebar from "./left-sidebar/LeftSidebar";
 import { connect } from "react-redux";
@@ -79,6 +79,9 @@ import {
 } from "../../redux/actions";
 import { withRouter } from "react-router";
 import BottomHeader from "../header/headers/BottomHeader";
+import Header from "../header/Header";
+import NavBar from "../navbar/NavBar";
+import Sidebar from "../sidebar/Sidebar";
 const mapStateToProps = (state) => ({
   tickets: state.ticketAdminOnly.tickets,
   myTickets: state.ticket.tickets,
@@ -98,6 +101,13 @@ const MainContent = ({
   tickets,
   myTickets,
 }) => {
+  const [sidebarOpen, setsidebarOpen] = useState(false);
+  const openSidebar = () => {
+    setsidebarOpen(true);
+  };
+  const closeSidebar = () => {
+    setsidebarOpen(false);
+  };
   useEffect(() => {
     getCurrentUser();
     if (currentUser.role === "admin") {
@@ -106,24 +116,28 @@ const MainContent = ({
     getMyTickets();
   }, []);
   return (
-    <main>
-      <div className="main__container">
-        {(currentUser && currentUser.role === "admin") ||
-        (currentUser && currentUser.role === "support-team") ? (
-          <BottomHeader tickets={tickets} getTickets={getTickets} />
-        ) : (
-          <BottomHeader tickets={myTickets} getTickets={getMyTickets} />
-        )}
+    <div className="container-fluid px-0">
+      <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
+      <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+      <main>
+        <div className="main__container">
+          {(currentUser && currentUser.role === "admin") ||
+          (currentUser && currentUser.role === "support-team") ? (
+            <BottomHeader tickets={tickets} getTickets={getTickets} />
+          ) : (
+            <BottomHeader tickets={myTickets} getTickets={getMyTickets} />
+          )}
 
-        {currentUser.role === "admin" ? (
-          <TicketListOnlyAdmin />
-        ) : (
-          <TicketList />
-        )}
-        {/* </div> */}
-        {/*  </div> */}
-      </div>
-    </main>
+          {currentUser.role === "admin" ? (
+            <TicketListOnlyAdmin />
+          ) : (
+            <TicketList />
+          )}
+          {/* </div> */}
+          {/*  </div> */}
+        </div>
+      </main>
+    </div>
   );
 };
 

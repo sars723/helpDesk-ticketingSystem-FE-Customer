@@ -168,28 +168,11 @@ import PaymentIssueCategoryTicketPageUser from "./filtered-pages-user/PaymentIss
 import SoftwareIssueCategoryTicketPageUser from "./filtered-pages-user/SoftwareIssueCategoryTicketPageUser";
 import NavBar from "./components/navbar/NavBar";
 import Sidebar from "./components/sidebar/Sidebar";
+import FooterComponent from "./footer/FooterComponent";
 function App() {
-  const [sidebarOpen, setsidebarOpen] = useState(false);
-  const openSidebar = () => {
-    setsidebarOpen(true);
-  };
-  const closeSidebar = () => {
-    setsidebarOpen(false);
-  };
   return (
-    <div className="container-fluid px-0">
+    <div className="container-fluid-all px-0">
       <Router>
-        {/* <Header /> */}
-        {console.log(window.location.pathname)}
-        {window.location.pathname !== "/register" &&
-        window.location.pathname !== "/login" ? (
-          <>
-            <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
-            <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
-          </>
-        ) : (
-          ""
-        )}
         <Route exact path="/" render={() => <Redirect to="/login" />} />
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
@@ -287,6 +270,7 @@ function App() {
           component={UnclosedTicketPageUser}
         />
         <Route path="/editUsers/:userId" exact component={EditUsers} />
+        {/*  <FooterComponent /> */}
       </Router>
     </div>
   );

@@ -3,7 +3,11 @@ import "./Login.css";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setCurrentUserAction } from "../redux/actions";
+import logo from "../components/assets/helpDeskLogo.png";
 const Login = (props) => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,9 +26,12 @@ const Login = (props) => {
         body: JSON.stringify(user),
       });
       if (response.ok) {
-        alert("successfully logged in");
         const token = await response.json();
         window.localStorage.setItem("Token", token.accessToken);
+
+        dispatch(setCurrentUserAction());
+
+        alert("successfully logged in");
         props.history.push("/home");
       } else {
         alert("sth during login");
@@ -36,11 +43,19 @@ const Login = (props) => {
   return (
     <main>
       <div className="login ">
+        {" "}
+        <div className="nav-login">
+          <div className="row">
+            <div className="col-12">
+              <img src={logo} alt="" />
+            </div>
+          </div>
+        </div>
         <div className="login-container">
           <Form onSubmit={handleSubmit}>
-            <h1 className="text-center">
+            <h2 className="text-center">
               <span className="font-weight-bold ">HelpDeskTS</span>.com
-            </h1>
+            </h2>
             <p className="no-account text-center">
               Don't have an account?
               <span className="no-account-signup">

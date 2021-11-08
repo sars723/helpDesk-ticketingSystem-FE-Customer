@@ -1,58 +1,31 @@
-import React, { useEffect } from "react";
-import TopHeader from "./headers/TopHeader";
-import MiddleHeader from "./headers/MiddleHeader";
-import BottomHeader from "./headers/BottomHeader";
-import "./Header.css";
-import { withRouter } from "react-router";
-import {
-  setCurrentUserAction,
-  setTicketsAction,
-  setTicketsOnlyAdminAction,
-} from "../../redux/actions";
-import { connect } from "react-redux";
-const mapStateToProps = (state) => ({
-  tickets: state.ticketAdminOnly.tickets,
-  myTickets: state.ticket.tickets,
-  currentUser: state.currentUser,
-});
-const mapDispatchToProps = (dispatch) => ({
-  getTickets: () => dispatch(setTicketsOnlyAdminAction()),
-  getMyTickets: () => dispatch(setTicketsAction()),
-  getCurrentUser: () => dispatch(setCurrentUserAction()),
-});
-const Header = ({
-  location,
-  getTickets,
-  getMyTickets,
-  getCurrentUser,
-  tickets,
-  myTickets,
-  currentUser,
-}) => {
-  useEffect(() => {
-    getCurrentUser();
-    if (currentUser.role === "admin") {
-      getTickets();
-    }
-    getMyTickets();
-  }, []);
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import NavBar from "../navbar/NavBar";
+import Sidebar from "../sidebar/Sidebar";
+
+export default function Header() {
+  const history = useHistory();
+  const [sidebarOpen, setsidebarOpen] = useState(false);
+  const openSidebar = () => {
+    setsidebarOpen(true);
+  };
+  const closeSidebar = () => {
+    setsidebarOpen(false);
+  };
+  const token = window.localStorage.getItem("Token");
+
   return (
-    <div className="header">
-      <TopHeader />
-      {location.pathname === "/login" ||
-      location.pathname === "/register" ? null : (
+    <>
+      {token === null ? (
+        history.push("/login")
+      ) : (
         <>
-          <MiddleHeader />
-          {/*  {(currentUser && currentUser.role === "admin") ||
-          (currentUser && currentUser.role === "support-team") ? (
-            <BottomHeader tickets={tickets} getTickets={getTickets} />
-          ) : (
-            <BottomHeader tickets={myTickets} getTickets={getMyTickets} />
-          )} */}
+          <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />
+          <div>
+            <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
+          </div>
         </>
       )}
-    </div>
+    </>
   );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
+}

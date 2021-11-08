@@ -69,3 +69,10 @@
   padding: 0 10px;
   vertical-align: middle;
 }
+@media only screen and (max-width: 855px) {
+  .main__cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+}

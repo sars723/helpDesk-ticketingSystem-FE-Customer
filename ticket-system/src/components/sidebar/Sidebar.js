@@ -75,24 +75,7 @@ const Sidebar = ({
     setAssignedToCurrentUserT(assignedToCurrentUserTickets);
   };
 
-  /*   const allClass =
-    location.pathname === "/home" ? "nav-link active" : "nav-link ";
-  const manageUserClass = location.pathname.match(/^\/manageUsers/)
-    ? "nav-link active"
-    : "nav-link ";
-  const addUserClass = location.pathname.match(/^\/addUsers/)
-    ? "nav-link active"
-    : "nav-link";
-  const newTicketClass = location.pathname.match(/^\/newTicket/)
-    ? "nav-link active"
-    : "nav-link ";
-  const newTicketClass = location.pathname.match(/^\/newTicket/)
-    ? "nav-link active"
-    : "nav-link "; */
-
   useEffect(() => {
-    getCurrentUser();
-
     if (currentUser.role === "admin" || currentUser.role === "support-team") {
       getTickets();
       filterTickets(tickets);
@@ -135,7 +118,7 @@ const Sidebar = ({
             </NavLink>
           </div>
           <div className="only-mobile d-none">
-            <div className="sidebar__link active_menu_link">
+            <div className="sidebar__link ">
               <NavLink
                 activeClassName="active_menu_link"
                 to="/manageUsers"
@@ -144,7 +127,7 @@ const Sidebar = ({
                 <i className="fa fa-fw fa-users mr-2"></i>ManageUsers
               </NavLink>
             </div>
-            <div className="sidebar__link active_menu_link">
+            <div className="sidebar__link ">
               <NavLink
                 activeClassName="active_menu_link"
                 to="/addUsers"
@@ -153,7 +136,7 @@ const Sidebar = ({
                 <i className="fa fa-fw fa-plus mr-2"></i>Add Users
               </NavLink>
             </div>
-            <div className="sidebar__link active_menu_link">
+            <div className="sidebar__link ">
               <NavLink
                 activeClassName="active_menu_link"
                 to="/newTicket"
