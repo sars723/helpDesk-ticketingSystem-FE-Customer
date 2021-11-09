@@ -99,6 +99,9 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
             history.push("/ticketDetail/" + ticket._id);
           }}
         >
+          <span id="hide" className="hide ">
+            Subject:{" "}
+          </span>
           {ticket.subject}
         </h5>
         <div className="user-category">
@@ -110,6 +113,9 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
 
           <p>
             <i className="fa fa-folder-open"></i>
+            <span id="hide" className="hide ml-2 ">
+              Category:{" "}
+            </span>{" "}
             {ticket.category}
           </p>
         </div>
@@ -118,11 +124,21 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
         {ticket.priority === "Critical" ? (
           <Badge variant="danger">{ticket.priority}</Badge>
         ) : (
-          <p>{ticket.priority}</p>
+          <p>
+            {" "}
+            <span id="hide" className="hide ">
+              Priority:{" "}
+            </span>
+            {ticket.priority}
+          </p>
         )}
       </td>
       <td>
         <p>
+          {" "}
+          <span id="hide" className="hide ">
+            Status:{" "}
+          </span>
           <Badge variant={ticket.status === "closed" ? "secondary" : "success"}>
             {ticket.status}
           </Badge>
@@ -130,10 +146,21 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
       </td>
       <td>
         {" "}
-        <p>{moment(ticket.createdAt).fromNow()}</p>
+        <p>
+          {" "}
+          <span id="hide" className="hide ">
+            Created At:{" "}
+          </span>
+          {moment(ticket.createdAt).fromNow()}
+        </p>
       </td>
       <td>
-        <p>{ticket.dueDate && moment(ticket.dueDate).fromNow()}</p>
+        <p>
+          <span id="hide" className="hide ">
+            Due date:{" "}
+          </span>
+          {ticket.dueDate && moment(ticket.dueDate).fromNow()}
+        </p>
       </td>
       <td>
         {" "}

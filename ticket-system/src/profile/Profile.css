@@ -3,7 +3,6 @@
   height: 100vh;
 }
 .profile-content {
-  margin-top: 40px;
   background: #fafafa;
   padding: 20px;
   border-radius: 5px;
@@ -14,6 +13,11 @@
   margin-right: 20px;
 }
 .profile-content .btn-submit {
-  background-color: #6fc4ed !important;
+  background: #6f7a8b;
+  border: none;
+}
+
+.profile-content .btn-submit:hover {
+  background: #565e6b;
   border: none;
 }

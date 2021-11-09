@@ -4,8 +4,6 @@ import "./NewTicket.css";
 import { withRouter } from "react-router";
 import FileBase64 from "react-file-base64";
 import { connect } from "react-redux";
-import { setCurrentUserAction } from "../../redux/actions";
-import Header from "../header/Header";
 import NavBar from "../navbar/NavBar";
 import Sidebar from "../sidebar/Sidebar";
 const mapStateToProps = (state) => ({
@@ -22,7 +20,7 @@ const intTicket = {
   file: "",
 };
 
-const NewTicket = ({ history, currentUser, getCurrentUser }) => {
+const NewTicket = ({ history, currentUser }) => {
   const [ticket, setTicket] = useState(intTicket);
   const [sidebarOpen, setsidebarOpen] = useState(false);
   const openSidebar = () => {

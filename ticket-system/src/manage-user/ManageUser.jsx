@@ -67,7 +67,7 @@ const ManageUser = ({ users, getUsers, history }) => {
       <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
       <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
       <main>
-        <div className="main__container">
+        <div className="main__container mt-5">
           <Table responsive="sm">
             <thead>
               <tr>
@@ -85,10 +85,41 @@ const ManageUser = ({ users, getUsers, history }) => {
                 users.map((user, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td>{user.name}</td> <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td>{user.department}</td>
-                    <td>{Moment(user.createdAt).format("DD/MM/YY")}</td>
+                    <td>
+                      {" "}
+                      <span id="hide" className="hide ">
+                        Name:{" "}
+                      </span>
+                      {user.name}
+                    </td>{" "}
+                    <td>
+                      {" "}
+                      <span id="hide" className="hide ">
+                        Email:{" "}
+                      </span>
+                      {user.email}
+                    </td>
+                    <td>
+                      {" "}
+                      <span id="hide" className="hide ">
+                        Role:{" "}
+                      </span>
+                      {user.role}
+                    </td>
+                    <td>
+                      {" "}
+                      <span id="hide" className="hide ">
+                        Department:{" "}
+                      </span>
+                      {user.department}
+                    </td>
+                    <td>
+                      {" "}
+                      <span id="hide" className="hide ">
+                        Created At:{" "}
+                      </span>
+                      {Moment(user.createdAt).format("DD/MM/YY")}
+                    </td>
                     <td className="d-flex justify-content-between">
                       <Button
                         variant="secondary"

@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import { Form, FormControl, Button, Dropdown, Nav } from "react-bootstrap";
 import { Link, withRouter, Redirect, useHistory } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { setSearchValueAction, setUserCurrentUser } from "../../redux/actions";
+import {
+  setSearchValueAction /* setUserCurrentUser */,
+} from "../../redux/actions";
 const mapStateToProps = (state) => ({
   searchQuery: state.searchValue.searchQuery,
   currentUser: state.currentUser,
@@ -41,7 +43,7 @@ const NavBar = ({
   useEffect(() => {}, []);
 
   const logout = () => {
-    dispatch(setUserCurrentUser({}));
+    /*  dispatch(setUserCurrentUser({})); */
     window.localStorage.clear();
     history.push("/login");
   };

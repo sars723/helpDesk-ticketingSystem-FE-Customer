@@ -92,6 +92,9 @@ const EditUsers = ({ users, getUsers, match, history }) => {
                     {" "}
                     <td>
                       {" "}
+                      <span id="hide" className="hide ">
+                        Name:{" "}
+                      </span>
                       <Form.Control
                         type="text"
                         value={user.name}
@@ -100,6 +103,9 @@ const EditUsers = ({ users, getUsers, match, history }) => {
                     </td>
                     <td>
                       {" "}
+                      <span id="hide" className="hide ">
+                        Email:{" "}
+                      </span>
                       <Form.Control
                         type="email"
                         value={user.email}
@@ -107,6 +113,9 @@ const EditUsers = ({ users, getUsers, match, history }) => {
                       />
                     </td>
                     <td>
+                      <span id="hide" className="hide ">
+                        Role:{" "}
+                      </span>
                       <Form.Control
                         as="select"
                         value={user.role}
@@ -119,6 +128,9 @@ const EditUsers = ({ users, getUsers, match, history }) => {
                       </Form.Control>
                     </td>
                     <td>
+                      <span id="hide" className="hide ">
+                        Department:{" "}
+                      </span>
                       <Form.Control
                         as="select"
                         value={user.department}
@@ -134,11 +146,16 @@ const EditUsers = ({ users, getUsers, match, history }) => {
                         <option value="administration">administration</option>
                       </Form.Control>
                     </td>
-                    <td>{Moment(user.createdAt).format("DD/MM/YY")}</td>
+                    <td>
+                      <span id="hide" className="hide ">
+                        Created At:{" "}
+                      </span>
+                      {Moment(user.createdAt).format("DD/MM/YY")}
+                    </td>
                     <td className="d-flex justify-content-between">
                       <Button
                         variant="secondary"
-                        className="btn-submit"
+                        className="btn-submit mr-2"
                         type="submit"
                       >
                         Edit

@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import LeftSidebar from "../components/mainContents/left-sidebar/LeftSidebar";
-import TicketOnlyAdmin from "../components/mainContents/ticket-display/ticket-list/tickets/TicketOnlyAdmin";
-import {
-  setCurrentUserAction,
-  setTicketsAction,
-  setTicketsOnlyAdminAction,
-} from "../redux/actions";
+import { setTicketsAction } from "../redux/actions";
 import { Table } from "react-bootstrap";
 import BottomHeader from "../components/header/headers/BottomHeader";
 import Ticket from "../components/mainContents/ticket-display/ticket-list/tickets/Ticket";
@@ -15,24 +9,21 @@ import Sidebar from "../components/sidebar/Sidebar";
 const mapStateToProps = (state) => ({
   tickets: state.ticket.tickets,
   searchQuery: state.searchValue.searchQuery,
-  currentUser: state.currentUser,
   sortKeys: state.sortingKey,
   myTickets: state.ticket.tickets,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTickets: () => dispatch(setTicketsOnlyAdminAction()),
   getMyTickets: () => dispatch(setTicketsAction()),
 });
 const PaymentIssueCategoryTicketPageUser = ({
   searchQuery,
-  getCurrentUser,
+
   getMyTickets,
-  getTickets,
+
   tickets,
   myTickets,
   sortKeys,
-  currentUser,
 }) => {
   const [sortedTickets, setSortedTickets] = useState(null);
   const [sidebarOpen, setsidebarOpen] = useState(false);
@@ -51,9 +42,6 @@ const PaymentIssueCategoryTicketPageUser = ({
   };
 
   useEffect(async () => {
-    /* if (currentUser?.role === "admin") {
-     getTickets();
-   } */
     getMyTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);

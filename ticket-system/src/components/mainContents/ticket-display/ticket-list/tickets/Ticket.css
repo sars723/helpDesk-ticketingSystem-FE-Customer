@@ -25,9 +25,18 @@ p {
   font-size: 10px;
   color: #8e8e8e !important;
 }
-/* #popover-positioned-left {
-  width: 50% !important;
-} */
+.hide {
+  display: none;
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 10px;
+}
+@media only screen and (max-width: 760px) {
+  #hide span.hide {
+    display: inline !important;
+  }
+}
+
 .popover {
   max-width: 650px !important;
 }
@@ -38,11 +47,3 @@ p {
   cursor: pointer;
   margin-left: 20px;
 }
-/* @media (max-width: 580px) {
-  .ticket-list table thead {
-    display: none;
-  }
-  .ticket-list table td {
-    display: block;
-  }
-} */

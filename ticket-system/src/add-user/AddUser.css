@@ -4,3 +4,20 @@
   border-radius: 5px;
   box-shadow: 0 0 15px -5px rgb(201, 199, 199);
 }
+.add-user-header {
+  background-color: #6f7a8b;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  /*  margin-left: -15px;
+  margin-right: -15px; */
+  padding: 10px;
+  color: white;
+}
+.add-user-content .btn-submit {
+  background: #6f7a8b;
+  border: none;
+}
+.add-user-content .btn-submit:hover {
+  background: #565e6b;
+  border: none;
+}

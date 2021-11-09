@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { setTicketsAction } from "../../../../redux/actions";
 import Ticket from "./tickets/Ticket";
 import { Table } from "react-bootstrap";
-import Header from "../../../header/Header";
 
 const mapStateToProps = (state) => ({
   tickets: state.ticket.tickets,

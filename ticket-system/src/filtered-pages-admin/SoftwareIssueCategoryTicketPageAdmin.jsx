@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import LeftSidebar from "../components/mainContents/left-sidebar/LeftSidebar";
+
 import TicketOnlyAdmin from "../components/mainContents/ticket-display/ticket-list/tickets/TicketOnlyAdmin";
-import {
-  setCurrentUserAction,
-  setTicketsAction,
-  setTicketsOnlyAdminAction,
-} from "../redux/actions";
+import { setTicketsAction, setTicketsOnlyAdminAction } from "../redux/actions";
 import { Table } from "react-bootstrap";
 import BottomHeader from "../components/header/headers/BottomHeader";
 import NavBar from "../components/navbar/NavBar";
@@ -25,13 +21,12 @@ const mapDispatchToProps = (dispatch) => ({
 });
 const SoftwareIssueCategoryTicketPage = ({
   searchQuery,
-  getCurrentUser,
+
   getMyTickets,
   getTickets,
   tickets,
   myTickets,
   sortKeys,
-  currentUser,
 }) => {
   const [sortedTickets, setSortedTickets] = useState(null);
 
@@ -51,9 +46,8 @@ const SoftwareIssueCategoryTicketPage = ({
   };
 
   useEffect(async () => {
-    /*  if (currentUser?.role === "admin") { */
     getTickets();
-    /*  } */
+
     getMyTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
@@ -66,12 +60,7 @@ const SoftwareIssueCategoryTicketPage = ({
       <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
       <main>
         <div className="main__container">
-          {/*  {(currentUser && currentUser.role === "admin") ||
-        (currentUser && currentUser.role === "support-team") ? ( */}
           <BottomHeader tickets={tickets} getTickets={getTickets} />
-          {/* ) : (
-          <BottomHeader tickets={myTickets} getTickets={getMyTickets} />
-        )} */}
           <div className="ticket-list ticket-display mt-3 row ">
             <Table hover>
               <thead>

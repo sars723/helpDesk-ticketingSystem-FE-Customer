@@ -1,36 +1,9 @@
-.bottom-header {
-  /* background-color: #4c5b6b; */
-}
 @media only screen and (max-width: 600px) {
   .bottom-header {
     display: none;
   }
 }
-.bottom-header-ticket-menu {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  margin: 0;
-  padding: 0 30px;
-  min-height: 37px;
-  /* line-height: 36px; */
-  /*  box-shadow: 0 6px 10px -5px rgb(0 0 0 / 40%); */
-}
-/* .bottom-header-ticket-menu li {
-  list-style: none;
-  margin-right: 24px;
-}
-.bottom-header-ticket-menu li .nav-link {
-  text-decoration: none;
-  color: #c7d4e2;
-  font-weight: bolder;
-}
-.bottom-header-ticket-menu li.active a {
-  background-color: #1d252f;
-  padding: 3px 10px;
-  border-radius: 5px;
-}
- */
+
 .main__cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

@@ -18,9 +18,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getSelectedTicket: (ticketId) => {
+  /* getSelectedTicket: (ticketId) => {
     dispatch(setSelectedMyTicketAction(ticketId));
-  },
+  }, */
 });
 
 const TicketDetail = ({

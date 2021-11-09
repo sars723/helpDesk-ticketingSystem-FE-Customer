@@ -62,7 +62,11 @@ const Profile = ({ currentUser, getCurrentUser, getUsers }) => {
       <main>
         <div className="main__container">
           <div className="row  ">
-            <div className="col-md-6 pr-5 mx-auto ">
+            <div className="col-md-6 mt-5 pr-5 mx-auto ">
+              <div className="add-user-header">
+                {" "}
+                <h6 className="text-center">Profile</h6>
+              </div>
               <div className="profile-content">
                 <Form onSubmit={handleSubmit}>
                   <Form.Group>

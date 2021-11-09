@@ -116,10 +116,10 @@ export const setCurrentUserAction = () => {
   };
 };
 
-export const setUserCurrentUser = (payload) => ({
+/* export const setUserCurrentUser = (payload) => ({
   type: "SET_CURRENT_USER",
   payload: payload,
-});
+}); */
 
 export const setSelectedTicketAction = (ticketID) => {
   return async (dispatch) => {
@@ -175,27 +175,6 @@ export const setSelectedMyTicketAction = (ticketID) => {
   };
 };
 
-export const removeTicketAction = (index) => {
-  return {
-    type: REMOVE_TICKET,
-    payload: index,
-  };
-
-  /*   return async(dispatch)=>{
-    try {
-      const response=await fetch("http://localhost:3004/tickets/"+ticketID,{
-        method:"PUT",
-        headers:{
-          Authorization:`Bearer ${window.localStorage.getItem("Token")}`
-        }
-      })
-      if(response.ok)
-      
-    } catch (error) {
-      
-    }
-  } */
-};
 export const setSortingKeyAction = (sortKey) => {
   return {
     type: SET_SORTING_KEY,
