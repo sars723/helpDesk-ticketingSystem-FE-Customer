@@ -35,7 +35,7 @@ const Profile = ({ currentUser, getCurrentUser, getUsers }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3004/users/me", {
+      const response = await fetch(process.env.REACT_APP_BE_URL + "/users/me", {
         method: "PUT",
         headers: {
           "Content-type": "application/json",

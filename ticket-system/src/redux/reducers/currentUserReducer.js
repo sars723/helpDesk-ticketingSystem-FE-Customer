@@ -8,7 +8,8 @@ const setCurrentUserReducer = (state = initialState.currentUser, action) => {
         ...state,
         ...action.payload,
       };
-
+    case "RESET_CURRENT_USER":
+      return {};
     default:
       return state;
   }

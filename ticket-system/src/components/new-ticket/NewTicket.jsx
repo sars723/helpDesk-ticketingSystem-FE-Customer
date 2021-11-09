@@ -6,10 +6,13 @@ import FileBase64 from "react-file-base64";
 import { connect } from "react-redux";
 import NavBar from "../navbar/NavBar";
 import Sidebar from "../sidebar/Sidebar";
+import { setCurrentUserAction } from "../../redux/actions";
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
+});
 const intTicket = {
   sender: "",
   category: "",
@@ -20,7 +23,7 @@ const intTicket = {
   file: "",
 };
 
-const NewTicket = ({ history, currentUser }) => {
+const NewTicket = ({ history, currentUser, getCurrentUser }) => {
   const [ticket, setTicket] = useState(intTicket);
   const [sidebarOpen, setsidebarOpen] = useState(false);
   const openSidebar = () => {
@@ -39,7 +42,7 @@ const NewTicket = ({ history, currentUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3004/tickets", {
+      const response = await fetch(process.env.REACT_APP_BE_URL + "/tickets", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +64,10 @@ const NewTicket = ({ history, currentUser }) => {
       console.log(error);
     }
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
+
   return (
     <div className="container-fluid px-0">
       <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}

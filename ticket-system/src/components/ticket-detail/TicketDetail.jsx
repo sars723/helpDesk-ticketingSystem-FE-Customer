@@ -44,7 +44,9 @@ const TicketDetail = ({
   const fetchTicket = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3004/users/me/tickets/" + match.params.ticketID,
+        process.env.REACT_APP_BE_URL +
+          "/users/me/tickets/" +
+          match.params.ticketID,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
@@ -79,7 +81,7 @@ const TicketDetail = ({
     };
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/reply/" + ticket._id,
+        process.env.REACT_APP_BE_URL + "/tickets/reply/" + ticket._id,
         {
           method: "PUT",
           headers: {

@@ -35,14 +35,17 @@ const AddUser = ({ history }) => {
       setPasswordError("password dont match");
       return false;
     } else {
-      const response = await fetch("http://localhost:3004/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BE_URL + "/users/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+          body: JSON.stringify(user),
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         console.log("registered", data);

@@ -25,7 +25,7 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
     console.log();
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/" + ticket._id,
+        process.env.REACT_APP_BE_URL + "/tickets/" + ticket._id,
         {
           method: "DELETE",
           headers: {

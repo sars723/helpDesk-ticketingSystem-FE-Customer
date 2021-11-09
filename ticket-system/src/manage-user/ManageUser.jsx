@@ -43,12 +43,15 @@ const ManageUser = ({ users, getUsers, history }) => {
   };
   const deleteUser = async (userId) => {
     try {
-      const response = await fetch("http://localhost:3004/users/" + userId, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
-        },
-      });
+      const response = await fetch(
+        "process.env.REACT_APP_BE_URL/users/" + userId,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          },
+        }
+      );
       if (response.ok) {
         alert("user deleted successfully");
         getUsers();

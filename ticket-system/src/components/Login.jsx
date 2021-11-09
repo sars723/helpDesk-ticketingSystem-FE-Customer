@@ -18,13 +18,16 @@ const Login = (props) => {
       password: password,
     };
     try {
-      const response = await fetch("http://localhost:3004/users/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BE_URL + "/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
       if (response.ok) {
         const token = await response.json();
         window.localStorage.setItem("Token", token.accessToken);

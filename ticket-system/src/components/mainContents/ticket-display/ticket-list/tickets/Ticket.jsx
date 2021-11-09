@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch) => ({});
 const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
   /* const [user, setUser] = useState(null); */
   const createAndDownloadpdf = async () => {
-    /*     const res = await fetch("http://localhost:3004/tickets/create-pdf", {
+    /*     const res = await fetch("process.env.REACT_APP_BE_URL/tickets/create-pdf", {
       method: "POST",
       headers: {
         "Content-type": "application/pdf",
@@ -27,14 +27,14 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
     } */
 
     axios
-      .post("http://localhost:3004/tickets/create-pdf", ticket, {
+      .post(process.env.REACT_APP_BE_URL + "/tickets/create-pdf", ticket, {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
         },
       })
       .then(() =>
         axios.get(
-          "http://localhost:3004/tickets/get-pdf",
+          process.env.REACT_APP_BE_URL + "/tickets/get-pdf",
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
@@ -52,7 +52,7 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
     /* try {
      
       const response = await fetch(
-        "http://localhost:3004/tickets/" + ticket._id,
+        "process.env.REACT_APP_BE_URL/tickets/" + ticket._id,
         {
           method: "DELETE",
           headers: {
@@ -72,7 +72,7 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
     console.log();
     try {
       const response = await fetch(
-        "http://localhost:3004/users/" + ticket.assignedTo,
+        "process.env.REACT_APP_BE_URL/users/" + ticket.assignedTo,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("Token")}`,

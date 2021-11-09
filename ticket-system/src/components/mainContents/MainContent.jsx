@@ -51,6 +51,11 @@ const MainContent = ({
       <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
       <main>
         <div className="main__container">
+          {console.log(
+            "!!!",
+            (currentUser && currentUser.role === "admin") ||
+              (currentUser && currentUser.role === "support-team")
+          )}
           {(currentUser && currentUser.role === "admin") ||
           (currentUser && currentUser.role === "support-team") ? (
             <BottomHeader tickets={tickets} getTickets={getTickets} />

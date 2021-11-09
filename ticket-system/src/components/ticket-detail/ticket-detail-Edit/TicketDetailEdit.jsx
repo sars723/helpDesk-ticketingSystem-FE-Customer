@@ -48,7 +48,7 @@ const TicketDetailEdit = ({ ticket, users, getUsers, tickets, history }) => {
     console.log("submit", ticketDetail);
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/" + ticket._id,
+        process.env.REACT_APP_BE_URL + "/tickets/" + ticket._id,
         {
           method: "PUT",
           headers: {

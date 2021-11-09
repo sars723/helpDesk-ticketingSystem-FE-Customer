@@ -50,7 +50,7 @@ const TicketDetailAdminOnly = ({
   const fetchTicket = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/" + match.params.ticketID,
+        process.env.REACT_APP_BE_URL + "/tickets/" + match.params.ticketID,
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
@@ -79,7 +79,7 @@ const TicketDetailAdminOnly = ({
     };
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/reply/" + ticket._id,
+        process.env.REACT_APP_BE_URL + "/tickets/reply/" + ticket._id,
         {
           method: "PUT",
           headers: {
@@ -102,7 +102,7 @@ const TicketDetailAdminOnly = ({
   const handleDelete = async (msgId) => {
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/message/" + msgId,
+        process.env.REACT_APP_BE_URL + "/tickets/message/" + msgId,
         {
           method: "DELETE",
           headers: {
@@ -123,7 +123,7 @@ const TicketDetailAdminOnly = ({
   const takeOver = async (ticketId) => {
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/" + ticketId,
+        process.env.REACT_APP_BE_URL + "/tickets/" + ticketId,
         {
           method: "PUT",
           headers: {
@@ -146,7 +146,7 @@ const TicketDetailAdminOnly = ({
   const handleClose = async (ticketId) => {
     try {
       const response = await fetch(
-        "http://localhost:3004/tickets/close-ticket/" + ticketId,
+        process.env.REACT_APP_BE_URL + "/tickets/close-ticket/" + ticketId,
         {
           method: "PUT",
           headers: {

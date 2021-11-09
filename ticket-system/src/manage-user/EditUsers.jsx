@@ -41,7 +41,7 @@ const EditUsers = ({ users, getUsers, match, history }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost:3004/users/" + match.params.userId,
+        process.env.REACT_APP_BE_URL + "/users/" + match.params.userId,
         {
           method: "PUT",
           headers: {
