@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
 import TicketOnlyAdmin from "../components/mainContents/ticket-display/ticket-list/tickets/TicketOnlyAdmin";
-import { setTicketsAction, setTicketsOnlyAdminAction } from "../redux/actions";
+import {
+  setCurrentUserAction,
+  setTicketsAction,
+  setTicketsOnlyAdminAction,
+} from "../redux/actions";
 import { Table } from "react-bootstrap";
 import BottomHeader from "../components/header/headers/BottomHeader";
 import NavBar from "../components/navbar/NavBar";
@@ -17,10 +22,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getTickets: () => dispatch(setTicketsOnlyAdminAction()),
   getMyTickets: () => dispatch(setTicketsAction()),
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
 });
 const UnansweredTicketPage = ({
   searchQuery,
-
+  getCurrentUser,
   getMyTickets,
   getTickets,
   tickets,
@@ -35,6 +41,10 @@ const UnansweredTicketPage = ({
   const closeSidebar = () => {
     setsidebarOpen(false);
   };
+
+  const sortedT = sortedTickets?.filter(
+    (ticket, i) => ticket.messageHistory.length === 0
+  );
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
@@ -45,7 +55,7 @@ const UnansweredTicketPage = ({
 
   useEffect(async () => {
     getTickets();
-
+    getCurrentUser();
     getMyTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
@@ -78,7 +88,7 @@ const UnansweredTicketPage = ({
               </thead>
               <tbody>
                 {" "}
-                {sortedTickets &&
+                {sortedTickets && sortedT.length !== 0 ? (
                   sortedTickets
                     .filter(
                       (ticket, i) =>
@@ -89,7 +99,12 @@ const UnansweredTicketPage = ({
                     )
                     .map((ticket, i) => (
                       <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-                    ))}
+                    ))
+                ) : (
+                  <Alert variant="info" style={{ margin: "20px" }}>
+                    no ticket to show!
+                  </Alert>
+                )}
               </tbody>
             </Table>
           </div>

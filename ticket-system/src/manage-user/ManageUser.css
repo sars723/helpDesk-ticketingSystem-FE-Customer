@@ -9,6 +9,6 @@
     display: inline !important;
   }
 }
-i.fa-trash.fas {
+.manage-user i.fa-trash.fas {
   color: white;
 }

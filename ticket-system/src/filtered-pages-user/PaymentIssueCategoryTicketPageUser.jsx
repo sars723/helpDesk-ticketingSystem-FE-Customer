@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setTicketsAction } from "../redux/actions";
 import { Table } from "react-bootstrap";
@@ -33,6 +34,9 @@ const PaymentIssueCategoryTicketPageUser = ({
   const closeSidebar = () => {
     setsidebarOpen(false);
   };
+  const sortedT = sortedTickets?.filter(
+    (ticket, i) => ticket.category === "Payment Issue"
+  );
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
@@ -78,7 +82,7 @@ const PaymentIssueCategoryTicketPageUser = ({
               </thead>
               <tbody>
                 {" "}
-                {sortedTickets &&
+                {sortedTickets && sortedT.length !== 0 ? (
                   sortedTickets
                     .filter(
                       (ticket, i) =>
@@ -89,7 +93,12 @@ const PaymentIssueCategoryTicketPageUser = ({
                     )
                     .map((ticket, i) => (
                       <Ticket key={i} ticket={ticket} i={i} />
-                    ))}
+                    ))
+                ) : (
+                  <Alert variant="info" style={{ margin: "20px" }}>
+                    no ticket to show!
+                  </Alert>
+                )}
               </tbody>
             </Table>
           </div>{" "}

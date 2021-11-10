@@ -155,18 +155,18 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
           {ticket.assignedTo === "" ? (
             <span style={{ color: "lightgrey" }}>not assigned</span>
           ) : (
-            users &&
+            /*  users &&
             users
               .filter((user) => user._id === ticket.assignedTo)
-              .map((user) => (
-                <p>
-                  {" "}
-                  <span id="hide" className="hide ">
-                    Assigned to:{" "}
-                  </span>
-                  {user.email}
-                </p>
-              ))
+              .map((user) => ( */
+            <p>
+              {" "}
+              <span id="hide" className="hide ">
+                Assigned to:{" "}
+              </span>
+              {ticket.assignedTo.email}
+            </p>
+            /*  )) */
           )}
         </p>
       </td>

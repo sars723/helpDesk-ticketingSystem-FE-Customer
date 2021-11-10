@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setTicketsAction } from "../redux/actions";
+import { setCurrentUserAction, setTicketsAction } from "../redux/actions";
 import { Table } from "react-bootstrap";
 import BottomHeader from "../components/header/headers/BottomHeader";
 import Ticket from "../components/mainContents/ticket-display/ticket-list/tickets/Ticket";
@@ -11,19 +12,22 @@ const mapStateToProps = (state) => ({
   searchQuery: state.searchValue.searchQuery,
   sortKeys: state.sortingKey,
   myTickets: state.ticket.tickets,
+  currentUser: state.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
   getMyTickets: () => dispatch(setTicketsAction()),
 });
 const UnansweredTicketPageUser = ({
   searchQuery,
-
+  getCurrentUser,
   getMyTickets,
   getTickets,
   tickets,
   myTickets,
   sortKeys,
+  currentUser,
 }) => {
   const [sortedTickets, setSortedTickets] = useState(null);
   const [sidebarOpen, setsidebarOpen] = useState(false);
@@ -33,6 +37,9 @@ const UnansweredTicketPageUser = ({
   const closeSidebar = () => {
     setsidebarOpen(false);
   };
+  const sortedT = sortedTickets?.filter(
+    (ticket, i) => ticket.messageHistory.length === 0
+  );
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
@@ -46,8 +53,10 @@ const UnansweredTicketPageUser = ({
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
   useEffect(() => {
+    getCurrentUser();
     sortTickets(sortKey, ascending);
   }, [tickets]);
+
   return (
     <div className="container-fluid px-0">
       <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
@@ -73,7 +82,7 @@ const UnansweredTicketPageUser = ({
               </thead>
               <tbody>
                 {" "}
-                {sortedTickets &&
+                {sortedTickets && sortedT.length !== 0 ? (
                   sortedTickets
                     .filter(
                       (ticket, i) =>
@@ -84,7 +93,12 @@ const UnansweredTicketPageUser = ({
                     )
                     .map((ticket, i) => (
                       <Ticket key={i} ticket={ticket} i={i} />
-                    ))}
+                    ))
+                ) : (
+                  <Alert variant="info" style={{ margin: "20px" }}>
+                    no ticket to show!
+                  </Alert>
+                )}
               </tbody>
             </Table>
           </div>{" "}

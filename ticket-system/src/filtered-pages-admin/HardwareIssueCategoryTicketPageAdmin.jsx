@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
 import TicketOnlyAdmin from "../components/mainContents/ticket-display/ticket-list/tickets/TicketOnlyAdmin";
 import {
@@ -30,6 +31,7 @@ const HardwareIssueCategoryTicketPage = ({
   tickets,
   myTickets,
   sortKeys,
+  getCurrentUser,
 }) => {
   const [sortedTickets, setSortedTickets] = useState(null);
   const [sidebarOpen, setsidebarOpen] = useState(false);
@@ -39,6 +41,10 @@ const HardwareIssueCategoryTicketPage = ({
   const closeSidebar = () => {
     setsidebarOpen(false);
   };
+
+  const sortedT = sortedTickets?.filter(
+    (ticket, i) => ticket.category === "Hardware Issue"
+  );
   const { sortKey, ascending } = sortKeys;
 
   const sortTickets = (field, sortAsc) => {
@@ -50,7 +56,7 @@ const HardwareIssueCategoryTicketPage = ({
 
   useEffect(async () => {
     getTickets();
-
+    getCurrentUser();
     getMyTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
@@ -83,7 +89,7 @@ const HardwareIssueCategoryTicketPage = ({
               </thead>
               <tbody>
                 {" "}
-                {sortedTickets &&
+                {sortedTickets && sortedT.length !== 0 ? (
                   sortedTickets
                     .filter(
                       (ticket, i) =>
@@ -94,7 +100,12 @@ const HardwareIssueCategoryTicketPage = ({
                     )
                     .map((ticket, i) => (
                       <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-                    ))}
+                    ))
+                ) : (
+                  <Alert variant="info" style={{ margin: "20px" }}>
+                    no ticket to show!
+                  </Alert>
+                )}
               </tbody>
             </Table>
           </div>

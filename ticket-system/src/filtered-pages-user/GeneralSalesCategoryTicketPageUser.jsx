@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setTicketsAction } from "../redux/actions";
+import { setCurrentUserAction, setTicketsAction } from "../redux/actions";
 import { Table } from "react-bootstrap";
 import BottomHeader from "../components/header/headers/BottomHeader";
 import Ticket from "../components/mainContents/ticket-display/ticket-list/tickets/Ticket";
@@ -15,6 +16,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
   getMyTickets: () => dispatch(setTicketsAction()),
 });
 const GeneralSalesCategoryTicketPageUser = ({
@@ -23,6 +25,7 @@ const GeneralSalesCategoryTicketPageUser = ({
   tickets,
   myTickets,
   sortKeys,
+  getCurrentUser,
 }) => {
   const [sortedTickets, setSortedTickets] = useState(null);
   const [sidebarOpen, setsidebarOpen] = useState(false);
@@ -32,6 +35,10 @@ const GeneralSalesCategoryTicketPageUser = ({
   const closeSidebar = () => {
     setsidebarOpen(false);
   };
+
+  const sortedT = sortedTickets?.filter(
+    (ticket, i) => ticket.category === "General Sales"
+  );
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
@@ -45,6 +52,7 @@ const GeneralSalesCategoryTicketPageUser = ({
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
   useEffect(() => {
+    getCurrentUser();
     sortTickets(sortKey, ascending);
   }, [tickets]);
   return (
@@ -73,7 +81,7 @@ const GeneralSalesCategoryTicketPageUser = ({
               </thead>
               <tbody>
                 {" "}
-                {sortedTickets &&
+                {sortedTickets && sortedT.length !== 0 ? (
                   sortedTickets
                     .filter(
                       (ticket, i) =>
@@ -84,7 +92,12 @@ const GeneralSalesCategoryTicketPageUser = ({
                     )
                     .map((ticket, i) => (
                       <Ticket key={i} ticket={ticket} i={i} />
-                    ))}
+                    ))
+                ) : (
+                  <Alert variant="info" style={{ margin: "20px" }}>
+                    no ticket to show!
+                  </Alert>
+                )}
               </tbody>
             </Table>
           </div>

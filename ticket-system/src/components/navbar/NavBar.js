@@ -85,20 +85,24 @@ const NavBar = ({
         )}
       </div>
       <div className="navbar__right">
-        <Form inline className="search">
-          <Button variant="outline-success">
-            <i className="fa fa-search"></i>
-          </Button>
+        <Form inline className=" wrapper">
+          <i className="fa fa-search search-icon"></i>
+
           <FormControl
             type="text"
             placeholder="Search"
+            className="search"
             id="search-input"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+          <i
+            class="fas fa-times clear-icon"
+            onClick={() => setSearchQuery("")}
+          ></i>
         </Form>
 
-        <Dropdown className="loged-user-info ml-3" autoClose={true}>
+        <Dropdown className="loged-user-info ml-4" autoClose={true}>
           <Dropdown.Toggle>
             <i className="fas fa-user mr-2"></i>
 

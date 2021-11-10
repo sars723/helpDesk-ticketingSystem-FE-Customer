@@ -70,7 +70,7 @@ const Sidebar = ({
     );
     setUnassignedT(unassignedTickets);
     const assignedToCurrentUserTickets = tickets.filter(
-      (ticket) => ticket.assignedTo === currentUser._id
+      (ticket) => ticket.assignedTo._id === currentUser._id
     );
     setAssignedToCurrentUserT(assignedToCurrentUserTickets);
   };
@@ -91,7 +91,7 @@ const Sidebar = ({
       filterTickets(myTickets);
     }
   }, [tickets, myTickets]);
-  console.log("ticket for user", myTickets, tickets);
+  /* console.log("ticket for user", myTickets, tickets); */
   return (
     <div className={sidebarOpen ? "sidebar_responsive" : ""} id="sidebar">
       <div className="sidebar__title">

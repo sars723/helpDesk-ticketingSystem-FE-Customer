@@ -70,7 +70,7 @@ const ManageUser = ({ users, getUsers, history }) => {
       <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}
       <Sidebar sidebarOpen={sidebarOpen} closeSidebar={closeSidebar} />
       <main>
-        <div className="main__container mt-5">
+        <div className="main__container mt-5 manage-user">
           <Table responsive="sm">
             <thead>
               <tr>
