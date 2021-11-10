@@ -19,7 +19,7 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
     axios
       .post(process.env.REACT_APP_BE_URL + "/tickets/create-pdf", ticket, {
         headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          Authorization: `Bearer ${window.localStorage.getItem("AccessToken")}`,
         },
       })
       .then(() =>
@@ -27,7 +27,9 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
           process.env.REACT_APP_BE_URL + "/tickets/get-pdf",
           {
             headers: {
-              Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+              Authorization: `Bearer ${window.localStorage.getItem(
+                "AccessToken"
+              )}`,
             },
           },
           {

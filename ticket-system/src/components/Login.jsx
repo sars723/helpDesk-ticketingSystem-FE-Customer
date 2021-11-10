@@ -30,7 +30,8 @@ const Login = (props) => {
       );
       if (response.ok) {
         const token = await response.json();
-        window.localStorage.setItem("Token", token.accessToken);
+        window.localStorage.setItem("AccessToken", token.accessToken);
+        /* window.localStorage.setItem("RefreshToken", token.refreshToken); */
 
         dispatch(setCurrentUserAction());
 

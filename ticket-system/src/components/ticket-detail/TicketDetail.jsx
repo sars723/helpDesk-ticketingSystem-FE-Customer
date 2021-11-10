@@ -49,7 +49,9 @@ const TicketDetail = ({
           match.params.ticketID,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );
@@ -86,7 +88,9 @@ const TicketDetail = ({
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
           body: JSON.stringify({
             messageHistory: [messageHistory],

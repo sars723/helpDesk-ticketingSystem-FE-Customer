@@ -29,7 +29,9 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );

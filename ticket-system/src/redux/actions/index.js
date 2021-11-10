@@ -18,7 +18,7 @@ export const setUsersAction = () => {
     try {
       const response = await fetch(process.env.REACT_APP_BE_URL + "/users", {
         headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          Authorization: `Bearer ${window.localStorage.getItem("AccessToken")}`,
         },
       });
       if (response.ok) {
@@ -43,7 +43,9 @@ export const setTicketsAction = () => {
         process.env.REACT_APP_BE_URL + "/users/me/tickets",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );
@@ -69,7 +71,7 @@ export const setTicketsOnlyAdminAction = () => {
     try {
       const response = await fetch(process.env.REACT_APP_BE_URL + "/tickets", {
         headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          Authorization: `Bearer ${window.localStorage.getItem("AccessToken")}`,
         },
       });
       if (response.ok) {
@@ -101,13 +103,15 @@ export const setCurrentUserAction = () => {
         process.env.REACT_APP_BE_URL + "/users/me" /* + ticket.sender._id */,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );
       if (response.ok) {
         const fetchedSender = await response.json();
-        /* console.log("fetchedsender or current user", fetchedSender); */
+        console.log("fetchedsender or current user", fetchedSender);
         dispatch({
           type: SET_CURRENT_USER,
           payload: fetchedSender,
@@ -130,11 +134,6 @@ export const resetUserAction = () => {
   };
 };
 
-/* export const setUserCurrentUser = (payload) => ({
-  type: "SET_CURRENT_USER",
-  payload: payload,
-}); */
-
 export const setSelectedTicketAction = (ticketID) => {
   return async (dispatch) => {
     try {
@@ -142,7 +141,9 @@ export const setSelectedTicketAction = (ticketID) => {
         process.env.REACT_APP_BE_URL + "/tickets/" + ticketID,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );
@@ -169,7 +170,9 @@ export const setSelectedMyTicketAction = (ticketID) => {
         process.env.REACT_APP_BE_URL + "/users/me/tickets/" + ticketID,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );

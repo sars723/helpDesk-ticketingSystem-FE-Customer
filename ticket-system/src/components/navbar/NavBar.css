@@ -110,7 +110,7 @@ nav .loged-user-info button:focus {
 }
 .search:hover,
 .search:focus {
-  border: 1.5px solid #34a4ba !important;
+  border: 1px solid #34a4ba !important;
   background-color: white;
 }
 

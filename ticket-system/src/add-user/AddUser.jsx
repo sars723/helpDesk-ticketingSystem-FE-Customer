@@ -41,7 +41,9 @@ const AddUser = ({ history }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
           body: JSON.stringify(user),
         }

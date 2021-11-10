@@ -39,7 +39,7 @@ const Profile = ({ currentUser, getCurrentUser, getUsers }) => {
         method: "PUT",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+          Authorization: `Bearer ${window.localStorage.getItem("AccessToken")}`,
         },
         body: JSON.stringify(user),
       });

@@ -53,7 +53,9 @@ const TicketDetailAdminOnly = ({
         process.env.REACT_APP_BE_URL + "/tickets/" + match.params.ticketID,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );
@@ -84,7 +86,9 @@ const TicketDetailAdminOnly = ({
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
           body: JSON.stringify({
             messageHistory: [messageHistory],
@@ -106,7 +110,9 @@ const TicketDetailAdminOnly = ({
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );
@@ -128,7 +134,9 @@ const TicketDetailAdminOnly = ({
           method: "PUT",
           headers: {
             "Content-type": "application/json",
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
           body: JSON.stringify({ assignedTo: currentUser._id }),
         }
@@ -150,7 +158,9 @@ const TicketDetailAdminOnly = ({
         {
           method: "PUT",
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );

@@ -48,7 +48,9 @@ const ManageUser = ({ users, getUsers, history }) => {
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem("Token")}`,
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "AccessToken"
+            )}`,
           },
         }
       );
