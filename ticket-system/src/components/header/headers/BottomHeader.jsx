@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import TicketSort from "../../mainContents/left-sidebar/ticket-category-sort-status/TicketSort";
 import "./BottomHeader.css";
 
 const mapStateToProps = (state) => ({
@@ -46,7 +47,7 @@ const BottomHeader = ({ tickets, getTickets, currentUser }) => {
   }, [tickets]);
 
   return (
-    <div className="main__cards my-5">
+    <div className="main__cards mt-5">
       <div className="card">
         <img
           src="https://cdn.jitbit.com/helpdesk/images/newtickets.png"
@@ -125,6 +126,10 @@ const BottomHeader = ({ tickets, getTickets, currentUser }) => {
             {tickets && tickets.length}
           </span>
         </div>
+      </div>
+      <div className="sort-tickets">
+        <span>Sort Tickets By</span>
+        <TicketSort />
       </div>
     </div>
   );
