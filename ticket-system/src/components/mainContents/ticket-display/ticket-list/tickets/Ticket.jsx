@@ -167,10 +167,11 @@ const Ticket = ({ ticket, history, currentUser, getCurrentUser }) => {
         {/* <p> {ticket.assignedTo !== "" && user && user.name}</p> */}
         <p>
           {" "}
+          {console.log("ticket assigned to", ticket.assignedTo.email)}
           {ticket.sender === "" ? (
             <span style={{ color: "lightgrey" }}>not assigned</span>
           ) : (
-            ticket.sender.email
+            ticket.assignedTo.email
           )}
         </p>
       </td>

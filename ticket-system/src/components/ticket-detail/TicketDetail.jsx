@@ -210,14 +210,18 @@ const TicketDetail = ({
                             <h6 className="msg-sender">{msg.sender}</h6>
                           </div>
                           <p>{msg.message}</p>
-                          {msg.attachments.length > 0 && (
-                            <img
-                              className="activator my-3"
-                              style={{ height: "400px", objectFit: "contain" }}
-                              src={msg.attachments}
-                            />
-                          )}
                         </div>
+                        {msg.attachments.length > 0 && (
+                          <img
+                            className="activator my-3"
+                            style={{
+                              height: "300px",
+                              objectFit: "contain",
+                              marginLeft: "60px",
+                            }}
+                            src={msg.attachments}
+                          />
+                        )}
                         <p className=" msg-at text-muted">
                           {Moment(msg.msgAt).format("DD/MM/YY  hh:mm")}
                         </p>
