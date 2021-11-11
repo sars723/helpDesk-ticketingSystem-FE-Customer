@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ManageUser.css";
 import { Button, Table, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setUsersAction } from "../redux/actions";
+import { setCurrentUserAction, setUsersAction } from "../redux/actions";
 import { withRouter } from "react-router";
 import Moment from "moment";
 import NavBar from "../components/navbar/NavBar";
@@ -10,11 +10,19 @@ import Sidebar from "../components/sidebar/Sidebar";
 
 const mapStateToProps = (state) => ({
   users: state.user.users,
+  searchQuery: state.searchValue.searchQuery,
 });
 const mapDispatchToProps = (dispatch) => ({
   getUsers: () => dispatch(setUsersAction()),
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
 });
-const ManageUser = ({ users, getUsers, history }) => {
+const ManageUser = ({
+  users,
+  getUsers,
+  history,
+  getCurrentUser,
+  searchQuery,
+}) => {
   /* const [users, setUsers] = useState([]); */
 
   const [editUser, setEditUser] = useState(false);
@@ -44,7 +52,7 @@ const ManageUser = ({ users, getUsers, history }) => {
   const deleteUser = async (userId) => {
     try {
       const response = await fetch(
-        "process.env.REACT_APP_BE_URL/users/" + userId,
+        process.env.REACT_APP_BE_URL + "/users/" + userId,
         {
           method: "DELETE",
           headers: {
@@ -65,6 +73,7 @@ const ManageUser = ({ users, getUsers, history }) => {
     }
   };
   useEffect(() => {
+    getCurrentUser();
     getUsers();
   }, []);
   return (
@@ -87,64 +96,68 @@ const ManageUser = ({ users, getUsers, history }) => {
             </thead>
             <tbody>
               {users.length > 0 &&
-                users.map((user, i) => (
-                  <tr key={i}>
-                    <td>{i + 1}</td>
-                    <td>
-                      {" "}
-                      <span id="hide" className="hide ">
-                        Name:{" "}
-                      </span>
-                      {user.name}
-                    </td>{" "}
-                    <td>
-                      {" "}
-                      <span id="hide" className="hide ">
-                        Email:{" "}
-                      </span>
-                      {user.email}
-                    </td>
-                    <td>
-                      {" "}
-                      <span id="hide" className="hide ">
-                        Role:{" "}
-                      </span>
-                      {user.role}
-                    </td>
-                    <td>
-                      {" "}
-                      <span id="hide" className="hide ">
-                        Department:{" "}
-                      </span>
-                      {user.department}
-                    </td>
-                    <td>
-                      {" "}
-                      <span id="hide" className="hide ">
-                        Created At:{" "}
-                      </span>
-                      {Moment(user.createdAt).format("DD/MM/YY")}
-                    </td>
-                    <td className="d-flex justify-content-between">
-                      <Button
-                        className="edit-user-btn"
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => history.push("/editUsers/" + user._id)}
-                      >
-                        <i class="fas fa-pencil-alt"></i> Edit
-                      </Button>
-                      <Button
-                        className="delete-user-btn"
-                        variant="danger"
-                        size="sm"
-                        onClick={() => deleteUser(user._id)}
-                      >
-                        <i class="fas fa-trash"></i> Delete
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                users
+                  .filter((user, i) =>
+                    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+                  )
+                  .map((user, i) => (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>
+                        {" "}
+                        <span id="hide" className="hide ">
+                          Name:{" "}
+                        </span>
+                        {user.name}
+                      </td>{" "}
+                      <td>
+                        {" "}
+                        <span id="hide" className="hide ">
+                          Email:{" "}
+                        </span>
+                        {user.email}
+                      </td>
+                      <td>
+                        {" "}
+                        <span id="hide" className="hide ">
+                          Role:{" "}
+                        </span>
+                        {user.role}
+                      </td>
+                      <td>
+                        {" "}
+                        <span id="hide" className="hide ">
+                          Department:{" "}
+                        </span>
+                        {user.department}
+                      </td>
+                      <td>
+                        {" "}
+                        <span id="hide" className="hide ">
+                          Created At:{" "}
+                        </span>
+                        {Moment(user.createdAt).format("DD/MM/YY")}
+                      </td>
+                      <td className="d-flex justify-content-between">
+                        <Button
+                          className="edit-user-btn"
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => history.push("/editUsers/" + user._id)}
+                        >
+                          <i class="fas fa-pencil-alt"></i> Edit
+                        </Button>
+                        <Button
+                          className="delete-user-btn"
+                          variant="danger"
+                          size="sm"
+                          onClick={() => deleteUser(user._id)}
+                        >
+                          <i class="fas fa-trash"></i> Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
             </tbody>
           </Table>
         </div>

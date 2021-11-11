@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentUserAction } from "../redux/actions";
 import logo from "../components/assets/helpDeskLogo.png";
+import loginPageImage from "../components/assets/ticketing-system2.png";
 const Login = (props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -55,52 +56,57 @@ const Login = (props) => {
             </div>
           </div>
         </div>
-        <div className="login-container">
-          <Form onSubmit={handleSubmit}>
-            <h2 className="text-center">
-              <span className="font-weight-bold ">HelpDeskTS</span>.com
-            </h2>
-            <p className="no-account text-center">
-              Don't have an account?
-              <span className="no-account-signup">
-                {" "}
-                <Link to="/register">Sign Up</Link>
-              </span>
-            </p>
-            <Form.Group>
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Password</Form.Label>
-              <span className="show-password">Show Password</span>
-              <Form.Control
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <span className="forget-password">Forget my password</span>
-            <Form.Group>
-              <Form.Check type="checkbox" label="Remember me" />
-            </Form.Group>
-            <Button className="btn-login" type="submit">
-              Log in
-            </Button>
-            <hr />
-            <div className="btn-login-google">
-              <Button variant="primary">Login with Google</Button>
-            </div>
-            <div className="btn-login-facebook">
-              <Button>Login with Facebook</Button>
-            </div>
-          </Form>
+        <div className="login-container-all d-flex">
+          <div className="loginPage-image">
+            <img src={loginPageImage} alt="" />
+          </div>{" "}
+          <div className="login-container">
+            <Form onSubmit={handleSubmit}>
+              <h2 className="text-center">
+                <span className="font-weight-bold ">HelpDeskTS</span>.com
+              </h2>
+              <p className="no-account text-center">
+                Don't have an account?
+                <span className="no-account-signup">
+                  {" "}
+                  <Link to="/register">Sign Up</Link>
+                </span>
+              </p>
+              <Form.Group>
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                <span className="show-password">Show Password</span>
+                <Form.Control
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <span className="forget-password">Forget my password</span>
+              <Form.Group>
+                <Form.Check type="checkbox" label="Remember me" />
+              </Form.Group>
+              <Button className="btn-login" type="submit">
+                Log in
+              </Button>
+              <hr />
+              <div className="btn-login-google">
+                <Button variant="primary">Login with Google</Button>
+              </div>
+              <div className="btn-login-facebook">
+                <Button>Login with Facebook</Button>
+              </div>
+            </Form>
+          </div>
         </div>
         <div className="footer">
           <span>©2021 HelpDesk, Inc. All Rights Reserved.</span>
