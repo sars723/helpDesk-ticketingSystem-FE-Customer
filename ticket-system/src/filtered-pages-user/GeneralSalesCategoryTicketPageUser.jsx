@@ -9,7 +9,7 @@ import NavBar from "../components/navbar/NavBar";
 import Sidebar from "../components/sidebar/Sidebar";
 
 const mapStateToProps = (state) => ({
-  tickets: state.ticket.tickets,
+  /*  tickets: state.ticket.tickets, */
   searchQuery: state.searchValue.searchQuery,
   sortKeys: state.sortingKey,
   myTickets: state.ticket.tickets,
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
 const GeneralSalesCategoryTicketPageUser = ({
   searchQuery,
   getMyTickets,
-  tickets,
+  /*  tickets, */
   myTickets,
   sortKeys,
   getCurrentUser,
@@ -42,8 +42,8 @@ const GeneralSalesCategoryTicketPageUser = ({
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
-      ? [].concat(tickets).sort((a, b) => (a[field] > b[field] ? 1 : -1))
-      : [].concat(tickets).sort((a, b) => (a[field] > b[field] ? -1 : 1));
+      ? [].concat(myTickets).sort((a, b) => (a[field] > b[field] ? 1 : -1))
+      : [].concat(myTickets).sort((a, b) => (a[field] > b[field] ? -1 : 1));
     setSortedTickets(sortedTickets);
   };
 
@@ -54,7 +54,7 @@ const GeneralSalesCategoryTicketPageUser = ({
   useEffect(() => {
     getCurrentUser();
     sortTickets(sortKey, ascending);
-  }, [tickets]);
+  }, [myTickets]);
   return (
     <div className="container-fluid px-0">
       <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}

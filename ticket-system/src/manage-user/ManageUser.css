@@ -12,3 +12,6 @@
 .manage-user i.fa-trash.fas {
   color: white;
 }
+.delete-user-btn {
+  margin-left: 10px;
+}

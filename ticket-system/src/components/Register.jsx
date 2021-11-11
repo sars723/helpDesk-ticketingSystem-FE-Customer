@@ -90,7 +90,7 @@ const Register = (props) => {
                 onChange={(e) => handleChange("password", e.target.value)}
               />
             </Form.Group>
-            <span className="forget-password">Forget my password</span>
+            {/*   <span className="forget-password">Forget my password</span> */}
             <Form.Group>
               <Form.Check type="checkbox" label="Remember me" />
             </Form.Group>

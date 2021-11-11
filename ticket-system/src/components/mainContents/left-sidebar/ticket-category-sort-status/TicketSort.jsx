@@ -25,7 +25,7 @@ const TicketSort = ({ setSortKey }) => {
   return (
     <div className="ticket-sort ">
       <div className="col-12">
-        <div className="row align-items-center pb-3">
+        <div className="row align-items-center pb-2">
           <div className="col-9 select-form">
             {
               <Form.Control

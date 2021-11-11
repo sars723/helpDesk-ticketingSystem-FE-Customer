@@ -10,6 +10,7 @@
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
+  box-shadow: 0 1px 12px -2px rgb(0 0 0 / 15%);
 }
 .conversation {
   margin: 0 0 20px 0px !important;
@@ -61,7 +62,8 @@
   box-shadow: 0 1px 12px -2px rgb(0 0 0 / 15%);
 }
 .ticket-detail-status-header {
-  background: #eaeced;
+  color: white;
+  background: #6f7a8b;
   margin-right: -15px;
   margin-left: -24px;
   padding: 10px 20px;

@@ -32,6 +32,9 @@
 .card_inner > span {
   font-size: 20px;
 }
+.sort-tickets {
+  font-size: 14px;
+}
 .new-ticket-btn {
   background: #6f9a43;
   border-radius: 3px;

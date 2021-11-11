@@ -11,9 +11,10 @@ const mapStateToProps = (state) => ({
   users: state.user.users,
 });
 const mapDispatchToProps = (dispatch) => ({
-  getUsers: () => dispatch(setUsersAction()),
+  /*  getUsers: () => dispatch(setUsersAction()), */
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
 });
-const Profile = ({ currentUser, getCurrentUser, getUsers }) => {
+const Profile = ({ currentUser, getCurrentUser /* getUsers */ }) => {
   const [user, setUser] = useState({
     name: currentUser.name,
     email: currentUser.email,
@@ -45,7 +46,7 @@ const Profile = ({ currentUser, getCurrentUser, getUsers }) => {
       });
       if (response.ok) {
         alert("updated successfully");
-        getUsers();
+        /* getUsers(); */
         /*  history.push("/manageUsers"); */
       } else {
         alert("sth wrong with updating user");
@@ -54,7 +55,9 @@ const Profile = ({ currentUser, getCurrentUser, getUsers }) => {
       console.log(error);
     }
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
   return (
     <div className="container-fluid px-0">
       <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}

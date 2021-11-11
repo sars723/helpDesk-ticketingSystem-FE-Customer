@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
-import { setTicketsAction, setTicketsOnlyAdminAction } from "../redux/actions";
+import {
+  setCurrentUserAction,
+  setTicketsAction,
+  setTicketsOnlyAdminAction,
+} from "../redux/actions";
 import { Table } from "react-bootstrap";
 import BottomHeader from "../components/header/headers/BottomHeader";
 import Ticket from "../components/mainContents/ticket-display/ticket-list/tickets/Ticket";
 import NavBar from "../components/navbar/NavBar";
 import Sidebar from "../components/sidebar/Sidebar";
 const mapStateToProps = (state) => ({
-  tickets: state.ticket.tickets,
+  /*  tickets: state.ticket.tickets, */
   searchQuery: state.searchValue.searchQuery,
   sortKeys: state.sortingKey,
   myTickets: state.ticket.tickets,
@@ -16,10 +20,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getMyTickets: () => dispatch(setTicketsAction()),
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
 });
 const HardwareIssueCategoryTicketPageUser = ({
   searchQuery,
-
+  getCurrentUser,
   getMyTickets,
 
   tickets,
@@ -41,17 +46,18 @@ const HardwareIssueCategoryTicketPageUser = ({
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
-      ? [].concat(tickets).sort((a, b) => (a[field] > b[field] ? 1 : -1))
-      : [].concat(tickets).sort((a, b) => (a[field] > b[field] ? -1 : 1));
+      ? [].concat(myTickets).sort((a, b) => (a[field] > b[field] ? 1 : -1))
+      : [].concat(myTickets).sort((a, b) => (a[field] > b[field] ? -1 : 1));
     setSortedTickets(sortedTickets);
   };
   useEffect(async () => {
+    getCurrentUser();
     getMyTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
   useEffect(() => {
     sortTickets(sortKey, ascending);
-  }, [tickets]);
+  }, [myTickets]);
   return (
     <div className="container-fluid px-0">
       <NavBar sidebarOpen={sidebarOpen} openSidebar={openSidebar} />{" "}

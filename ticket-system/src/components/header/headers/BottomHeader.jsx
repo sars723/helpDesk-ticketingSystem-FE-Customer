@@ -20,20 +20,18 @@ const BottomHeader = ({ tickets, getTickets, currentUser }) => {
       (ticket) => ticket.messageHistory.length === 0
     );
     setUnanswerdT(unansweredTickets);
-    const unclosedTickets = tickets.filter(
-      (ticket) => ticket.status === "new" || ticket.status === "assigned"
-    );
+    const unclosedTickets = tickets.filter((ticket) => ticket.status === "new");
     setUnclosedT(unclosedTickets);
     const closedTickets = tickets.filter(
-      (ticket) => ticket.status === "closed" || ticket.status === "assigned"
+      (ticket) => ticket.status === "closed"
     );
     setClosedT(closedTickets);
     const unassignedTickets = tickets.filter(
-      (ticket) => ticket.assignedTo === ""
+      (ticket) => ticket.assignedTo && ticket.assignedTo.email === ""
     );
     setUnassignedT(unassignedTickets);
     const assignedToCurrentUserTickets = tickets.filter(
-      (ticket) => ticket.assignedTo === currentUser._id
+      (ticket) => ticket.assignedTo && ticket.assignedTo._id === currentUser._id
     );
     setAssignedToCurrentUserT(assignedToCurrentUserTickets);
   };

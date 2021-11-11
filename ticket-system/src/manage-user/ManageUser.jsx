@@ -127,6 +127,7 @@ const ManageUser = ({ users, getUsers, history }) => {
                     </td>
                     <td className="d-flex justify-content-between">
                       <Button
+                        className="edit-user-btn"
                         variant="secondary"
                         size="sm"
                         onClick={() => history.push("/editUsers/" + user._id)}
@@ -134,6 +135,7 @@ const ManageUser = ({ users, getUsers, history }) => {
                         <i class="fas fa-pencil-alt"></i> Edit
                       </Button>
                       <Button
+                        className="delete-user-btn"
                         variant="danger"
                         size="sm"
                         onClick={() => deleteUser(user._id)}

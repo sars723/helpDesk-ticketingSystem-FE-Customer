@@ -23,8 +23,7 @@ const UnansweredTicketPageUser = ({
   searchQuery,
   getCurrentUser,
   getMyTickets,
-  getTickets,
-  tickets,
+
   myTickets,
   sortKeys,
   currentUser,
@@ -43,19 +42,20 @@ const UnansweredTicketPageUser = ({
   const { sortKey, ascending } = sortKeys;
   const sortTickets = (field, sortAsc) => {
     const sortedTickets = sortAsc
-      ? [].concat(tickets).sort((a, b) => (a[field] > b[field] ? 1 : -1))
-      : [].concat(tickets).sort((a, b) => (a[field] > b[field] ? -1 : 1));
+      ? [].concat(myTickets).sort((a, b) => (a[field] > b[field] ? 1 : -1))
+      : [].concat(myTickets).sort((a, b) => (a[field] > b[field] ? -1 : 1));
     setSortedTickets(sortedTickets);
   };
 
   useEffect(async () => {
+    getCurrentUser();
     getMyTickets();
     sortTickets(sortKey, ascending);
   }, [sortKey, ascending]);
   useEffect(() => {
     getCurrentUser();
     sortTickets(sortKey, ascending);
-  }, [tickets]);
+  }, [myTickets]);
 
   return (
     <div className="container-fluid px-0">

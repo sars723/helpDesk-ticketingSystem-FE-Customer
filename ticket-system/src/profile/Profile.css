@@ -17,7 +17,8 @@
   border: none;
 }
 
-.profile-content .btn-submit:hover {
+.profile-content .btn-submit:hover,
+.profile-content .btn-submit:visited {
   background: #565e6b;
   border: none;
 }

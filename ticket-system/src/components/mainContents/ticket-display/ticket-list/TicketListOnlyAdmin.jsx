@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 import { connect } from "react-redux";
 import { setTicketsOnlyAdminAction } from "../../../../redux/actions";
 import { Table } from "react-bootstrap";
@@ -53,14 +54,19 @@ const TicketList = ({ searchQuery, getTickets, tickets, sortKeys }) => {
         </thead>
         <tbody>
           {" "}
-          {sortedTickets &&
+          {sortedTickets && sortedTickets.length !== 0 ? (
             sortedTickets
               .filter((ticket, i) =>
                 ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
               )
               .map((ticket, i) => (
                 <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-              ))}
+              ))
+          ) : (
+            <Alert variant="info" style={{ margin: "20px" }}>
+              no ticket to show!
+            </Alert>
+          )}
         </tbody>
       </Table>
     </div>

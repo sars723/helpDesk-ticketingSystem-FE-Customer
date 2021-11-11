@@ -1,9 +1,9 @@
 .ticket-sort {
   background: #fdfcfd;
-  padding-top: 12px;
+  padding-top: 10px;
   border-radius: 5px;
   box-shadow: 0 1px 12px -2px rgb(0 0 0 / 15%);
-  margin-bottom: 25px;
+
   font-size: 12px;
 }
 .form-control {
