@@ -8,9 +8,13 @@ import Moment from "moment";
 import FileBase64 from "react-file-base64";
 
 import { connect } from "react-redux";
-import { setSelectedMyTicketAction } from "../../redux/actions/index.js";
+import {
+  setCurrentUserAction,
+  setSelectedMyTicketAction,
+} from "../../redux/actions/index.js";
 import NavBar from "../navbar/NavBar";
 import Sidebar from "../sidebar/Sidebar";
+import TicketDetailUser from "./ticket-detail-Edit/TicketDetailUser";
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
@@ -18,14 +22,17 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  /* getSelectedTicket: (ticketId) => {
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
+  getSelectedTicket: (ticketId) => {
     dispatch(setSelectedMyTicketAction(ticketId));
-  }, */
+  },
 });
 
 const TicketDetail = ({
   match,
-  currentUser /*  ticket, getSelectedTicket */,
+  currentUser,
+  getCurrentUser,
+  getSelectedTicket /*  ticket, getSelectedTicket */,
 }) => {
   const [msgHistory, setMsgHistory] = useState({
     message: "",
@@ -108,8 +115,9 @@ const TicketDetail = ({
 
   useEffect(
     async () => {
+      getCurrentUser();
       fetchTicket();
-      /* getSelectedTicket(match.params.ticketID); */
+      getSelectedTicket(match.params.ticketID);
     },
     [
       /* msgHistory, ticket.messageHistory */
@@ -233,6 +241,7 @@ const TicketDetail = ({
                     ))}
               </div>
             </div>
+            {ticket && <TicketDetailUser ticket={ticket} />}
           </div>
         </div>
       </main>

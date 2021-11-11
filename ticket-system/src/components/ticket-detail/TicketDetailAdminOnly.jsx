@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 /* import { setSelectedTicketAction } from "../../redux/actions/index.js"; */
 import Sidebar from "../sidebar/Sidebar";
 import NavBar from "../navbar/NavBar";
+import { setCurrentUserAction } from "../../redux/actions";
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
@@ -18,13 +19,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getCurrentUser: () => dispatch(setCurrentUserAction()),
   /* getSelectedTicket: (ticketId) => dispatch(setSelectedTicketAction(ticketId)), */
 });
 
 const TicketDetailAdminOnly = ({
   match,
   currentUser,
-
+  getCurrentUser,
   history,
 }) => {
   const [msgHistory, setMsgHistory] = useState({
@@ -178,6 +180,7 @@ const TicketDetailAdminOnly = ({
     }
   };
   useEffect(() => {
+    getCurrentUser();
     fetchTicket();
   }, []);
 

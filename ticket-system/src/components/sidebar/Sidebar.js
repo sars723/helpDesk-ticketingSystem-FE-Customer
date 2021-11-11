@@ -70,7 +70,7 @@ const Sidebar = ({
     );
     setUnassignedT(unassignedTickets);
     const assignedToCurrentUserTickets = tickets.filter(
-      (ticket) => ticket.assignedTo._id === currentUser._id
+      (ticket) => ticket.assignedTo?._id === currentUser._id
     );
     setAssignedToCurrentUserT(assignedToCurrentUserTickets);
   };
@@ -186,25 +186,8 @@ const Sidebar = ({
             </NavLink>
           </div>
 
-          {/*     <div className="sidebar__link">
-            <NavLink
-              activeClassName="active_menu_link"
-              className="nav-link "
-              to="/home"
-            >
-              All <span>({tickets && tickets.length})</span>
-            </NavLink>
-          </div> */}
           <h2>Categories</h2>
-          {/*    <div className="sidebar__link">
-            <NavLink
-              activeClassName="active_menu_link"
-              to="/home"
-              className="nav-link"
-            >
-              All categories <span>({tickets && tickets.length})</span>
-            </NavLink>
-          </div> */}
+
           <div className="sidebar__link">
             <NavLink
               activeClassName="active_menu_link"
@@ -306,26 +289,8 @@ const Sidebar = ({
             </NavLink>
           </div>
 
-          {/*  <div className="sidebar__link">
-            <NavLink
-              activeClassName="active_menu_link"
-              className="nav-link "
-              to="/home"
-            >
-              All <span>({myTickets && myTickets.length})</span>
-            </NavLink>
-          </div> */}
           <h2>Categories</h2>
-          {/* <div className="sidebar__link">
-            <Link
-              activeClassName="active_menu_link"
-              to="/home"
-              className="nav-link"
-            >
-              <p>All categories</p>
-            </Link>
-            <span>{myTickets && myTickets.length}</span>
-          </div> */}
+
           <div className="sidebar__link">
             <NavLink
               activeClassName="active_menu_link"
