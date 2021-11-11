@@ -101,7 +101,7 @@ nav .loged-user-info button:focus {
 .search {
   border: 1px solid grey;
   border-radius: 30px !important;
-  height: 20px;
+  /*  height: 20px; */
   width: 100%;
   padding: 2px 23px 2px 30px;
   outline: 0;
