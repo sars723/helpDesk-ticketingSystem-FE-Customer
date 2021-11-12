@@ -167,12 +167,12 @@ const NewTicket = ({ history, currentUser, getCurrentUser }) => {
                       setTicket({ ...ticket, file: base64 })
                     }
                   />
-                  {/* <Form.Control
+                </Form.Group>{" "}
+                {/* <Form.Control
                 type="file"
                 name="attach file"
                 onChange={(e) => handleChange("file", e.target.files[0])}
               /> */}
-                </Form.Group>
                 <Button className="btn-submit " type="submit">
                   submit
                 </Button>

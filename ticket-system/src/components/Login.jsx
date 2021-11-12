@@ -58,7 +58,7 @@ const Login = (props) => {
         </div>
         <div className="login-container-all d-flex">
           <div className="loginPage-image">
-            <img src={loginPageImage} alt="" />
+            {/* <img src={loginPageImage} alt="" /> */}
           </div>{" "}
           <div className="login-container">
             <Form onSubmit={handleSubmit}>

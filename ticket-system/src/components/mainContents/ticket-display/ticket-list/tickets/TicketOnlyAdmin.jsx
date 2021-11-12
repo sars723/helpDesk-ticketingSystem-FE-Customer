@@ -81,7 +81,7 @@ const Ticket = ({ ticket, history, users, getUsers, tickets, getTickets }) => {
           <p>
             <i class="fa fa-user"></i>
 
-            {ticket.sender.name}
+            {ticket.sender && ticket.sender.name}
           </p>
 
           <p>

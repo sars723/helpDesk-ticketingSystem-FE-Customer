@@ -66,11 +66,11 @@ const Sidebar = ({
     );
     setUnclosedT(unclosedTickets);
     const unassignedTickets = tickets.filter(
-      (ticket) => ticket.assignedTo === ""
+      (ticket) => !ticket.hasOwnProperty("assignedTo")
     );
     setUnassignedT(unassignedTickets);
     const assignedToCurrentUserTickets = tickets.filter(
-      (ticket) => ticket.assignedTo?._id === currentUser._id
+      (ticket) => ticket.assignedTo && ticket.assignedTo._id === currentUser._id
     );
     setAssignedToCurrentUserT(assignedToCurrentUserTickets);
   };

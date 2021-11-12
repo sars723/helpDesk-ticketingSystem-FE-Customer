@@ -43,7 +43,8 @@ const AssignedToCurrentAgentTicketPage = ({
     setsidebarOpen(false);
   };
   const sortedT = sortedTickets?.filter(
-    (ticket, i) => ticket.assignedTo._id === currentUser._id
+    (ticket, i) =>
+      ticket.assignedTo && ticket.assignedTo._id === currentUser._id
   );
 
   const { sortKey, ascending } = sortKeys;
@@ -97,6 +98,7 @@ const AssignedToCurrentAgentTicketPage = ({
                         ticket.subject
                           .toLowerCase()
                           .includes(searchQuery.toLowerCase()) &&
+                        ticket.assignedTo &&
                         ticket.assignedTo._id === currentUser._id
                     )
                     .map((ticket, i) => (

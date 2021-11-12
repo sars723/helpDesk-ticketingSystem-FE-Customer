@@ -59,9 +59,10 @@ const TicketList = ({ searchQuery, getTickets, tickets, sortKeys }) => {
               .filter((ticket, i) =>
                 ticket.subject.toLowerCase().includes(searchQuery.toLowerCase())
               )
-              .map((ticket, i) => (
-                <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
-              ))
+              .map(
+                (ticket, i) =>
+                  ticket && <TicketOnlyAdmin key={i} ticket={ticket} i={i} />
+              )
           ) : (
             <Alert variant="info" style={{ margin: "20px" }}>
               no ticket to show!
